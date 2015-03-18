@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:orientation="vertical" android:id="@id/RelativeLayout1" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_margin="10.0dip"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textAppearance="?android:textAppearanceLarge" android:id="@id/tView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Large Text" android:layout_alignParentLeft="true" android:layout_alignParentTop="true" />
+    <TextView android:textAppearance="?android:textAppearanceMedium" android:id="@id/tView2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="5.0dip" android:text="@string/titulo6" android:layout_below="@id/tView1" android:layout_alignParentLeft="true" />
+    <RadioGroup android:id="@id/radioGroup1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="5.0dip" android:layout_below="@id/tView2" android:layout_alignParentLeft="true">
+        <RadioButton android:id="@id/radio0" android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="false" android:text="@string/Opc1" />
+        <RadioButton android:id="@id/radio1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/Opc2" />
+        <RadioButton android:id="@id/radio2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/Opc3" />
+    </RadioGroup>
+    <TextView android:textAppearance="?android:textAppearanceMedium" android:id="@id/tView3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="5.0dip" android:text="@string/titulo7" android:layout_below="@id/radioGroup1" android:layout_alignParentLeft="true" />
+    <EditText android:id="@id/editText1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="0.0dip" android:ems="10" android:layout_below="@id/tView3" android:layout_alignParentLeft="true" android:inputType="textMultiLine">
+        <requestFocus />
+    </EditText>
+    <CheckBox android:id="@id/checkBox1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="false" android:layout_alignParentTop="true" android:layout_alignParentRight="true" />
+</RelativeLayout>

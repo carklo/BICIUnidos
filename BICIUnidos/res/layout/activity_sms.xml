@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:orientation="vertical" android:id="@id/RelativeLayout1" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="10.0dip"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:id="@id/TextView1" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Ingrese el numero de telefono de contacto" android:layout_alignParentLeft="true" android:layout_alignParentTop="true" />
+    <TextView android:id="@id/TextView2" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Mensaje" android:layout_below="@id/txtPhoneNo" android:layout_alignParentLeft="true" />
+    <Button android:layout_gravity="end" android:id="@id/btnSendSMS" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Enviar SMS" android:layout_alignLeft="@id/TextView1" android:layout_alignParentBottom="true" />
+
+    <EditText
+        android:id="@id/txtMessage"
+        android:layout_width="fill_parent"
+        android:layout_height="150.0px"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/TextView2"
+        android:ems="10"
+        android:gravity="top" />
+
+    <EditText
+        android:id="@id/txtPhoneNo"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/TextView1"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
+</RelativeLayout>
