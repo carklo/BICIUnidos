@@ -104,4 +104,10 @@
     <string name="error_invalid_password">Contrasena muy corta</string>
     <string name="error_incorrect_password">Contrasena incorrecta</string>
     <string name="error_field_required">Este campo es requerido</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="direccion">Direccion</string>
+    <string name="mar_inicio">Inicio</string>
+    <string name="mar_fin">Fin</string>
+    <string name="mar_intermedio">Intermedio</string>
+    <string name="mar_tipo">Inicio</string>
 </resources>

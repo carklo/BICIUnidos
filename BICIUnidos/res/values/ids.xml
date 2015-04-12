@@ -19,7 +19,6 @@
     <item type="id" name="action_mode_close_button">false</item>
     <item type="id" name="activity_chooser_view_content">false</item>
     <item type="id" name="expand_activities_button">false</item>
-    <item type="id" name="image">false</item>
     <item type="id" name="default_activity_button">false</item>
     <item type="id" name="image1">false</item>
     <item type="id" name="list_item">false</item>

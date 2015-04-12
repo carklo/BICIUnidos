@@ -7,7 +7,10 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
 import java.io.PrintStream;
+
+import com.google.android.gms.maps.LocationSource;
 
 public class MainActivity
   extends ActionBarActivity
@@ -16,7 +19,7 @@ public class MainActivity
   {
     super.onCreate(paramBundle);
     setContentView(R.layout.activity_main);
-    getActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
   }
   
   public boolean onCreateOptionsMenu(Menu paramMenu)
@@ -49,4 +52,5 @@ public class MainActivity
     }
     return super.onOptionsItemSelected(paramMenuItem);
   }
+
 }

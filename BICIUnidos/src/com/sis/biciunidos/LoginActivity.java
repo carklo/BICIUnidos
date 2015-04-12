@@ -99,8 +99,6 @@ public class LoginActivity extends Activity implements
 
 		mLoginFormView = findViewById(R.id.login_form);
 		mProgressView = findViewById(R.id.login_progress);
-		mEmailLoginFormView = findViewById(R.id.email_login_form);
-		mSignOutButtons = findViewById(R.id.plus_sign_out_buttons);
 	}
 
 	private void populateAutoComplete() {

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/GridLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:columnCount="2"
+    android:orientation="horizontal"
+    android:rowCount="2" >
+
+    <ImageButton
+        android:id="@+id/eliminarMarcador"
+        android:layout_column="1"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:layout_row="1"
+        android:background="#00000000"
+        android:src="@drawable/trash"
+        tools:ignore="RtlHardcoded,ContentDescription" />
+
+    <TextView
+        android:id="@+id/textTip"
+        android:layout_column="1"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:layout_row="1"
+        android:text="@string/mar_tipo"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        tools:ignore="HardcodedText" />
+
+</GridLayout>
