@@ -330,7 +330,8 @@ public class LoginActivity extends Activity implements
 		}
 
 		@Override
-		protected void onCancelled() {
+		protected void onCancelled() 
+		{
 			mAuthTask = null;
 			showProgress(false);
 		}

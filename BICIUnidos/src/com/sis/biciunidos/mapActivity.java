@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -29,10 +30,13 @@ import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -71,10 +75,14 @@ extends ActionBarActivity
 	private String numero;
 	public ArrayList<Marcador> markers = new ArrayList<Marcador>();
 	private TextView textTip;
+	public ArrayList<LatLng> marcadores;
+	private boolean endTracking = false;
+	
 	protected void onCreate(Bundle paramBundle)
 	{
 		super.onCreate(paramBundle);
 		setContentView(R.layout.activity_map);
+		marcadores = new ArrayList<LatLng>();
 		if (this.map == null)
 		{
 			MapFragment mf = (MapFragment)getFragmentManager().findFragmentById(R.id.maps);
@@ -91,15 +99,16 @@ extends ActionBarActivity
 				Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
 				if (location != null)
 				{
+					Log.e("PROCESO", "Se obtuvo una ubicacion con la red");
 					map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
+					CameraPosition cameraPosition = new CameraPosition.Builder()
+					.target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
+					.zoom(17)                   // Sets the zoom
+					.bearing(90)                // Sets the orientation of the camera to east
+					.tilt(40)                   // Sets the tilt of the camera to 30 degrees
+					.build();                   // Creates a CameraPosition from the builder
+					map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 				}
-				CameraPosition cameraPosition = new CameraPosition.Builder()
-				.target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
-				.zoom(17)                   // Sets the zoom
-				.bearing(90)                // Sets the orientation of the camera to east
-				.tilt(40)                   // Sets the tilt of the camera to 30 degrees
-				.build();                   // Creates a CameraPosition from the builder
-				map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 				UiSettings localUiSettings2 = this.map.getUiSettings();
 				localUiSettings2.setMyLocationButtonEnabled(true);
 				localUiSettings2.setZoomControlsEnabled(true);
@@ -119,15 +128,16 @@ extends ActionBarActivity
 				Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
 				if (location != null)
 				{
+					Log.e("PROCESO", "Se obtuvo una ubicacion con la red");
 					map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
+					CameraPosition cameraPosition = new CameraPosition.Builder()
+					.target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
+					.zoom(17)                   // Sets the zoom
+					.bearing(90)                // Sets the orientation of the camera to east
+					.tilt(40)                   // Sets the tilt of the camera to 30 degrees
+					.build();                   // Creates a CameraPosition from the builder
+					map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 				}
-				CameraPosition cameraPosition = new CameraPosition.Builder()
-				.target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
-				.zoom(17)                   // Sets the zoom
-				.bearing(90)                // Sets the orientation of the camera to east
-				.tilt(40)                   // Sets the tilt of the camera to 30 degrees
-				.build();                   // Creates a CameraPosition from the builder
-				map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 				UiSettings localUiSettings2 = this.map.getUiSettings();
 				localUiSettings2.setMyLocationButtonEnabled(true);
 				localUiSettings2.setZoomControlsEnabled(true);
@@ -136,7 +146,18 @@ extends ActionBarActivity
 		pointLocation();
 		showInfoMarker();
 		eliminarMarcador();
-		((ImageButton) findViewById(R.id.btnClean)).setOnClickListener(new OnClickListener() {
+		((ImageButton) findViewById(R.id.chronometer)).setOnClickListener(new OnClickListener() 
+		{
+			
+			@Override
+			public void onClick(View v) 
+			{
+				starTracking();
+			}
+		});
+		
+		((ImageButton) findViewById(R.id.btnClean)).setOnClickListener(new OnClickListener() 
+		{
 
 			@Override
 			public void onClick(View v) 
@@ -881,4 +902,152 @@ extends ActionBarActivity
 		map.clear();
 		markers = new ArrayList<Marcador>();
 	}
+	
+	
+	private class checkConnectionTask extends AsyncTask<Context, Void, String>
+	{
+		private mapActivity map;
+		
+		public checkConnectionTask(mapActivity m)
+		{
+			map = m;
+		}
+		@Override
+		protected String doInBackground(Context... params) 
+		{
+			String res = null;
+			ConnectivityManager connectivity = (ConnectivityManager) params[0].getSystemService(Context.CONNECTIVITY_SERVICE);
+			NetworkInfo nf=connectivity.getActiveNetworkInfo();
+			if(nf != null && nf.isConnected()==true )
+			{
+				res = "true";
+			}
+			else
+			{
+				res = "false";
+			}
+		    return res;
+		}
+		
+		protected void onPostExecute(String res)
+		{
+			Log.e("PROCESO","termino el proceso de chequeo de conexion =" + res);
+			map.processTracking(res);
+		}
+	}
+	
+	private class ContinuosTracking extends AsyncTask<Context, Void, Void>
+	{
+		private mapActivity mapA;
+		private int modo;
+		public ContinuosTracking(mapActivity ma, int mod)
+		{
+			mapA = ma;
+			modo = mod;
+		}
+
+		@Override
+		protected Void doInBackground(Context... params) 
+		{
+			final Context con = params[0];
+			if(modo ==  Constantes.GSM_TRACKER)
+			{
+				while(mapA.endTracking == false)
+				{
+					// TODO
+				}
+			}
+			else
+			{
+				while(mapA.endTracking == false)
+				{
+					try 
+					{
+						mapA.runOnUiThread(new Runnable() {
+
+							@Override
+							public void run() 
+							{
+								Toast.makeText(con, "Va comenzar el minuto y medio", Toast.LENGTH_LONG).show();
+
+							}
+						});
+						Thread.sleep(90000); // 1 minuto y medio
+						mapA.runOnUiThread(new Runnable() {
+							
+							@Override
+							public void run() 
+							{
+								Toast.makeText(con, "Termino el minuto y medio", Toast.LENGTH_LONG).show();
+							}
+						});
+						LocationManager locationManager = (LocationManager) params[0].getSystemService(Context.LOCATION_SERVICE);
+						Criteria criteria = new Criteria();
+						final Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
+						mapA.marcadores.add(new LatLng(location.getLatitude(), location.getLongitude()));
+						mapA.runOnUiThread(new Runnable() 
+						{
+							@Override
+							public void run() 
+							{
+								map.addMarker(new MarkerOptions()
+								.position(new LatLng(location.getLatitude(), location.getLongitude()))
+								.icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
+							}
+						});
+					} 
+					catch (InterruptedException e) 
+					{
+						e.printStackTrace();
+					}
+					
+				}
+			}
+			return null;
+		}
+	}
+	private void starTracking()
+	{
+		checkConnectionTask cct = new checkConnectionTask(this);
+		Log.e("PROCESO", "Va ejecutar el chequeo de conexion");
+		cct.execute(mapActivity.this.getApplicationContext());
+	}
+	
+	private void processTracking(String res)
+	{
+		if(res.equals("false"))
+		{
+			AlertDialog.Builder builder1 = new AlertDialog.Builder(mapActivity.this);
+			builder1.setMessage("Actualmente no hay conexion, se utilizara la opcion de ubicacion por GSM");
+			builder1.setCancelable(true);
+			builder1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() 
+			{
+				public void onClick(DialogInterface dialog, int id) 
+				{
+					dialog.cancel();
+				}
+			});
+			AlertDialog alert11 = builder1.create();
+			alert11.show();
+			ContinuosTracking ct = new ContinuosTracking(this, Constantes.GSM_TRACKER);
+		}
+		else
+		{
+			Log.e("PROCESO", "va a obtener una primera ubicacion ya que hay conexion");
+			LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+			Criteria criteria = new Criteria();
+			Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
+			if(location != null)
+			{
+				Log.e("PROCESO", "primera location: "+ location.getLatitude()+";"+location.getLongitude());
+				marcadores.add(new LatLng(location.getLatitude(), location.getLongitude()));
+				map.addMarker(new MarkerOptions()
+				.position(new LatLng(location.getLatitude(), location.getLongitude()))
+				.icon(BitmapDescriptorFactory.fromResource(R.drawable.start)));
+				Log.e("PROCESO", "debio poner el marcador");
+				ContinuosTracking ct = new ContinuosTracking(this, Constantes.NETWORK_TRACKER);
+			}	
+		}
+	}
+	
 }
