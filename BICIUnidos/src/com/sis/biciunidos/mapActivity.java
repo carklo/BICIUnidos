@@ -9,7 +9,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -23,20 +22,15 @@ import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.location.LocationListener;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -52,6 +46,11 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
@@ -60,6 +59,7 @@ import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -68,7 +68,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 @SuppressLint("InflateParams") public class mapActivity
-extends ActionBarActivity
+extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedListener, LocationListener, com.google.android.gms.location.LocationListener
 {
 	//private final LatLng S_LOCATION = new LatLng(4.602664D, -74.066264000000004D);
 	private GoogleMap map;
@@ -76,7 +76,12 @@ extends ActionBarActivity
 	public ArrayList<Marcador> markers = new ArrayList<Marcador>();
 	private TextView textTip;
 	public ArrayList<LatLng> marcadores;
-	private boolean endTracking = false;
+	private Location initial;
+	private boolean vaARecibirOnLoc0 = false;
+	private int contOnC = 0;
+	private int contBtn = 0;
+	private GoogleApiClient mGoogleApiClient;
+	private long initTime;
 	
 	protected void onCreate(Bundle paramBundle)
 	{
@@ -87,6 +92,10 @@ extends ActionBarActivity
 		{
 			MapFragment mf = (MapFragment)getFragmentManager().findFragmentById(R.id.maps);
 			map = mf.getMap();
+			contOnC = 0;
+			contBtn = 0;
+			initTime = 0L;
+			markers = new ArrayList<Marcador>();
 			if(GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext())!=ConnectionResult.SUCCESS)
 			{
 				GooglePlayServicesUtil.getErrorDialog(GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext()), this, ConnectionResult.SUCCESS);
@@ -94,24 +103,13 @@ extends ActionBarActivity
 			else
 			{
 				map.setMyLocationEnabled(true);
-				LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-				Criteria criteria = new Criteria();
-				Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
-				if (location != null)
-				{
-					Log.e("PROCESO", "Se obtuvo una ubicacion con la red");
-					map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
-					CameraPosition cameraPosition = new CameraPosition.Builder()
-					.target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
-					.zoom(17)                   // Sets the zoom
-					.bearing(90)                // Sets the orientation of the camera to east
-					.tilt(40)                   // Sets the tilt of the camera to 30 degrees
-					.build();                   // Creates a CameraPosition from the builder
-					map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-				}
-				UiSettings localUiSettings2 = this.map.getUiSettings();
-				localUiSettings2.setMyLocationButtonEnabled(true);
-				localUiSettings2.setZoomControlsEnabled(true);
+				Log.i("PROCESO", "SE ESTA PIDIENDO LA ULTIMA LOCACION");
+				mGoogleApiClient = new GoogleApiClient.Builder(this)
+		        .addConnectionCallbacks(this)
+		        .addOnConnectionFailedListener(this)
+		        .addApi(LocationServices.API)
+		        .build();
+				mGoogleApiClient.connect();	
 			}
 		}
 		else
@@ -123,24 +121,13 @@ extends ActionBarActivity
 			else
 			{
 				map.setMyLocationEnabled(true);
-				LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-				Criteria criteria = new Criteria();
-				Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
-				if (location != null)
-				{
-					Log.e("PROCESO", "Se obtuvo una ubicacion con la red");
-					map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
-					CameraPosition cameraPosition = new CameraPosition.Builder()
-					.target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
-					.zoom(17)                   // Sets the zoom
-					.bearing(90)                // Sets the orientation of the camera to east
-					.tilt(40)                   // Sets the tilt of the camera to 30 degrees
-					.build();                   // Creates a CameraPosition from the builder
-					map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-				}
-				UiSettings localUiSettings2 = this.map.getUiSettings();
-				localUiSettings2.setMyLocationButtonEnabled(true);
-				localUiSettings2.setZoomControlsEnabled(true);
+				Log.i("PROCESO", "SE ESTA PIDIENDO LA ULTIMA LOCACION");
+				mGoogleApiClient = new GoogleApiClient.Builder(this)
+		        .addConnectionCallbacks(this)
+		        .addOnConnectionFailedListener(this)
+		        .addApi(LocationServices.API)
+		        .build();
+				mGoogleApiClient.connect();
 			}
 		}
 		pointLocation();
@@ -152,7 +139,25 @@ extends ActionBarActivity
 			@Override
 			public void onClick(View v) 
 			{
-				starTracking();
+				if(contBtn ==0)
+				{
+					contBtn++;
+					//Primera vez que se da a ejecutar al boton
+					initTime = System.currentTimeMillis();
+					mGoogleApiClient = new GoogleApiClient.Builder(mapActivity.this)
+			        .addConnectionCallbacks(mapActivity.this)
+			        .addOnConnectionFailedListener(mapActivity.this)
+			        .addApi(LocationServices.API)
+			        .build();
+					mGoogleApiClient.connect();	
+					
+				}
+				else
+				{
+					//Segunda vez que se da a ejecutar al boton. Cancelar?
+					LocationServices.FusedLocationApi.removeLocationUpdates( mGoogleApiClient, (com.google.android.gms.location.LocationListener) mapActivity.this);
+					contBtn = 0;
+				}
 			}
 		});
 		
@@ -904,150 +909,284 @@ extends ActionBarActivity
 	}
 	
 	
-	private class checkConnectionTask extends AsyncTask<Context, Void, String>
-	{
-		private mapActivity map;
-		
-		public checkConnectionTask(mapActivity m)
-		{
-			map = m;
-		}
-		@Override
-		protected String doInBackground(Context... params) 
-		{
-			String res = null;
-			ConnectivityManager connectivity = (ConnectivityManager) params[0].getSystemService(Context.CONNECTIVITY_SERVICE);
-			NetworkInfo nf=connectivity.getActiveNetworkInfo();
-			if(nf != null && nf.isConnected()==true )
-			{
-				res = "true";
-			}
-			else
-			{
-				res = "false";
-			}
-		    return res;
-		}
-		
-		protected void onPostExecute(String res)
-		{
-			Log.e("PROCESO","termino el proceso de chequeo de conexion =" + res);
-			map.processTracking(res);
-		}
-	}
+//	private class checkConnectionTask extends AsyncTask<Context, Void, String>
+//	{
+//		private mapActivity map;
+//		
+//		public checkConnectionTask(mapActivity m)
+//		{
+//			map = m;
+//		}
+//		@Override
+//		protected String doInBackground(Context... params) 
+//		{
+//			String res = null;
+//			ConnectivityManager connectivity = (ConnectivityManager) params[0].getSystemService(Context.CONNECTIVITY_SERVICE);
+//			NetworkInfo nf=connectivity.getActiveNetworkInfo();
+//			if(nf != null && nf.isConnected()==true )
+//			{
+//				res = "true";
+//			}
+//			else
+//			{
+//				res = "false";
+//			}
+//		    return res;
+//		}
+//		
+//		protected void onPostExecute(String res)
+//		{
+//			Log.e("PROCESO","termino el proceso de chequeo de conexion =" + res);
+//			map.processTracking(res);
+//		}
+//	}
 	
-	private class ContinuosTracking extends AsyncTask<Context, Void, Void>
-	{
-		private mapActivity mapA;
-		private int modo;
-		public ContinuosTracking(mapActivity ma, int mod)
-		{
-			mapA = ma;
-			modo = mod;
-		}
+//	private class ContinuosTracking extends AsyncTask<Context, Void, Void>
+//	{
+//		private mapActivity mapA;
+//		private int modo;
+//		public ContinuosTracking(mapActivity ma, int mod)
+//		{
+//			mapA = ma;
+//			modo = mod;
+//		}
+//
+//		@Override
+//		protected Void doInBackground(Context... params) 
+//		{
+//			final Context con = params[0];
+//			if(modo ==  Constantes.GSM_TRACKER)
+//			{
+//				while(mapA.endTracking == false)
+//				{
+//					// TODO
+//				}
+//			}
+//			else
+//			{
+//				while(mapA.endTracking == false)
+//				{
+//					try 
+//					{
+//						mapA.runOnUiThread(new Runnable() {
+//
+//							@Override
+//							public void run() 
+//							{
+//								Toast.makeText(con, "Va comenzar el minuto y medio", Toast.LENGTH_LONG).show();
+//
+//							}
+//						});
+//						Thread.sleep(90000); // 1 minuto y medio
+//						mapA.runOnUiThread(new Runnable() {
+//							
+//							@Override
+//							public void run() 
+//							{
+//								Toast.makeText(con, "Termino el minuto y medio", Toast.LENGTH_LONG).show();
+//							}
+//						});
+//						LocationManager locationManager = (LocationManager) params[0].getSystemService(Context.LOCATION_SERVICE);
+//						Criteria criteria = new Criteria();
+//						final Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
+//						mapA.marcadores.add(new LatLng(location.getLatitude(), location.getLongitude()));
+//						mapA.runOnUiThread(new Runnable() 
+//						{
+//							@Override
+//							public void run() 
+//							{
+//								map.addMarker(new MarkerOptions()
+//								.position(new LatLng(location.getLatitude(), location.getLongitude()))
+//								.icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
+//							}
+//						});
+//					} 
+//					catch (InterruptedException e) 
+//					{
+//						e.printStackTrace();
+//					}
+//					
+//				}
+//			}
+//			return null;
+//		}
+//	}
+//	private void starTracking()
+//	{
+//		checkConnectionTask cct = new checkConnectionTask(this);
+//		Log.e("PROCESO", "Va ejecutar el chequeo de conexion");
+//		cct.execute(mapActivity.this.getApplicationContext());
+//	}
+//	
+//	private void processTracking(String res)
+//	{
+//		if(res.equals("false"))
+//		{
+//			AlertDialog.Builder builder1 = new AlertDialog.Builder(mapActivity.this);
+//			builder1.setMessage("Actualmente no hay conexion, se utilizara la opcion de ubicacion por GSM");
+//			builder1.setCancelable(true);
+//			builder1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() 
+//			{
+//				public void onClick(DialogInterface dialog, int id) 
+//				{
+//					dialog.cancel();
+//				}
+//			});
+//			AlertDialog alert11 = builder1.create();
+//			alert11.show();
+//			ContinuosTracking ct = new ContinuosTracking(this, Constantes.GSM_TRACKER);
+//		}
+//		else
+//		{
+//			Log.e("PROCESO", "va a obtener una primera ubicacion ya que hay conexion");
+//			LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//			Criteria criteria = new Criteria();
+//			Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
+//			if(location != null)
+//			{
+//				Log.e("PROCESO", "primera location: "+ location.getLatitude()+";"+location.getLongitude());
+//				marcadores.add(new LatLng(location.getLatitude(), location.getLongitude()));
+//				map.addMarker(new MarkerOptions()
+//				.position(new LatLng(location.getLatitude(), location.getLongitude()))
+//				.icon(BitmapDescriptorFactory.fromResource(R.drawable.start)));
+//				Log.e("PROCESO", "debio poner el marcador");
+//				ContinuosTracking ct = new ContinuosTracking(this, Constantes.NETWORK_TRACKER);
+//			}	
+//		}
+//	}
 
-		@Override
-		protected Void doInBackground(Context... params) 
+	@Override
+	public void onConnected(Bundle connectionHint) 
+	{
+		if(contOnC ==0)
 		{
-			final Context con = params[0];
-			if(modo ==  Constantes.GSM_TRACKER)
+			Log.e("PROCESO","LLEGO A ONCONNECTED");
+			Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+			Log.i("PROCESO", "SE HIZO EL PEDIDO DE LA ULTIMA LOCACION");
+			if (location != null) 
 			{
-				while(mapA.endTracking == false)
-				{
-					// TODO
-				}
+				Log.i("PROCESO", "NO LLEGO NULA LA ULTIMA LOCACION");
+				map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
+				CameraPosition cameraPosition = new CameraPosition.Builder()
+				.target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
+				.zoom(17)                   // Sets the zoom
+				.bearing(90)                // Sets the orientation of the camera to east
+				.tilt(40)                   // Sets the tilt of the camera to 30 degrees
+				.build();                   // Creates a CameraPosition from the builder
+				map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+				UiSettings localUiSettings2 = this.map.getUiSettings();
+				localUiSettings2.setMyLocationButtonEnabled(true);
+				localUiSettings2.setZoomControlsEnabled(true);
 			}
 			else
 			{
-				while(mapA.endTracking == false)
+				Log.i("PROCESO", "LLEGO NULA LA ULTIMA LOCACION");
+				if(mGoogleApiClient.isConnected())
 				{
-					try 
-					{
-						mapA.runOnUiThread(new Runnable() {
-
-							@Override
-							public void run() 
-							{
-								Toast.makeText(con, "Va comenzar el minuto y medio", Toast.LENGTH_LONG).show();
-
-							}
-						});
-						Thread.sleep(90000); // 1 minuto y medio
-						mapA.runOnUiThread(new Runnable() {
-							
-							@Override
-							public void run() 
-							{
-								Toast.makeText(con, "Termino el minuto y medio", Toast.LENGTH_LONG).show();
-							}
-						});
-						LocationManager locationManager = (LocationManager) params[0].getSystemService(Context.LOCATION_SERVICE);
-						Criteria criteria = new Criteria();
-						final Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
-						mapA.marcadores.add(new LatLng(location.getLatitude(), location.getLongitude()));
-						mapA.runOnUiThread(new Runnable() 
-						{
-							@Override
-							public void run() 
-							{
-								map.addMarker(new MarkerOptions()
-								.position(new LatLng(location.getLatitude(), location.getLongitude()))
-								.icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
-							}
-						});
-					} 
-					catch (InterruptedException e) 
-					{
+					Log.i("PROCESO", "SE ESTA CONECTADO A LA GOOGLE API CLIENT");
+					LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,new LocationRequest()
+					.setInterval(10000)
+					.setFastestInterval(8000)
+					.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY), (com.google.android.gms.location.LocationListener) this);
+					Log.i("PROCESO", "SE ENVIO REQUEST DE UPDATE");
+					vaARecibirOnLoc0 = true;
+					try {
+						Thread.sleep(5000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					
 				}
 			}
-			return null;
-		}
-	}
-	private void starTracking()
-	{
-		checkConnectionTask cct = new checkConnectionTask(this);
-		Log.e("PROCESO", "Va ejecutar el chequeo de conexion");
-		cct.execute(mapActivity.this.getApplicationContext());
-	}
-	
-	private void processTracking(String res)
-	{
-		if(res.equals("false"))
-		{
-			AlertDialog.Builder builder1 = new AlertDialog.Builder(mapActivity.this);
-			builder1.setMessage("Actualmente no hay conexion, se utilizara la opcion de ubicacion por GSM");
-			builder1.setCancelable(true);
-			builder1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() 
-			{
-				public void onClick(DialogInterface dialog, int id) 
-				{
-					dialog.cancel();
-				}
-			});
-			AlertDialog alert11 = builder1.create();
-			alert11.show();
-			ContinuosTracking ct = new ContinuosTracking(this, Constantes.GSM_TRACKER);
+			contOnC++;
 		}
 		else
 		{
-			Log.e("PROCESO", "va a obtener una primera ubicacion ya que hay conexion");
-			LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-			Criteria criteria = new Criteria();
-			Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
-			if(location != null)
-			{
-				Log.e("PROCESO", "primera location: "+ location.getLatitude()+";"+location.getLongitude());
-				marcadores.add(new LatLng(location.getLatitude(), location.getLongitude()));
-				map.addMarker(new MarkerOptions()
-				.position(new LatLng(location.getLatitude(), location.getLongitude()))
-				.icon(BitmapDescriptorFactory.fromResource(R.drawable.start)));
-				Log.e("PROCESO", "debio poner el marcador");
-				ContinuosTracking ct = new ContinuosTracking(this, Constantes.NETWORK_TRACKER);
-			}	
+			//Se van a generar los updates de las posiciones
+			LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,new LocationRequest()
+			.setInterval(30000)
+			.setFastestInterval(20000)
+			.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY), mapActivity.this);
 		}
+	}
+
+	@Override
+	public void onConnectionSuspended(int cause) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onLocationChanged(Location location) 
+	{
+		if(vaARecibirOnLoc0 == true)
+		{
+			initial = location;
+			LocationServices.FusedLocationApi.removeLocationUpdates( mGoogleApiClient, (com.google.android.gms.location.LocationListener) this);
+			if(initial != null)
+			{
+				Log.i("PROCESO", "REQUEST EXITOSO");
+				map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(initial.getLatitude(), initial.getLongitude()), 13));
+				CameraPosition cameraPosition = new CameraPosition.Builder()
+				.target(new LatLng(initial.getLatitude(), initial.getLongitude()))      // Sets the center of the map to location user
+				.zoom(17)                   // Sets the zoom
+				.bearing(90)                // Sets the orientation of the camera to east
+				.tilt(40)                   // Sets the tilt of the camera to 30 degrees
+				.build();                   // Creates a CameraPosition from the builder
+				map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+				
+			}
+			else
+			{
+				Log.i("PROCESO", "REQUEST FALLIDO");
+			}
+
+			UiSettings localUiSettings2 = this.map.getUiSettings();
+			localUiSettings2.setMyLocationButtonEnabled(true);
+			localUiSettings2.setZoomControlsEnabled(true);
+			vaARecibirOnLoc0 = false;
+		}
+		else
+		{
+			if(marcadores.size() == 0)
+			{
+				LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
+				marcadores.add(latlng);
+				map.addMarker(new MarkerOptions().position(latlng).icon(BitmapDescriptorFactory.fromResource(R.drawable.start)));
+			}
+			else
+			{
+				LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
+				marcadores.add(latlng);
+				map.addMarker(new MarkerOptions().position(latlng).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
+			}
+		}
+		
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderDisabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onConnectionFailed(ConnectionResult result) 
+	{
+		Log.e("PROCESO", "NO SE PUDO CONECTAR A GOOGLE API CLIENT");
 	}
 	
 }
