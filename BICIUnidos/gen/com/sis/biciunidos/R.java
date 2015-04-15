@@ -1974,6 +1974,12 @@ containing a value of this type.
  Default text size for action bar title.
          */
         public static final int abc_text_size_title_material_toolbar=0x7f0b0017;
+        /** 
+         Example customization of dimensions originally defined in res/values/dimens.xml
+         (such as screen margins) for screens with more than 820dp of available width. This
+         would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
+    
+         */
         public static final int activity_horizontal_margin=0x7f0b0037;
         public static final int activity_vertical_margin=0x7f0b0038;
         /**  The platform's desired fixed height for a dialog along the major axis
@@ -2122,8 +2128,11 @@ containing a value of this type.
         public static final int tuberia=0x7f02006b;
     }
     public static final class id {
-        public static final int GridLayout1=0x7f0c00af;
+        public static final int GridLayout1=0x7f0c00ad;
+        public static final int ImagenPerfil=0x7f0c00b0;
+        public static final int NumeroCelular=0x7f0c00ab;
         public static final int RelativeLayout1=0x7f0c0059;
+        public static final int Sing_up=0x7f0c00b4;
         public static final int TableLayout1=0x7f0c0038;
         public static final int TextView1=0x7f0c005a;
         public static final int TextView2=0x7f0c005c;
@@ -2153,8 +2162,9 @@ containing a value of this type.
         public static final int btn1=0x7f0c002e;
         public static final int btnAlarm1=0x7f0c0058;
         public static final int btnCancelar=0x7f0c005f;
-        public static final int btnClean=0x7f0c00aa;
-        public static final int btnFind=0x7f0c00a9;
+        public static final int btnClean=0x7f0c00b6;
+        public static final int btnFind=0x7f0c00b5;
+        public static final int btnSaveProfile=0x7f0c00b1;
         public static final int btnSendSMS=0x7f0c005e;
         public static final int button1=0x7f0c003c;
         public static final int buttonHorizontalDivider=0x7f0c002b;
@@ -2180,13 +2190,14 @@ containing a value of this type.
         public static final int dropdown=0x7f0c009f;
         public static final int editText1=0x7f0c0069;
         public static final int edit_query=0x7f0c001d;
-        public static final int eliminarMarcador=0x7f0c00b0;
+        public static final int eliminarMarcador=0x7f0c00bb;
         public static final int email=0x7f0c0034;
-        public static final int email_sign_in_button=0x7f0c00a8;
+        public static final int email_sign_in_button=0x7f0c00b3;
         public static final int end=0x7f0c00a1;
         public static final int expand_activities_button=0x7f0c0013;
         public static final int expandableListView1=0x7f0c0029;
         public static final int expanded_menu=0x7f0c0019;
+        public static final int fullName=0x7f0c00a9;
         public static final int gallery1=0x7f0c0050;
         public static final int grayscale=0x7f0c008e;
         public static final int handM=0x7f0c0076;
@@ -2208,7 +2219,7 @@ containing a value of this type.
         public static final int list_item=0x7f0c0016;
         public static final int login=0x7f0c0036;
         public static final int login_form=0x7f0c0031;
-        public static final int login_progress=0x7f0c00a7;
+        public static final int login_progress=0x7f0c00b2;
         public static final int login_status=0x7f0c002f;
         public static final int login_status_message=0x7f0c0030;
         public static final int maps=0x7f0c0053;
@@ -2223,18 +2234,19 @@ containing a value of this type.
         public static final int okButton=0x7f0c0073;
         public static final int password=0x7f0c0035;
         public static final int police=0x7f0c0056;
+        public static final int previewImage=0x7f0c00ae;
         public static final int production=0x7f0c0082;
         public static final int progress_circular=0x7f0c0007;
         public static final int progress_horizontal=0x7f0c0008;
-        public static final int radTipMar0=0x7f0c00ac;
-        public static final int radTipMar1=0x7f0c00ad;
-        public static final int radTipMar2=0x7f0c00ae;
+        public static final int radTipMar0=0x7f0c00b8;
+        public static final int radTipMar1=0x7f0c00b9;
+        public static final int radTipMar2=0x7f0c00ba;
         public static final int radio=0x7f0c001c;
         public static final int radio0=0x7f0c0065;
         public static final int radio1=0x7f0c0066;
         public static final int radio2=0x7f0c0067;
         public static final int radioGroup1=0x7f0c0064;
-        public static final int radioTipMar=0x7f0c00ab;
+        public static final int radioTipMar=0x7f0c00b7;
         public static final int sandbox=0x7f0c0083;
         public static final int satellite=0x7f0c007e;
         public static final int search_badge=0x7f0c001f;
@@ -2271,7 +2283,7 @@ containing a value of this type.
         public static final int tempM=0x7f0c0061;
         public static final int tempo=0x7f0c0060;
         public static final int terrain=0x7f0c007f;
-        public static final int textTip=0x7f0c00b1;
+        public static final int textTip=0x7f0c00bc;
         public static final int textView1=0x7f0c0033;
         public static final int textView10=0x7f0c0046;
         public static final int textView11=0x7f0c0047;
@@ -2293,10 +2305,15 @@ containing a value of this type.
         public static final int timePicker=0x7f0c006e;
         public static final int title=0x7f0c0018;
         public static final int top_action_bar=0x7f0c000e;
+        public static final int txtFullName=0x7f0c00aa;
         public static final int txtMessage=0x7f0c005d;
+        public static final int txtPhone=0x7f0c00ac;
         public static final int txtPhoneNo=0x7f0c005b;
+        public static final int txtUser=0x7f0c00a8;
         public static final int up=0x7f0c0001;
+        public static final int uploadPhoto=0x7f0c00af;
         public static final int useLogo=0x7f0c0098;
+        public static final int user=0x7f0c00a7;
         public static final int viewPager=0x7f0c0072;
         public static final int withText=0x7f0c009d;
         public static final int wrap_content=0x7f0c0088;
@@ -2355,33 +2372,35 @@ containing a value of this type.
         public static final int abc_search_view=0x7f030014;
         public static final int abc_simple_dropdown_hint=0x7f030015;
         public static final int activity_alquiler=0x7f030016;
-        public static final int activity_login=0x7f030017;
-        public static final int activity_main=0x7f030018;
-        public static final int activity_map=0x7f030019;
-        public static final int activity_recibidor_alarma=0x7f03001a;
-        public static final int activity_sms=0x7f03001b;
-        public static final int activity_splash=0x7f03001c;
-        public static final int activity_temporizador=0x7f03001d;
-        public static final int child_item=0x7f03001e;
-        public static final int custom_tab=0x7f03001f;
-        public static final int dialog_radio=0x7f030020;
-        public static final int fragment_date=0x7f030021;
-        public static final int fragment_time=0x7f030022;
-        public static final int group_item=0x7f030023;
-        public static final int info_window_marker=0x7f030024;
-        public static final int slide_date_time_picker=0x7f030025;
-        public static final int support_simple_spinner_dropdown_item=0x7f030026;
+        public static final int activity_formulario=0x7f030017;
+        public static final int activity_login=0x7f030018;
+        public static final int activity_main=0x7f030019;
+        public static final int activity_map=0x7f03001a;
+        public static final int activity_recibidor_alarma=0x7f03001b;
+        public static final int activity_sms=0x7f03001c;
+        public static final int activity_splash=0x7f03001d;
+        public static final int activity_temporizador=0x7f03001e;
+        public static final int child_item=0x7f03001f;
+        public static final int custom_tab=0x7f030020;
+        public static final int dialog_radio=0x7f030021;
+        public static final int fragment_date=0x7f030022;
+        public static final int fragment_time=0x7f030023;
+        public static final int group_item=0x7f030024;
+        public static final int info_window_marker=0x7f030025;
+        public static final int slide_date_time_picker=0x7f030026;
+        public static final int support_simple_spinner_dropdown_item=0x7f030027;
     }
     public static final class menu {
         public static final int activity_main_actions=0x7f0d0000;
         public static final int alquiler=0x7f0d0001;
         public static final int call=0x7f0d0002;
-        public static final int login=0x7f0d0003;
-        public static final int recibidor_alarma=0x7f0d0004;
-        public static final int sm=0x7f0d0005;
-        public static final int smsreceiver=0x7f0d0006;
-        public static final int splash=0x7f0d0007;
-        public static final int temporizador=0x7f0d0008;
+        public static final int formulario=0x7f0d0003;
+        public static final int login=0x7f0d0004;
+        public static final int recibidor_alarma=0x7f0d0005;
+        public static final int sm=0x7f0d0006;
+        public static final int smsreceiver=0x7f0d0007;
+        public static final int splash=0x7f0d0008;
+        public static final int temporizador=0x7f0d0009;
     }
     public static final class raw {
         public static final int gtm_analytics=0x7f050000;
@@ -2600,6 +2619,7 @@ containing a value of this type.
         public static final int store_picture_title=0x7f070000;
         public static final int title_activity_alquiler=0x7f070052;
         public static final int title_activity_call=0x7f070060;
+        public static final int title_activity_formulario=0x7f070074;
         public static final int title_activity_login=0x7f070063;
         public static final int title_activity_main=0x7f07003b;
         public static final int title_activity_map=0x7f070062;

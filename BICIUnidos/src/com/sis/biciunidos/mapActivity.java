@@ -30,6 +30,7 @@ import android.location.LocationListener;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,6 +45,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -59,16 +62,23 @@ import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.UiSettings;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.gson.Gson;
+import com.sis.geofirebase.GeoFire;
+import com.sis.geofirebase.GeoFire.CompletionListener;
+import com.sis.geofirebase.GeoLocation;
+import com.sis.geofirebase.GeoQuery;
+import com.sis.geofirebase.GeoQueryEventListener;
 
 @SuppressLint("InflateParams") public class mapActivity
-extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedListener, LocationListener, com.google.android.gms.location.LocationListener
+extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedListener, LocationListener, com.google.android.gms.location.LocationListener, GeoQueryEventListener, GoogleMap.OnCameraChangeListener
 {
 	//private final LatLng S_LOCATION = new LatLng(4.602664D, -74.066264000000004D);
 	private GoogleMap map;
@@ -82,12 +92,20 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 	private int contBtn = 0;
 	private GoogleApiClient mGoogleApiClient;
 	private long initTime;
+	private Circle searchCircle;
+	private GeoFire geoFire;
+	private GeoQuery geoQuery;
+	private Usuario user;
 	
 	protected void onCreate(Bundle paramBundle)
 	{
 		super.onCreate(paramBundle);
 		setContentView(R.layout.activity_map);
 		marcadores = new ArrayList<LatLng>();
+		Gson gson = new Gson();
+		String jsonObjUser = PreferenceManager.getDefaultSharedPreferences(mapActivity.this.getApplicationContext()).getString("USUARIO", "");
+		user = gson.fromJson(jsonObjUser, Usuario.class);
+		Firebase.setAndroidContext(getApplicationContext());
 		if (this.map == null)
 		{
 			MapFragment mf = (MapFragment)getFragmentManager().findFragmentById(R.id.maps);
@@ -1069,11 +1087,14 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 				map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
 				CameraPosition cameraPosition = new CameraPosition.Builder()
 				.target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
-				.zoom(17)                   // Sets the zoom
+				.zoom(13)                   // Sets the zoom
 				.bearing(90)                // Sets the orientation of the camera to east
 				.tilt(40)                   // Sets the tilt of the camera to 30 degrees
 				.build();                   // Creates a CameraPosition from the builder
 				map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+				searchCircle = map.addCircle(new CircleOptions().center(new LatLng(location.getLatitude(), location.getLongitude())).radius(1000));
+				this.searchCircle.setFillColor(Color.argb(66, 255, 0, 255));
+		        this.searchCircle.setStrokeColor(Color.argb(66, 0, 0, 0));
 				UiSettings localUiSettings2 = this.map.getUiSettings();
 				localUiSettings2.setMyLocationButtonEnabled(true);
 				localUiSettings2.setZoomControlsEnabled(true);
@@ -1092,7 +1113,8 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 					vaARecibirOnLoc0 = true;
 					try {
 						Thread.sleep(5000);
-					} catch (InterruptedException e) {
+					} catch (InterruptedException e)
+					{
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
@@ -1130,7 +1152,7 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 				map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(initial.getLatitude(), initial.getLongitude()), 13));
 				CameraPosition cameraPosition = new CameraPosition.Builder()
 				.target(new LatLng(initial.getLatitude(), initial.getLongitude()))      // Sets the center of the map to location user
-				.zoom(17)                   // Sets the zoom
+				.zoom(13)                   // Sets the zoom
 				.bearing(90)                // Sets the orientation of the camera to east
 				.tilt(40)                   // Sets the tilt of the camera to 30 degrees
 				.build();                   // Creates a CameraPosition from the builder
@@ -1154,31 +1176,66 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 				LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
 				marcadores.add(latlng);
 				map.addMarker(new MarkerOptions().position(latlng).icon(BitmapDescriptorFactory.fromResource(R.drawable.start)));
+				String userName = user.getNombreUser();
+				geoFire.setLocation("users/"+userName+"/lastlatLong", new GeoLocation(latlng.latitude, latlng.longitude), new CompletionListener() {
+					
+					@Override
+					public void onComplete(String key, FirebaseError error) 
+					{
+						if (error != null) 
+						{
+				            System.err.println("There was an error saving the location to GeoFire: " + error);
+				        } 
+						else 
+						{
+				            System.out.println("Location saved on server successfully!");
+				        }
+					}
+				});
 			}
 			else
 			{
 				LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
 				marcadores.add(latlng);
 				map.addMarker(new MarkerOptions().position(latlng).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
+				String userName = user.getNombreUser();
+				geoFire.setLocation("users/"+userName+"/lastlatLong", new GeoLocation(latlng.latitude, latlng.longitude), new CompletionListener() {
+
+					@Override
+					public void onComplete(String key, FirebaseError error) 
+					{
+						if (error != null) 
+						{
+							System.err.println("There was an error saving the location to GeoFire: " + error);
+						} 
+						else 
+						{
+							System.out.println("Location saved on server successfully!");
+						}
+					}
+				});
 			}
 		}
 		
 	}
 
 	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {
+	public void onStatusChanged(String provider, int status, Bundle extras) 
+	{
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void onProviderEnabled(String provider) {
+	public void onProviderEnabled(String provider) 
+	{
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void onProviderDisabled(String provider) {
+	public void onProviderDisabled(String provider) 
+	{
 		// TODO Auto-generated method stub
 		
 	}
@@ -1187,6 +1244,42 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 	public void onConnectionFailed(ConnectionResult result) 
 	{
 		Log.e("PROCESO", "NO SE PUDO CONECTAR A GOOGLE API CLIENT");
+	}
+
+	@Override
+	public void onKeyEntered(String key, GeoLocation location) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onKeyExited(String key) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onKeyMoved(String key, GeoLocation location) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onGeoQueryReady() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onGeoQueryError(FirebaseError error) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onCameraChange(CameraPosition position) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

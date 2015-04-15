@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="store_picture_title">Save image</string>
     <string name="store_picture_message">Allow Ad to store image in Picture gallery?</string>
     <string name="accept">Accept</string>
@@ -110,4 +111,6 @@
     <string name="mar_fin">Fin</string>
     <string name="mar_intermedio">Intermedio</string>
     <string name="mar_tipo">Inicio</string>
+    <string name="title_activity_formulario">Perfil</string>
+
 </resources>

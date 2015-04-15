@@ -2,13 +2,16 @@ package com.sis.biciunidos;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.SharedPreferences;
@@ -19,7 +22,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
+import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,9 +34,14 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.firebase.client.AuthData;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.shaded.fasterxml.jackson.databind.util.ArrayBuilders.BooleanBuilder;
 
 /**
  * A login screen that offers login via email/password and via Google+ sign in.
@@ -42,15 +52,9 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
  * /android/getting-started#step_1_enable_the_google_api and follow the steps in
  * "Step 1" to create an OAuth 2.0 client for your package.
  */
-public class LoginActivity extends Activity implements
+public class LoginActivity extends ActionBarActivity implements
 		LoaderCallbacks<Cursor> {
 
-	/**
-	 * A dummy authentication store containing known user names and passwords.
-	 * TODO: remove after connecting to a real authentication system.
-	 */
-	private static final String[] DUMMY_CREDENTIALS = new String[] {
-			"a@a.com:contra", "bar@example.com:world" };
 	/**
 	 * Keep track of the login task to ensure we can cancel it if requested.
 	 */
@@ -60,8 +64,6 @@ public class LoginActivity extends Activity implements
 	private AutoCompleteTextView mEmailView;
 	private EditText mPasswordView;
 	private View mProgressView;
-	private View mEmailLoginFormView;
-	private View mSignOutButtons;
 	private View mLoginFormView;
 	public String mEmail;
 	public String mPassword;
@@ -70,7 +72,9 @@ public class LoginActivity extends Activity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-
+		getSupportActionBar().show();
+		getSupportActionBar().setLogo(R.drawable.ic_launcher);
+		
 		// Set up the login form.
 		mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
 		populateAutoComplete();
@@ -99,6 +103,55 @@ public class LoginActivity extends Activity implements
 
 		mLoginFormView = findViewById(R.id.login_form);
 		mProgressView = findViewById(R.id.login_progress);
+		
+		((Button)findViewById(R.id.Sing_up)).setOnClickListener(new OnClickListener() 
+		{
+			
+			@Override
+			public void onClick(View v) 
+			{
+				// Reset errors.
+				mEmailView.setError(null);
+				mPasswordView.setError(null);
+
+				// Store values at the time of the login attempt.
+				String email = mEmailView.getText().toString();
+				String password = mPasswordView.getText().toString();
+
+				boolean cancel = false;
+				View focusView = null;
+
+				// Check for a valid password, if the user entered one.
+				if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+					mPasswordView.setError(getString(R.string.error_invalid_password));
+					focusView = mPasswordView;
+					cancel = true;
+				}
+
+				// Check for a valid email address.
+				if (TextUtils.isEmpty(email)) {
+					mEmailView.setError(getString(R.string.error_field_required));
+					focusView = mEmailView;
+					cancel = true;
+				} else if (!isEmailValid(email)) {
+					mEmailView.setError(getString(R.string.error_invalid_email));
+					focusView = mEmailView;
+					cancel = true;
+				}
+
+				if (cancel) {
+					// There was an error; don't attempt login and focus the first
+					// form field with an error.
+					focusView.requestFocus();
+				} else {
+					// Show a progress spinner, and kick off a background task to
+					// perform the user login attempt.
+					showProgress(true);
+					RegisterTask rt = new RegisterTask(email, password);
+					rt.execute((Void) null);
+				}
+			}
+		});
 	}
 
 	private void populateAutoComplete() {
@@ -110,11 +163,9 @@ public class LoginActivity extends Activity implements
 	 * If there are form errors (invalid email, missing fields, etc.), the
 	 * errors are presented and no actual login attempt is made.
 	 */
-	public void attemptLogin() {
-		if (mAuthTask != null) {
-			return;
-		}
-
+	public void attemptLogin() 
+	{
+		mAuthTask = null;
 		// Reset errors.
 		mEmailView.setError(null);
 		mPasswordView.setError(null);
@@ -286,47 +337,58 @@ public class LoginActivity extends Activity implements
 		}
 
 		@Override
-		protected Boolean doInBackground(Void... params) {
-			// TODO: attempt authentication against a network service.
-
-			try {
-				// Simulate network access.
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				return false;
-			}
-
-			for (String credential : DUMMY_CREDENTIALS) {
-				String[] pieces = credential.split(":");
-				if (pieces[0].equals(mEmail)) {
-					// Account exists, return true if the password matches.
-					return pieces[1].equals(mPassword);
-				}
-			}
-
-			// TODO: register the new account here.
+		protected Boolean doInBackground(Void... params) 
+		{	
+			Firebase.setAndroidContext(LoginActivity.this);
+			Firebase ref = new Firebase(Constantes.FIRE_REF);
+			ref.authWithPassword(mEmail, mPassword, new Firebase.AuthResultHandler() 
+			{
+			    @Override
+			    public void onAuthenticated(AuthData authData) 
+			    {
+			        System.out.println("User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
+			        LoginActivity.this.mAuthTask = null;
+				    LoginActivity.this.showProgress(false); 
+				    SharedPreferences.Editor localEditor = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this.getApplicationContext()).edit();
+				    localEditor.putBoolean("loggedIn", true);
+				    localEditor.putString("User", mEmail);
+				    System.out.println("email-->"+LoginActivity.this.mEmail);
+				    System.out.println(mEmail);
+				    localEditor.putString("Pass", mPassword);
+				    localEditor.commit();
+				    Intent localIntent = new Intent(LoginActivity.this, FormularioActivity.class);
+				    LoginActivity.this.startActivity(localIntent);
+				    LoginActivity.this.finish();
+				    return;
+			    }
+			    @Override
+			    public void onAuthenticationError(FirebaseError firebaseError) 
+			    {
+			        // there was an error
+			    	final FirebaseError fe = firebaseError;
+			    	runOnUiThread(new Runnable() 
+			        {
+						public void run() 
+						{
+							showProgress(false);
+							AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
+							builder1.setTitle("Inicio de sesion");
+							builder1.setMessage("Ocurrio un error en la autenticacion: "+fe.getMessage() +" "+", intentelo mas tarde");
+							builder1.setCancelable(true);
+							builder1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() 
+							{
+								public void onClick(DialogInterface dialog, int id) 
+								{
+									dialog.cancel();
+								}
+							});
+							AlertDialog alert11 = builder1.create();
+							alert11.show();
+						}
+					});
+			    }
+			});
 			return true;
-		}
-
-		@Override
-		protected void onPostExecute(final Boolean success) 
-		{
-			LoginActivity.this.mAuthTask = null;
-		    LoginActivity.this.showProgress(false);
-		      if (success.booleanValue())
-		      {
-		        SharedPreferences.Editor localEditor = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this.getApplicationContext()).edit();
-		        localEditor.putBoolean("loggedIn", true);
-		        localEditor.putString("User", LoginActivity.this.mEmail);
-		        localEditor.putString("Pass", LoginActivity.this.mPassword);
-		        localEditor.commit();
-		        Intent localIntent = new Intent(LoginActivity.this, MainActivity.class);
-		        LoginActivity.this.startActivity(localIntent);
-		        LoginActivity.this.finish();
-		        return;
-		      }
-		      LoginActivity.this.mPasswordView.setError(LoginActivity.this.getString(2131165286));
-		      LoginActivity.this.mPasswordView.requestFocus();
 		}
 
 		@Override
@@ -334,6 +396,80 @@ public class LoginActivity extends Activity implements
 		{
 			mAuthTask = null;
 			showProgress(false);
+		}
+	}
+	
+	private class RegisterTask extends AsyncTask<Void, Void, Void>
+	{
+
+		private String email;
+		private String pass;
+		public RegisterTask(String mEmail, String mPass)
+		{
+			email = mEmail;
+			pass = mPass;
+		}
+		
+		@Override
+		protected Void doInBackground(Void... params) 
+		{
+			final StringBuffer s = new StringBuffer();
+			Firebase.setAndroidContext(LoginActivity.this);
+			Firebase ref = new Firebase(Constantes.FIRE_REF);
+			ref.createUser(email, pass, new Firebase.ValueResultHandler<Map<String, Object>>() {
+			    @Override
+			    public void onSuccess(Map<String, Object> result) 
+			    {
+			        Log.e("Successfully created user account with uid: ",result.get("uid")+"");
+			        s.append("true");
+			        runOnUiThread(new Runnable() 
+			        {
+						public void run() 
+						{
+							showProgress(false);
+							AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
+							builder1.setTitle("Crear cuenta: Exito!");
+							builder1.setMessage("Su cuenta fue creada exitosamente");
+							builder1.setCancelable(true);
+							builder1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() 
+							{
+								public void onClick(DialogInterface dialog, int id) 
+								{
+									dialog.cancel();
+								}
+							});
+							AlertDialog alert11 = builder1.create();
+							alert11.show();
+						}
+					});
+			    }
+			    @Override
+			    public void onError(FirebaseError firebaseError) 
+			    {
+			    	final FirebaseError fe = firebaseError;
+			    	runOnUiThread(new Runnable() 
+			        {
+						public void run() 
+						{
+							showProgress(false);
+							AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
+							builder1.setTitle("Crear cuenta: Error!");
+							builder1.setMessage("Ocurrio un error al crear su cuenta: "+fe.getMessage());
+							builder1.setCancelable(true);
+							builder1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() 
+							{
+								public void onClick(DialogInterface dialog, int id) 
+								{
+									dialog.cancel();
+								}
+							});
+							AlertDialog alert11 = builder1.create();
+							alert11.show();
+						}
+					});
+			    }
+			});
+			return null;
 		}
 	}
 }
