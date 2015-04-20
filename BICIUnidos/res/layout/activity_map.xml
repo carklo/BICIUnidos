@@ -32,4 +32,13 @@
         android:minHeight="0dp"
         android:src="@drawable/clean" />
 
+    <TextView
+        android:id="@+id/textTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/microphone"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
 </RelativeLayout>

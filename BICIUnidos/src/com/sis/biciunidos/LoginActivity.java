@@ -352,8 +352,7 @@ public class LoginActivity extends ActionBarActivity implements
 				    SharedPreferences.Editor localEditor = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this.getApplicationContext()).edit();
 				    localEditor.putBoolean("loggedIn", true);
 				    localEditor.putString("User", mEmail);
-				    System.out.println("email-->"+LoginActivity.this.mEmail);
-				    System.out.println(mEmail);
+				    System.out.println("email-->"+ mEmail);
 				    localEditor.putString("Pass", mPassword);
 				    localEditor.commit();
 				    Intent localIntent = new Intent(LoginActivity.this, FormularioActivity.class);

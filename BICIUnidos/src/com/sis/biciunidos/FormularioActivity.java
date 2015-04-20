@@ -1,12 +1,10 @@
 package com.sis.biciunidos;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 
 import android.app.AlertDialog;
@@ -31,11 +29,14 @@ import android.widget.ImageView;
 public class FormularioActivity extends ActionBarActivity
 {
 	 private static final int SELECT_PICTURE = 1;
-	 private String selectedImagePath = null;
+	 private String selectedImagePath = "";
 	 private ImageView imv;
 	 private EditText user;
 	 private EditText fullName;
 	 private EditText phoneNumber;
+	 private Usuario newUser;
+	 private Firebase userRef;
+	 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
@@ -68,7 +69,7 @@ public class FormularioActivity extends ActionBarActivity
 			{
 				if(user.getText().toString().equals("") || user.getText() == null || fullName.getText().toString().equals("") || fullName.getText().toString() == null 
 						|| phoneNumber.getText().equals("") || phoneNumber.getText() == null || phoneNumber.getText().toString().matches("[0-9]+") == false 
-						|| phoneNumber.getText().toString().length()!=10 || selectedImagePath == null || user.getText().toString().contains(".")||user.getText().toString().contains("#")
+						|| phoneNumber.getText().toString().length()!=10 || user.getText().toString().contains(".")||user.getText().toString().contains("#")
 						||user.getText().toString().contains("[") || user.getText().toString().contains("]")||user.getText().toString().contains("(")||user.getText().toString().contains(")") || user.getText().toString().contains("/"))
 				{
 					AlertDialog.Builder builder1 = new AlertDialog.Builder(FormularioActivity.this);
@@ -90,18 +91,13 @@ public class FormularioActivity extends ActionBarActivity
 					//Es la primera vez por lo que no hay datos en el firebase, se guardaran todos los datos que entren
 					Firebase ref = new Firebase(Constantes.FIRE_REF);
 					Firebase.setAndroidContext(FormularioActivity.this);
-					Firebase userRef = ref.child("users");
+					Firebase preuserRef = ref.child("users");
 					String email = PreferenceManager.getDefaultSharedPreferences(FormularioActivity.this.getApplicationContext()).getString("User", "");
 					Log.e("EMAIL", email);
-					Usuario newUser = new Usuario(0, fullName.getText().toString(), user.getText().toString(),"", 0L, Double.parseDouble(phoneNumber.getText().toString()), 0.0, 0.0, email,0.0);
-					Gson gson = new Gson();
-					String newUserJson = gson.toJson(newUser);
-					SharedPreferences.Editor localEditor = PreferenceManager.getDefaultSharedPreferences(FormularioActivity.this.getApplicationContext()).edit();
-					localEditor.putString("ImagenPerfil", selectedImagePath);
-					localEditor.putString("USUARIO", newUserJson);
-					localEditor.commit();
+					newUser = new Usuario(0, fullName.getText().toString(), user.getText().toString(),"", 0L, Double.parseDouble(phoneNumber.getText().toString()), 0.0, 0.0, email,0.0,0,0);
 					Map<String, Usuario> usuario = new HashMap<String, Usuario>();
 					usuario.put(user.getText().toString(), newUser);
+					userRef = preuserRef.push();
 					userRef.setValue(usuario, new Firebase.CompletionListener() 
 					{
 						
@@ -127,6 +123,13 @@ public class FormularioActivity extends ActionBarActivity
 					        } 
 							else 
 							{
+								Gson gson = new Gson();
+								newUser.setKeyU(userRef.getKey());
+								String newUserJson = gson.toJson(newUser);
+								SharedPreferences.Editor localEditor = PreferenceManager.getDefaultSharedPreferences(FormularioActivity.this.getApplicationContext()).edit();
+								localEditor.putString("ImagenPerfil", selectedImagePath);
+								localEditor.putString("USUARIO", newUserJson);
+								localEditor.commit();
 								AlertDialog.Builder builder1 = new AlertDialog.Builder(FormularioActivity.this);
 								builder1.setTitle("Perfil: Exito!");
 								builder1.setMessage("Su Perfil fue guardado y sincronizado con exito.");

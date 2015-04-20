@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -30,6 +31,8 @@ import android.location.LocationListener;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -38,6 +41,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Interpolator;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -96,6 +101,8 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 	private GeoFire geoFire;
 	private GeoQuery geoQuery;
 	private Usuario user;
+	private Marker inicial = null;
+	private Map<String,Marker> markersF;
 	
 	protected void onCreate(Bundle paramBundle)
 	{
@@ -106,6 +113,8 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 		String jsonObjUser = PreferenceManager.getDefaultSharedPreferences(mapActivity.this.getApplicationContext()).getString("USUARIO", "");
 		user = gson.fromJson(jsonObjUser, Usuario.class);
 		Firebase.setAndroidContext(getApplicationContext());
+		geoFire = new GeoFire(new Firebase(Constantes.FIRE_REF));
+		markersF = new HashMap<String, Marker>();
 		if (this.map == null)
 		{
 			MapFragment mf = (MapFragment)getFragmentManager().findFragmentById(R.id.maps);
@@ -162,6 +171,7 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 					contBtn++;
 					//Primera vez que se da a ejecutar al boton
 					initTime = System.currentTimeMillis();
+					((ImageButton) findViewById(R.id.chronometer)).setBackgroundColor(Color.BLUE);
 					mGoogleApiClient = new GoogleApiClient.Builder(mapActivity.this)
 			        .addConnectionCallbacks(mapActivity.this)
 			        .addOnConnectionFailedListener(mapActivity.this)
@@ -174,6 +184,13 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 				{
 					//Segunda vez que se da a ejecutar al boton. Cancelar?
 					LocationServices.FusedLocationApi.removeLocationUpdates( mGoogleApiClient, (com.google.android.gms.location.LocationListener) mapActivity.this);
+					((ImageButton) findViewById(R.id.chronometer)).setBackgroundColor(Color.TRANSPARENT);
+					// remove all event listeners to stop updating in the background
+			        geoQuery.removeAllListeners();
+			        for (Marker marker: markersF.values()) {
+			            marker.remove();
+			        }
+			        markersF.clear();
 					contBtn = 0;
 				}
 			}
@@ -977,7 +994,7 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 //			{
 //				while(mapA.endTracking == false)
 //				{
-//					// TODO
+//					
 //				}
 //			}
 //			else
@@ -1087,7 +1104,7 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 				map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
 				CameraPosition cameraPosition = new CameraPosition.Builder()
 				.target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
-				.zoom(13)                   // Sets the zoom
+				.zoom(15)                   // Sets the zoom
 				.bearing(90)                // Sets the orientation of the camera to east
 				.tilt(40)                   // Sets the tilt of the camera to 30 degrees
 				.build();                   // Creates a CameraPosition from the builder
@@ -1115,7 +1132,6 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 						Thread.sleep(5000);
 					} catch (InterruptedException e)
 					{
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -1135,8 +1151,6 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 	@Override
 	public void onConnectionSuspended(int cause) 
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -1152,7 +1166,7 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 				map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(initial.getLatitude(), initial.getLongitude()), 13));
 				CameraPosition cameraPosition = new CameraPosition.Builder()
 				.target(new LatLng(initial.getLatitude(), initial.getLongitude()))      // Sets the center of the map to location user
-				.zoom(13)                   // Sets the zoom
+				.zoom(15)                   // Sets the zoom
 				.bearing(90)                // Sets the orientation of the camera to east
 				.tilt(40)                   // Sets the tilt of the camera to 30 degrees
 				.build();                   // Creates a CameraPosition from the builder
@@ -1174,10 +1188,12 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 			if(marcadores.size() == 0)
 			{
 				LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
-				marcadores.add(latlng);
-				map.addMarker(new MarkerOptions().position(latlng).icon(BitmapDescriptorFactory.fromResource(R.drawable.start)));
+				inicial = map.addMarker(new MarkerOptions().position(latlng).icon(BitmapDescriptorFactory.fromResource(R.drawable.start)));
+				marcadores.add(latlng);	
 				String userName = user.getNombreUser();
-				geoFire.setLocation("users/"+userName+"/lastlatLong", new GeoLocation(latlng.latitude, latlng.longitude), new CompletionListener() {
+				geoQuery = this.geoFire.queryAtLocation(new GeoLocation(location.getLatitude(),location.getLongitude()),1);
+				this.geoQuery.addGeoQueryEventListener(this);
+				geoFire.setLocation("users/"+user.getKeyU()+"/"+userName+"/lastlatLong", new GeoLocation(latlng.latitude, latlng.longitude), new CompletionListener() {
 					
 					@Override
 					public void onComplete(String key, FirebaseError error) 
@@ -1197,8 +1213,10 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 			{
 				LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
 				marcadores.add(latlng);
-				map.addMarker(new MarkerOptions().position(latlng).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
+				animateMarkerTo(inicial, latlng.latitude, latlng.longitude);
 				String userName = user.getNombreUser();
+				geoQuery = this.geoFire.queryAtLocation(new GeoLocation(location.getLatitude(),location.getLongitude()),1);
+				this.geoQuery.addGeoQueryEventListener(this);
 				geoFire.setLocation("users/"+userName+"/lastlatLong", new GeoLocation(latlng.latitude, latlng.longitude), new CompletionListener() {
 
 					@Override
@@ -1222,22 +1240,16 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) 
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void onProviderEnabled(String provider) 
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void onProviderDisabled(String provider) 
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -1247,39 +1259,93 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 	}
 
 	@Override
-	public void onKeyEntered(String key, GeoLocation location) {
-		// TODO Auto-generated method stub
+	public void onKeyEntered(String key, GeoLocation location) 
+	{
+		Marker marker = this.map.addMarker(new MarkerOptions().
+		icon(BitmapDescriptorFactory.fromResource(R.drawable.fmarker))
+		.position(new LatLng(location.latitude, location.longitude)));
+		markersF.put(key, marker);
+        System.out.println(key);
+	}
+
+	@Override
+	public void onKeyExited(String key) 
+	{
+		Marker marker = this.markersF.get(key);
+        if (marker != null) {
+            marker.remove();
+            this.markersF.remove(key);
+        }
+	}
+
+	@Override
+	public void onKeyMoved(String key, GeoLocation location) 
+	{
+		// Move the marker
+        Marker marker = this.markersF.get(key);
+        if (marker != null) {
+            this.animateMarkerTo(marker, location.latitude, location.longitude);
+        }
+	}
+
+	@Override
+	public void onGeoQueryReady() 
+	{
 		
 	}
 
 	@Override
-	public void onKeyExited(String key) {
-		// TODO Auto-generated method stub
-		
+	public void onGeoQueryError(FirebaseError error) 
+	{
+		new AlertDialog.Builder(this)
+        .setTitle("Error")
+        .setMessage("There was an unexpected error querying GeoFire: " + error.getMessage())
+        .setPositiveButton(android.R.string.ok, null)
+        .setIcon(android.R.drawable.ic_dialog_alert)
+        .show();
 	}
 
 	@Override
-	public void onKeyMoved(String key, GeoLocation location) {
-		// TODO Auto-generated method stub
-		
+	public void onCameraChange(CameraPosition position) 
+	{
+		// Update the search criteria for this geoQuery and the circle on the map
+        LatLng center = position.target;
+        double radius = zoomLevelToRadius(position.zoom);
+        this.searchCircle.setCenter(center);
+        this.searchCircle.setRadius(radius);
+        this.geoQuery.setCenter(new GeoLocation(center.latitude, center.longitude));
+        // radius in km
+        this.geoQuery.setRadius(radius/1000);
 	}
 
-	@Override
-	public void onGeoQueryReady() {
-		// TODO Auto-generated method stub
-		
-	}
+	 private void animateMarkerTo(final Marker marker, final double lat, final double lng) 
+	 {
+	        final Handler handler = new Handler();
+	        final long start = SystemClock.uptimeMillis();
+	        final long DURATION_MS = 2800;
+	        final Interpolator interpolator = new AccelerateDecelerateInterpolator();
+	        final LatLng startPosition = marker.getPosition();
+	        handler.post(new Runnable() {
+	            @Override
+	            public void run() {
+	                float elapsed = SystemClock.uptimeMillis() - start;
+	                float t = elapsed/DURATION_MS;
+	                float v = interpolator.getInterpolation(t);
 
-	@Override
-	public void onGeoQueryError(FirebaseError error) {
-		// TODO Auto-generated method stub
-		
-	}
+	                double currentLat = (lat - startPosition.latitude) * v + startPosition.latitude;
+	                double currentLng = (lng - startPosition.longitude) * v + startPosition.longitude;
+	                marker.setPosition(new LatLng(currentLat, currentLng));
 
-	@Override
-	public void onCameraChange(CameraPosition position) {
-		// TODO Auto-generated method stub
-		
-	}
-	
+	                // if animation is not finished yet, repeat
+	                if (t < 1) {
+	                    handler.postDelayed(this, 16);
+	                }
+	            }
+	        });
+	    }
+	 
+	 private double zoomLevelToRadius(double zoomLevel) 
+	 {
+		 return 16384000/Math.pow(2, zoomLevel);
+	 }
 }

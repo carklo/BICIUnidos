@@ -1,9 +1,5 @@
 package com.sis.biciunidos;
 
-import java.util.ArrayList;
-
-import com.google.android.gms.maps.model.LatLng;
-
 public class Usuario 
 {
 	private int amigos;
@@ -16,6 +12,9 @@ public class Usuario
 	private double numKilometros;
 	private double ritmo;
 	private double pedalazos;
+	private int caravanas;
+	private int caloriasTotales;
+	private String keyU;
 	
 	/**
 	 * 
@@ -27,7 +26,7 @@ public class Usuario
 	 * @param ri
 	 * @param pe
 	 */
-	public Usuario(int am, String nomb, String nameUser, String latlong, long last, double num, double ri, double pe, String em, double kil)
+	public Usuario(int am, String nomb, String nameUser, String latlong, long last, double num, double ri, double pe, String em, double kil,int car, int cal)
 	{
 		setAmigos(am);
 		setNombreUser(nameUser);
@@ -39,6 +38,8 @@ public class Usuario
 		setPedalazos(pe);
 		setEmail(em);
 		setNumKilom(kil);
+		setCaravanas(car);
+		setCaloriasTotales(cal);
 	}
 
 	public int getAmigos() {
@@ -173,5 +174,47 @@ public class Usuario
 	 */
 	public void setLastlatLong(String lastlatLong) {
 		this.lastlatLong = lastlatLong;
+	}
+
+	/**
+	 * @return the caravanas
+	 */
+	public int getCaravanas() {
+		return caravanas;
+	}
+
+	/**
+	 * @param caravanas the caravanas to set
+	 */
+	public void setCaravanas(int caravanas) {
+		this.caravanas = caravanas;
+	}
+
+	/**
+	 * @return the caloriasTotales
+	 */
+	public int getCaloriasTotales() {
+		return caloriasTotales;
+	}
+
+	/**
+	 * @param caloriasTotales the caloriasTotales to set
+	 */
+	public void setCaloriasTotales(int caloriasTotales) {
+		this.caloriasTotales = caloriasTotales;
+	}
+
+	/**
+	 * @return the keyU
+	 */
+	public String getKeyU() {
+		return keyU;
+	}
+
+	/**
+	 * @param keyU the keyU to set
+	 */
+	public void setKeyU(String keyU) {
+		this.keyU = keyU;
 	}
 }
