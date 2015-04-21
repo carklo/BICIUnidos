@@ -20,6 +20,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.firebase.client.DataSnapshot;
@@ -49,9 +51,9 @@ public class MainActivity extends ActionBarActivity
 		//getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		btnPerfil = (ImageButton) findViewById(R.id.imageButton1);
 		txtNombre =  (TextView) findViewById(R.id.textView1);
-		btnAmigos = (Button) findViewById(R.id.button1);
+		btnAmigos = (Button) findViewById(R.id.btnAmigos);
 		txtKilometros = (TextView) findViewById(R.id.textView4);
-		txtCaravanas = (TextView)findViewById(R.id.textView7);
+		txtCaravanas = (TextView)findViewById(R.id.textCara);
 		txtRitmo = (TextView)findViewById(R.id.textView10);
 		txtCalorias = (TextView)findViewById(R.id.textView13);
 		txtPedalazos = (TextView)findViewById(R.id.textView16);
@@ -113,11 +115,37 @@ public class MainActivity extends ActionBarActivity
 		@Override
 		public void onDataChange(DataSnapshot arg0) 
 		{
-			@SuppressWarnings("unchecked")
-			Map<String, Usuario> datosUsuario = (Map<String, Usuario>) arg0.getValue();
-			Usuario usu = datosUsuario.get(user.getNombreUser());
-			user = null;
-			user = usu;
+			HashMap<String, Usuario> datos = (HashMap<String, Usuario>) arg0.getValue();
+			System.out.println(arg0.getValue());
+			ArrayList<Usuario> arr = new ArrayList<Usuario>(datos.values());
+			String val = "";
+			for(int i = 0;i<arr.size();i++)
+			{
+				if(i==arr.size()-1)
+				{
+					val+=arr.get(i);
+				}
+				else
+				{
+					val+=arr.get(i)+",";
+				}
+			}
+			System.out.println(val);
+			String[] vals = val.split(",");
+			String nombre = vals[0];
+			String numKilo = vals[1];
+			String numCara = vals[2];
+			String numCalo = vals[3];
+			String phone = vals[4];
+			String email = vals[5];
+			String amigos = vals[6];
+			String time = vals[7];
+			String ritmo = vals[8];
+			String nomU = vals[9];
+			String peda= vals[11];
+			Usuario u = new Usuario(Integer.parseInt(amigos), nombre, nomU, " ", Long.parseLong(time), Double.parseDouble(phone), Double.parseDouble(ritmo), Double.parseDouble(peda), email, Double.parseDouble(numKilo), Integer.parseInt(numCara), Integer.parseInt(numCalo));
+			//user = null;
+			user = u;
 			String PATH = PreferenceManager.getDefaultSharedPreferences(MainActivity.this.getApplicationContext()).getString("ImagenPerfil", "");
 			System.out.println("PATH: "+ PATH);
 			File file = new File(PATH);
@@ -126,10 +154,10 @@ public class MainActivity extends ActionBarActivity
 				Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
 				btnPerfil.setImageBitmap(myBitmap);
 			}
-			txtNombre.setText(user.getNombre());
+			txtNombre.setText(user.getNombre()+"");
 			txtKilometros.setText(user.getNumKilom()+"");
 			btnAmigos.setText(user.getAmigos()+"");
-			txtCaravanas.setText(user.getCaravanas());
+			txtCaravanas.setText(user.getCaravanas()+"");
 			txtRitmo.setText(user.getRitmo()+"");
 			txtPedalazos.setText(user.getPedalazos()+"");
 			txtCalorias.setText(user.getCaloriasTotales()+"");
