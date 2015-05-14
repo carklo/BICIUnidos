@@ -1,6 +1,8 @@
 package com.sis.biciunidos;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -11,6 +13,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -20,12 +26,16 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.net.Uri;
@@ -43,6 +53,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
+import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -103,13 +114,17 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 	private Usuario user;
 	private Marker inicial = null;
 	private Map<String,Marker> markersF;
+	private Chronometer chr;
+	private ArrayList<PlaceMark>cuadrantes;
 	
 	protected void onCreate(Bundle paramBundle)
 	{
 		super.onCreate(paramBundle);
 		setContentView(R.layout.activity_map);
 		marcadores = new ArrayList<LatLng>();
+		cuadrantes = new ArrayList<PlaceMark>();
 		Gson gson = new Gson();
+		chr = (Chronometer) findViewById(R.id.chronometer1);
 		String jsonObjUser = PreferenceManager.getDefaultSharedPreferences(mapActivity.this.getApplicationContext()).getString("USUARIO", "");
 		user = gson.fromJson(jsonObjUser, Usuario.class);
 		Firebase.setAndroidContext(getApplicationContext());
@@ -163,6 +178,7 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 		((ImageButton) findViewById(R.id.chronometer)).setOnClickListener(new OnClickListener() 
 		{
 			
+			@SuppressWarnings("deprecation")
 			@Override
 			public void onClick(View v) 
 			{
@@ -170,27 +186,94 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 				{
 					contBtn++;
 					//Primera vez que se da a ejecutar al boton
+					Drawable orange = getResources().getDrawable(R.drawable.round_button_whi);
+					((ImageButton) findViewById(R.id.chronometer)).setBackgroundDrawable(orange);
 					initTime = System.currentTimeMillis();
-					((ImageButton) findViewById(R.id.chronometer)).setBackgroundColor(Color.BLUE);
 					mGoogleApiClient = new GoogleApiClient.Builder(mapActivity.this)
 			        .addConnectionCallbacks(mapActivity.this)
 			        .addOnConnectionFailedListener(mapActivity.this)
 			        .addApi(LocationServices.API)
 			        .build();
 					mGoogleApiClient.connect();	
-					
+					chr.setFormat("H:MM:SS");
+					chr.start();
 				}
 				else
 				{
+					chr.stop();
+					//Segunda vez que se da a ejecutar al boton.
+					LocationServices.FusedLocationApi.removeLocationUpdates( mGoogleApiClient, (com.google.android.gms.location.LocationListener) mapActivity.this);
+					// remove all event listeners to stop updating in the background
+					geoQuery.removeAllListeners();
+					AlertDialog.Builder builder1 = new AlertDialog.Builder(mapActivity.this);
+					builder1.setTitle("Pausa!");
+					builder1.setMessage("¿Qué deseas hacer?");
+					builder1.setCancelable(true);
+					builder1.setPositiveButton("Reestablecer", new DialogInterface.OnClickListener() 
+					{
+						public void onClick(DialogInterface dialog, int id) 
+						{
+							chr.start();
+							initTime = System.currentTimeMillis();
+							mGoogleApiClient = new GoogleApiClient.Builder(mapActivity.this)
+					        .addConnectionCallbacks(mapActivity.this)
+					        .addOnConnectionFailedListener(mapActivity.this)
+					        .addApi(LocationServices.API)
+					        .build();
+							mGoogleApiClient.connect();
+							dialog.dismiss();
+						}
+					});
+					builder1.setNegativeButton("Reiniciar", new DialogInterface.OnClickListener() 
+					{
+						
+						@Override
+						public void onClick(DialogInterface dialog, int which) 
+						{
+							chr.setBase(0L);
+							chr.start();
+							for (Marker marker: markersF.values()) 
+							{
+					            marker.remove();
+					        }
+					        markersF.clear();
+					      //Segunda vez que se da a ejecutar al boton. Cancelar?
+							LocationServices.FusedLocationApi.removeLocationUpdates( mGoogleApiClient, (com.google.android.gms.location.LocationListener) mapActivity.this);
+							// remove all event listeners to stop updating in the background
+							geoQuery.removeAllListeners();
+							chr.start();
+							initTime = System.currentTimeMillis();
+							mGoogleApiClient = new GoogleApiClient.Builder(mapActivity.this)
+					        .addConnectionCallbacks(mapActivity.this)
+					        .addOnConnectionFailedListener(mapActivity.this)
+					        .addApi(LocationServices.API)
+					        .build();
+							mGoogleApiClient.connect();
+							dialog.dismiss();
+						}
+					});
+					builder1.setNeutralButton("Apagar", new DialogInterface.OnClickListener() 
+					{
+						
+						@Override
+						public void onClick(DialogInterface dialog, int which) 
+						{
+							
+						}
+					});
+					AlertDialog alert11 = builder1.create();
+					alert11.show();
 					//Segunda vez que se da a ejecutar al boton. Cancelar?
 					LocationServices.FusedLocationApi.removeLocationUpdates( mGoogleApiClient, (com.google.android.gms.location.LocationListener) mapActivity.this);
-					((ImageButton) findViewById(R.id.chronometer)).setBackgroundColor(Color.TRANSPARENT);
 					// remove all event listeners to stop updating in the background
-			        geoQuery.removeAllListeners();
+					Drawable orange = getResources().getDrawable(R.drawable.round_button);
+					((ImageButton) findViewById(R.id.chronometer)).setBackgroundDrawable(orange);
+					geoQuery.removeAllListeners();
 			        for (Marker marker: markersF.values()) {
 			            marker.remove();
 			        }
 			        markersF.clear();
+			        chr.stop();
 					contBtn = 0;
 				}
 			}
@@ -203,6 +286,30 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 			public void onClick(View v) 
 			{
 				limpiarMapa();
+			}
+		});
+		((ImageButton) findViewById(R.id.station)).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) 
+			{
+				try 
+				{
+					cargarCuadrantes();
+					dibujarCuadrantes();
+				} catch (ParserConfigurationException e) 
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SAXException e) 
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) 
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		((ImageButton) findViewById(R.id.btnFind)).setOnClickListener(new OnClickListener() {
@@ -1188,7 +1295,7 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 			if(marcadores.size() == 0)
 			{
 				LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
-				inicial = map.addMarker(new MarkerOptions().position(latlng).icon(BitmapDescriptorFactory.fromResource(R.drawable.start)));
+				map.addMarker(new MarkerOptions().position(latlng).icon(BitmapDescriptorFactory.fromResource(R.drawable.start)));
 				marcadores.add(latlng);	
 				String userName = user.getNombreUser();
 				geoQuery = this.geoFire.queryAtLocation(new GeoLocation(location.getLatitude(),location.getLongitude()),1);
@@ -1209,6 +1316,31 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 					}
 				});
 			}
+			else if(marcadores.size() == 1)
+			{
+				LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
+				inicial = map.addMarker(new MarkerOptions().position(latlng).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
+				marcadores.add(latlng);
+				animateMarkerTo(inicial, latlng.latitude, latlng.longitude);
+				String userName = user.getNombreUser();
+				geoQuery = this.geoFire.queryAtLocation(new GeoLocation(location.getLatitude(),location.getLongitude()),1);
+				this.geoQuery.addGeoQueryEventListener(this);
+				geoFire.setLocation("users/"+user.getKeyU()+"/"+userName+"/lastlatLong", new GeoLocation(latlng.latitude, latlng.longitude), new CompletionListener() {
+
+					@Override
+					public void onComplete(String key, FirebaseError error) 
+					{
+						if (error != null) 
+						{
+							System.err.println("There was an error saving the location to GeoFire: " + error);
+						} 
+						else 
+						{
+							System.out.println("Location saved on server successfully!");
+						}
+					}
+				});
+			}
 			else
 			{
 				LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
@@ -1217,7 +1349,7 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 				String userName = user.getNombreUser();
 				geoQuery = this.geoFire.queryAtLocation(new GeoLocation(location.getLatitude(),location.getLongitude()),1);
 				this.geoQuery.addGeoQueryEventListener(this);
-				geoFire.setLocation("users/"+userName+"/lastlatLong", new GeoLocation(latlng.latitude, latlng.longitude), new CompletionListener() {
+				geoFire.setLocation("users/"+user.getKeyU()+"/"+userName+"/lastlatLong", new GeoLocation(latlng.latitude, latlng.longitude), new CompletionListener() {
 
 					@Override
 					public void onComplete(String key, FirebaseError error) 
@@ -1347,5 +1479,115 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 	 private double zoomLevelToRadius(double zoomLevel) 
 	 {
 		 return 16384000/Math.pow(2, zoomLevel);
+	 }
+	 
+	 private void cargarCuadrantes() throws ParserConfigurationException, SAXException, IOException
+	 {
+		 SAXParserFactory factory = SAXParserFactory.newInstance();
+		 SAXParser saxParser = factory.newSAXParser();
+		 
+		 DefaultHandler handler = new DefaultHandler()
+		 {
+			 boolean bname = false;
+			 boolean bdescr = false;
+			 boolean bcoord = false;
+			 PlaceMark pl = null;
+			 
+			 public void startElement(String uri, String localName,String qName, org.xml.sax.Attributes attributes)
+			 {
+				 if(qName.equalsIgnoreCase("Placemark"))
+				 {
+					 pl = new PlaceMark();
+				 }
+				 else if(qName.equalsIgnoreCase("name"))
+				 {
+					 bname = true;
+				 }
+				 else if(qName.equalsIgnoreCase("description"))
+				 {
+					 bdescr = true;
+				 }
+				 else if(qName.equalsIgnoreCase("coordinates"))
+				 {
+					 bcoord = true;
+				 }
+			 }
+			 
+			 public void endElement(String uri, String localName, String qName)
+			 {
+				 if(qName.equalsIgnoreCase("Placemark"))
+				 {
+					 cuadrantes.add(pl);
+					 //System.out.println(pl.getNombre());
+					 //System.out.println(pl.getCoordenadas());
+					 //System.out.println(pl.getDescripcion());
+					 pl = null;
+				 }
+			 }
+			 
+			 public void characters(char ch[], int start, int length)
+			 {
+				 if(bname)
+				 {
+					 pl.setNombre(new String(ch, start, length));
+					 System.out.println(new String(ch, start, length));
+					 bname = false;
+				 }
+				 if(bdescr)
+				 {
+					 pl.setDescripcion(new String(ch, start, length));
+					 System.out.println(new String(ch, start, length));
+					 //TODO Hacer split
+					 bdescr =  false;
+				 }
+				 if(bcoord)
+				 {
+					 pl.setCoordenadas(new String(ch, start, length));
+					 System.out.println(new String(ch, start, length));
+					 //TODO Hacer split para guardar latlng
+					 bcoord = false;
+				 }
+			 }
+		 };
+		 AssetManager asset = getAssets();
+		 InputStream input = asset.open("doc.kml");
+		 int size = input.available();
+		 byte[] buffer = new byte[size];
+		 input.read(buffer);
+		 input.close();
+		 File file = new File(getFilesDir(), "doc.kml");
+		 FileOutputStream fos = new FileOutputStream(file);
+		 fos.write(buffer);
+		 fos.close();
+		 saxParser.parse(file, handler);
+	 }
+	 
+	 private void dibujarCuadrantes() 
+	 {
+		 for(int i = 0;i<cuadrantes.size();i++)
+		 {
+			 PlaceMark pl = cuadrantes.get(i);
+			 String loc = pl.getCoordenadas();
+			 System.out.println("COOR-----> "+loc);
+			 String[] coor = loc.split(",");
+			 if(coor.length == 1)
+			 {
+				 double lon = Double.parseDouble(coor[0]);
+				 double lat = 4.757677;
+				 LatLng latlo = new LatLng(lat, lon);
+				 mapActivity.this.map.addMarker(new MarkerOptions()
+				 .position(latlo)
+				 .icon(BitmapDescriptorFactory.fromResource(R.drawable.cop)));
+			 }
+			 else
+			 {
+				 double lat = Double.parseDouble(coor[1]);
+				 double lon = Double.parseDouble(coor[0]);
+				 LatLng latlo = new LatLng(lat, lon);
+				 mapActivity.this.map.addMarker(new MarkerOptions()
+				 .position(latlo)
+				 .icon(BitmapDescriptorFactory.fromResource(R.drawable.cop)));
+			 }
+		 }
 	 }
 }

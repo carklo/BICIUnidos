@@ -1,5 +1,9 @@
 package com.sis.biciunidos;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,11 +22,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -49,7 +48,7 @@ public class MainActivity extends ActionBarActivity
 		super.onCreate(paramBundle);
 		setContentView(R.layout.activity_main);
 		//getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		btnPerfil = (ImageButton) findViewById(R.id.imageButton1);
+		btnPerfil = (ImageButton) findViewById(R.id.support);
 		txtNombre =  (TextView) findViewById(R.id.textView1);
 		btnAmigos = (Button) findViewById(R.id.btnAmigos);
 		txtKilometros = (TextView) findViewById(R.id.textView4);
@@ -57,7 +56,6 @@ public class MainActivity extends ActionBarActivity
 		txtRitmo = (TextView)findViewById(R.id.textView10);
 		txtCalorias = (TextView)findViewById(R.id.textView13);
 		txtPedalazos = (TextView)findViewById(R.id.textView16);
-		ActualizarInfoPanel();
 		btnPerfil.setOnClickListener(new OnClickListener() 
 		{
 			
@@ -115,6 +113,7 @@ public class MainActivity extends ActionBarActivity
 		@Override
 		public void onDataChange(DataSnapshot arg0) 
 		{
+			@SuppressWarnings("unchecked")
 			HashMap<String, Usuario> datos = (HashMap<String, Usuario>) arg0.getValue();
 			System.out.println(arg0.getValue());
 			ArrayList<Usuario> arr = new ArrayList<Usuario>(datos.values());
@@ -127,11 +126,11 @@ public class MainActivity extends ActionBarActivity
 				}
 				else
 				{
-					val+=arr.get(i)+",";
+					val+=arr.get(i)+";";
 				}
 			}
 			System.out.println(val);
-			String[] vals = val.split(",");
+			String[] vals = val.split(";");
 			String nombre = vals[0];
 			String numKilo = vals[1];
 			String numCara = vals[2];
@@ -142,8 +141,24 @@ public class MainActivity extends ActionBarActivity
 			String time = vals[7];
 			String ritmo = vals[8];
 			String nomU = vals[9];
+			String lastLong = vals[10];
 			String peda= vals[11];
-			Usuario u = new Usuario(Integer.parseInt(amigos), nombre, nomU, " ", Long.parseLong(time), Double.parseDouble(phone), Double.parseDouble(ritmo), Double.parseDouble(peda), email, Double.parseDouble(numKilo), Integer.parseInt(numCara), Integer.parseInt(numCalo));
+			if(lastLong.equals("")||lastLong==null)
+			{
+				lastLong = " ";
+			}
+			else
+			{
+				String[] ltln = lastLong.split(",");
+				String lat = ltln[1];
+				String lng = ltln[2];
+				String[] lats = lat.split("\\[");
+				String reLat = lats[1];
+				String[] longs = lng.split("\\]");
+				String reLong = longs[0];
+				lastLong = reLat+","+reLong;
+			}
+			Usuario u = new Usuario(Integer.parseInt(amigos), nombre, nomU, lastLong, Long.parseLong(time), Double.parseDouble(phone), Double.parseDouble(ritmo), Double.parseDouble(peda), email, Double.parseDouble(numKilo), Integer.parseInt(numCara), Integer.parseInt(numCalo));
 			//user = null;
 			user = u;
 			String PATH = PreferenceManager.getDefaultSharedPreferences(MainActivity.this.getApplicationContext()).getString("ImagenPerfil", "");
@@ -229,4 +244,16 @@ public class MainActivity extends ActionBarActivity
 	        cursor.moveToFirst();
 	        return cursor.getString(column_index);
 	    }
+	 
+	 protected void onResume()
+	 {
+		 super.onResume();
+		 ActualizarInfoPanel();
+	 }
+	 
+	 protected void onStart()
+	 {
+		 super.onStart();
+		 ActualizarInfoPanel();
+	 }
 }

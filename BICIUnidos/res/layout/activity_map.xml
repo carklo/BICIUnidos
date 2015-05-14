@@ -1,12 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:gravity="fill_horizontal" android:paddingLeft="@dimen/activity_horizontal_margin" android:paddingTop="@dimen/activity_vertical_margin" android:paddingRight="@dimen/activity_horizontal_margin" android:paddingBottom="@dimen/activity_vertical_margin" android:layout_width="fill_parent" android:layout_height="fill_parent"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <ImageButton android:id="@id/microphone" android:background="@color/white" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:src="@drawable/microphone" android:layout_alignBottom="@id/camera" android:layout_alignParentLeft="true" android:layout_alignParentStart="true" />
-    <fragment android:name="com.google.android.gms.maps.MapFragment" android:id="@id/maps" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_above="@id/chronometer" android:layout_below="@id/microphone" />
-    <ImageButton android:id="@id/camera" android:background="@color/white" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="5.0dip" android:layout_marginRight="10.0dip" android:src="@drawable/camera" android:layout_alignParentTop="true" android:layout_alignParentRight="true" android:layout_alignParentEnd="true" />
-    <ImageButton android:id="@id/chronometer" android:background="@color/white" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/chronometer" android:layout_alignTop="@id/contacts" android:layout_alignBottom="@id/contacts" android:layout_centerHorizontal="true" />
-    <ImageButton android:id="@id/contacts" android:background="@color/white" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="10.0dip" android:layout_marginBottom="10.0dip" android:src="@drawable/contact" android:layout_alignParentRight="true" android:layout_alignParentBottom="true" android:layout_alignParentEnd="true" />
-    <ImageButton android:id="@id/police" android:background="@color/white" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip" android:src="@drawable/police" android:layout_alignLeft="@id/microphone" android:layout_alignBottom="@id/chronometer" android:layout_alignParentStart="true" android:layout_alignParentLeft="true"/>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="fill_horizontal"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin" >
+
+    <ImageButton
+        android:id="@id/microphone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/camera"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10.0dip"
+        android:layout_marginStart="10.0dip"
+        android:background="@drawable/round_button"
+        android:elevation="5dp"
+        android:src="@drawable/microphone"
+        tools:ignore="UnusedAttribute,ContentDescription" />
+
+    <fragment
+        android:id="@id/maps"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@id/chronometer"
+        android:layout_below="@id/microphone"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="4dp" />
+
+    <ImageButton
+        android:id="@id/camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="4dp"
+        android:layout_marginRight="10.0dip"
+        android:layout_marginTop="5.0dip"
+        android:background="@drawable/round_button"
+        android:elevation="5dp"
+        android:src="@drawable/camera"
+        tools:ignore="UnusedAttribute,RtlHardcoded,ContentDescription" />
+
+    <ImageButton
+        android:id="@id/chronometer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/contacts"
+        android:layout_alignTop="@id/contacts"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/round_button"
+        android:elevation="5dp"
+        android:src="@drawable/chronometer"
+        tools:ignore="UnusedAttribute,ContentDescription" />
+
+    <ImageButton
+        android:id="@id/contacts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="3dp"
+        android:layout_marginRight="10.0dip"
+        android:background="@drawable/round_button"
+        android:elevation="5dp"
+        android:src="@drawable/contact"
+        tools:ignore="UnusedAttribute,RtlHardcoded,ContentDescription" />
+
+    <ImageButton
+        android:id="@id/police"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/chronometer"
+        android:layout_alignLeft="@id/microphone"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10.0dip"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/round_button"
+        android:elevation="5dp"
+        android:src="@drawable/police"
+        tools:ignore="UnusedAttribute,RtlHardcoded,ContentDescription" />
 
     <ImageButton
         android:id="@+id/btnFind"
@@ -17,8 +98,10 @@
         android:layout_marginBottom="18dp"
         android:alpha="0.75"
         android:background="@color/white"
+        android:elevation="5dp"
         android:minHeight="0dp"
-        android:src="@drawable/route" />
+        android:src="@drawable/route"
+        tools:ignore="UnusedAttribute,RtlHardcoded,ContentDescription" />
 
     <ImageButton
         android:id="@+id/btnClean"
@@ -29,16 +112,46 @@
         android:layout_marginBottom="3dp"
         android:alpha="0.75"
         android:background="@color/white"
+        android:elevation="5dp"
         android:minHeight="0dp"
-        android:src="@drawable/clean" />
+        android:src="@drawable/clean"
+        tools:ignore="UnusedAttribute,RtlHardcoded,ContentDescription" />
 
-    <TextView
-        android:id="@+id/textTimer"
+    <Chronometer
+        android:id="@+id/chronometer1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/microphone"
+        android:layout_alignBottom="@id/camera"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="5dp"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_marginBottom="14dp"
+        android:text="Chronometer" />
+
+    <ImageButton
+        android:id="@+id/station"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnClean"
+        android:layout_alignLeft="@+id/btnClean"
+        android:layout_marginBottom="3dp"
+        android:background="@color/white"
+        android:src="@drawable/estacion"
+        android:alpha="0.75"
+        android:elevation="5dp"
+        android:minHeight="0dp"
+        tools:ignore="UnusedAttribute,RtlHardcoded,ContentDescription" />
+
+    <ImageButton
+        android:id="@+id/support"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/station"
+        android:layout_alignLeft="@+id/station"
+        android:layout_marginBottom="3dp"
+        android:alpha="0.75"
+        android:background="@color/white"
+        android:elevation="5dp"
+        android:minHeight="0dp"
+        android:src="@drawable/support"
+        tools:ignore="UnusedAttribute,RtlHardcoded,ContentDescription" />
 
 </RelativeLayout>

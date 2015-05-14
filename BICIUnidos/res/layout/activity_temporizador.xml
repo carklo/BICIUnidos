@@ -16,7 +16,9 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:text="@string/btnCancel" />
+        android:background="#49B9EB"
+        android:text="@string/btnCancel"
+        android:textColor="@color/white" />
 
     <TextView
         android:id="@id/tempo"

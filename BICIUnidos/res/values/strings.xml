@@ -59,19 +59,19 @@
     <string name="fecha">Unido el 3/02/2015</string>
     <string name="amigos">10 amigos</string>
     <string name="titulo">Kilómetros</string>
-    <string name="numKim">15</string>
+    <string name="numKim">0</string>
     <string name="desTime">Esta semana</string>
     <string name="titulo1">Caravanas</string>
     <string name="numCar">5</string>
     <string name="desCar">Inicio de uso</string>
     <string name="titulo2">Ritmo</string>
-    <string name="numRim">5:30</string>
+    <string name="numRim">0:0</string>
     <string name="desRim">(avg/km)</string>
     <string name="titulo3">Calorías</string>
-    <string name="numCal">1086</string>
+    <string name="numCal">0</string>
     <string name="desCal">(net)</string>
     <string name="titulo4">Pedalazos</string>
-    <string name="numPed">80</string>
+    <string name="numPed">0</string>
     <string name="desPed">(avg/min)</string>
     <string name="titulo5">Mis rutas</string>
     <string name="tituloH">Home</string>
@@ -112,5 +112,6 @@
     <string name="mar_intermedio">Intermedio</string>
     <string name="mar_tipo">Inicio</string>
     <string name="title_activity_formulario">Perfil</string>
+    <string name="chronoTxt"></string>
 
 </resources>

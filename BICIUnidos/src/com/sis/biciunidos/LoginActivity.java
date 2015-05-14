@@ -10,6 +10,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,7 +29,9 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -77,6 +80,18 @@ public class LoginActivity extends ActionBarActivity implements
 		
 		// Set up the login form.
 		mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+		mEmailView.setOnFocusChangeListener(new OnFocusChangeListener() 
+		{
+			
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) 
+			{
+				if(!hasFocus)
+				{
+		            hideKeyboard();
+		        } 
+			}
+		});
 		populateAutoComplete();
 
 		mPasswordView = (EditText) findViewById(R.id.password);
@@ -92,7 +107,6 @@ public class LoginActivity extends ActionBarActivity implements
 						return false;
 					}
 				});
-
 		Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
 		mEmailSignInButton.setOnClickListener(new OnClickListener() {
 			@Override
@@ -470,5 +484,10 @@ public class LoginActivity extends ActionBarActivity implements
 			});
 			return null;
 		}
+	}
+	
+	private void hideKeyboard() {
+	    InputMethodManager imm = (InputMethodManager)LoginActivity.this.getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+	    imm.hideSoftInputFromWindow(mEmailView.getWindowToken(), 0);
 	}
 }
