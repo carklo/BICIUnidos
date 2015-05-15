@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
@@ -26,15 +25,17 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
@@ -92,6 +93,7 @@ import com.sis.geofirebase.GeoFire.CompletionListener;
 import com.sis.geofirebase.GeoLocation;
 import com.sis.geofirebase.GeoQuery;
 import com.sis.geofirebase.GeoQueryEventListener;
+import com.sis.supportClasses.SphericalUtil;
 
 @SuppressLint("InflateParams") public class mapActivity
 extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedListener, LocationListener, com.google.android.gms.location.LocationListener, GeoQueryEventListener, GoogleMap.OnCameraChangeListener
@@ -99,9 +101,9 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 	//private final LatLng S_LOCATION = new LatLng(4.602664D, -74.066264000000004D);
 	private GoogleMap map;
 	private String numero;
-	public ArrayList<Marcador> markers = new ArrayList<Marcador>();
+	public ArrayList<Marcador> markers = new ArrayList<Marcador>(); //marcadores creados por el usuario para rutas
 	private TextView textTip;
-	public ArrayList<LatLng> marcadores;
+	public ArrayList<LatLng> marcadores; //posiciones guardadas cuando se activa el modo ruta
 	private Location initial;
 	private boolean vaARecibirOnLoc0 = false;
 	private int contOnC = 0;
@@ -113,15 +115,18 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 	private GeoQuery geoQuery;
 	private Usuario user;
 	private Marker inicial = null;
-	private Map<String,Marker> markersF;
+	private Map<String,Marker> markersF; //marcadores de posicion de otros usuarios
 	private Chronometer chr;
-	private ArrayList<PlaceMark>cuadrantes;
+	private ArrayList<PlaceMark>cuadrantes; //informacion de los cuadrantes de la policia
+	private Location actualLocation;
+	private Map<LatLng,Marker> marcadoresCuadrantes;
 	
 	protected void onCreate(Bundle paramBundle)
 	{
 		super.onCreate(paramBundle);
 		setContentView(R.layout.activity_map);
 		marcadores = new ArrayList<LatLng>();
+		marcadoresCuadrantes = new HashMap<LatLng, Marker>();
 		cuadrantes = new ArrayList<PlaceMark>();
 		Gson gson = new Gson();
 		chr = (Chronometer) findViewById(R.id.chronometer1);
@@ -288,27 +293,44 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 				limpiarMapa();
 			}
 		});
+		((ImageButton) findViewById(R.id.police)).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) 
+			{
+				if(marcadoresCuadrantes.size()==0)
+				{
+					AlertDialog.Builder builder1 = new AlertDialog.Builder(mapActivity.this);
+					builder1.setMessage("No se ha cargado la información de los cuadrantes al mapa.");
+					builder1.setCancelable(true);
+					builder1.setTitle("Error!");
+					builder1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() 
+					{
+						public void onClick(DialogInterface dialog, int id) 
+						{
+							dialog.cancel();
+						}
+					});
+					AlertDialog alert11 = builder1.create();
+					alert11.show();
+				}
+				else
+				{
+					LatLng pos = calcularCuadranteMasCercano(new LatLng(actualLocation.getLatitude(), actualLocation.getLongitude()));
+					contactarCuadrante(pos);
+				}
+				
+			}
+		});
 		((ImageButton) findViewById(R.id.station)).setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) 
 			{
-				try 
+				if(marcadoresCuadrantes.size()==0)
 				{
-					cargarCuadrantes();
-					dibujarCuadrantes();
-				} catch (ParserConfigurationException e) 
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (SAXException e) 
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) 
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					saxQuadrantsParserTask sqpt = new saxQuadrantsParserTask(mapActivity.this);
+					sqpt.execute();
 				}
 			}
 		});
@@ -582,15 +604,8 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 					@Override
 					public View getInfoContents(Marker marker) 
 					{
-						LayoutInflater inflater = mapActivity.this.getLayoutInflater();
-						View v = inflater.inflate(R.layout.info_window_marker, null);
-						textTip = (TextView) v.findViewById(R.id.textTip);
-						LatLng latLng = marker.getPosition();
 						String tipo = "";
-						String url = generateURL(latLng);
-						DownloadAddressTask dat = new DownloadAddressTask();
-						dat.execute(url);
-						Log.d("MARCADORES", markers.size()+"");
+						LatLng latLng = marker.getPosition();
 						for(int i = 0;i<markers.size();i++)
 						{
 							Marcador m = markers.get(i);
@@ -605,8 +620,22 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 							}
 							Log.d("MARCADOR-"+i,pos.toString()+", "+tipo);
 						}
-						textTip.setText(tipo);
-						return v;
+						if(tipo.equals(""))
+						{
+							return null;
+						}
+						else
+						{
+							LayoutInflater inflater = mapActivity.this.getLayoutInflater();
+							View v = inflater.inflate(R.layout.info_window_marker, null);
+							textTip = (TextView) v.findViewById(R.id.textTip);
+							String url = generateURL(latLng);
+							DownloadAddressTask dat = new DownloadAddressTask();
+							dat.execute(url);
+							Log.d("MARCADORES", markers.size()+"");
+							textTip.setText(tipo);
+							return v;
+						}
 					}
 				});
 				return false;
@@ -1204,6 +1233,7 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 		{
 			Log.e("PROCESO","LLEGO A ONCONNECTED");
 			Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+			actualLocation = location;
 			Log.i("PROCESO", "SE HIZO EL PEDIDO DE LA ULTIMA LOCACION");
 			if (location != null) 
 			{
@@ -1263,6 +1293,7 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 	@Override
 	public void onLocationChanged(Location location) 
 	{
+		actualLocation = location;
 		if(vaARecibirOnLoc0 == true)
 		{
 			initial = location;
@@ -1481,85 +1512,158 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 		 return 16384000/Math.pow(2, zoomLevel);
 	 }
 	 
-	 private void cargarCuadrantes() throws ParserConfigurationException, SAXException, IOException
+	 private class saxQuadrantsParserTask extends AsyncTask<Void, Void, Boolean>
 	 {
-		 SAXParserFactory factory = SAXParserFactory.newInstance();
-		 SAXParser saxParser = factory.newSAXParser();
+		 private ProgressDialog dialog;
 		 
-		 DefaultHandler handler = new DefaultHandler()
+		 public saxQuadrantsParserTask(mapActivity activity) 
 		 {
-			 boolean bname = false;
-			 boolean bdescr = false;
-			 boolean bcoord = false;
-			 PlaceMark pl = null;
-			 
-			 public void startElement(String uri, String localName,String qName, org.xml.sax.Attributes attributes)
+			 dialog = new ProgressDialog(activity);
+		 }
+		 
+		 @Override
+		 protected void onPreExecute() 
+		 {
+			 dialog.setMessage("Cargando la información al mapa. Por favor espere...");
+			 dialog.show();
+		 }
+		 
+		 @Override
+		 protected void onPostExecute(Boolean result) 
+		 {
+			 if(result)
 			 {
-				 if(qName.equalsIgnoreCase("Placemark"))
+				 if (dialog.isShowing()) 
 				 {
-					 pl = new PlaceMark();
+					 dialog.dismiss();
 				 }
-				 else if(qName.equalsIgnoreCase("name"))
-				 {
-					 bname = true;
-				 }
-				 else if(qName.equalsIgnoreCase("description"))
-				 {
-					 bdescr = true;
-				 }
-				 else if(qName.equalsIgnoreCase("coordinates"))
-				 {
-					 bcoord = true;
-				 }
+				 dibujarCuadrantes();
 			 }
-			 
-			 public void endElement(String uri, String localName, String qName)
-			 {
-				 if(qName.equalsIgnoreCase("Placemark"))
+		 }
+		 
+		@Override
+		protected Boolean doInBackground(Void... params) 
+		{
+			boolean retorno = false;
+			try
+			{
+				SAXParserFactory factory = SAXParserFactory.newInstance();
+				SAXParser saxParser = factory.newSAXParser();
+				 
+				 DefaultHandler handler = new DefaultHandler()
 				 {
-					 cuadrantes.add(pl);
-					 //System.out.println(pl.getNombre());
-					 //System.out.println(pl.getCoordenadas());
-					 //System.out.println(pl.getDescripcion());
-					 pl = null;
-				 }
-			 }
-			 
-			 public void characters(char ch[], int start, int length)
-			 {
-				 if(bname)
-				 {
-					 pl.setNombre(new String(ch, start, length));
-					 System.out.println(new String(ch, start, length));
-					 bname = false;
-				 }
-				 if(bdescr)
-				 {
-					 pl.setDescripcion(new String(ch, start, length));
-					 System.out.println(new String(ch, start, length));
-					 //TODO Hacer split
-					 bdescr =  false;
-				 }
-				 if(bcoord)
-				 {
-					 pl.setCoordenadas(new String(ch, start, length));
-					 System.out.println(new String(ch, start, length));
-					 //TODO Hacer split para guardar latlng
-					 bcoord = false;
-				 }
-			 }
-		 };
-		 AssetManager asset = getAssets();
-		 InputStream input = asset.open("doc.kml");
-		 int size = input.available();
-		 byte[] buffer = new byte[size];
-		 input.read(buffer);
-		 input.close();
-		 File file = new File(getFilesDir(), "doc.kml");
-		 FileOutputStream fos = new FileOutputStream(file);
-		 fos.write(buffer);
-		 fos.close();
-		 saxParser.parse(file, handler);
+					 boolean bname = false;
+					 boolean bdescr = false;
+					 boolean bcoord = false;
+					 PlaceMark pl = null;
+					 
+					 public void startElement(String uri, String localName,String qName, org.xml.sax.Attributes attributes)
+					 {
+						 if(qName.equalsIgnoreCase("Placemark"))
+						 {
+							 pl = new PlaceMark();
+						 }
+						 else if(qName.equalsIgnoreCase("name"))
+						 {
+							 bname = true;
+						 }
+						 else if(qName.equalsIgnoreCase("description"))
+						 {
+							 bdescr = true;
+						 }
+						 else if(qName.equalsIgnoreCase("coordinates"))
+						 {
+							 bcoord = true;
+						 }
+					 }
+					 
+					 public void endElement(String uri, String localName, String qName)
+					 {
+						 if(qName.equalsIgnoreCase("Placemark"))
+						 {
+							 cuadrantes.add(pl);
+							 //System.out.println(pl.getNombre());
+							 //System.out.println(pl.getCoordenadas());
+							 //System.out.println(pl.getDescripcion());
+							 pl = null;
+						 }
+					 }
+					 
+					 public void characters(char ch[], int start, int length)
+					 {
+						 if(bname)
+						 {
+							 pl.setNombre(new String(ch, start, length));
+							 System.out.println(new String(ch, start, length));
+							 bname = false;
+						 }
+						 if(bdescr)
+						 {
+							 pl.setDescripcion(new String(ch, start, length));
+							 System.out.println(new String(ch, start, length));
+							 bdescr =  false;
+						 }
+						 if(bcoord)
+						 {
+							 pl.setCoordenadas(new String(ch, start, length));
+							 System.out.println(new String(ch, start, length));
+							 bcoord = false;
+						 }
+					 }
+				 };
+				 AssetManager asset = getAssets();
+				 InputStream input = asset.open("doc.kml");
+				 int size = input.available();
+				 byte[] buffer = new byte[size];
+				 input.read(buffer);
+				 input.close();
+				 File file = new File(getFilesDir(), "doc.kml");
+				 FileOutputStream fos = new FileOutputStream(file);
+				 fos.write(buffer);
+				 fos.close();
+				 saxParser.parse(file, handler);
+				 retorno = true;
+			}
+			catch (Exception e)
+			{
+				final Exception ex = e;
+				runOnUiThread(new Runnable() 
+				{
+					public void run() 
+					{
+						dialog.dismiss();
+						AlertDialog.Builder builder1 = new AlertDialog.Builder(mapActivity.this);
+						builder1.setMessage("Hubo un error al cargar los datos:" +ex.getMessage());
+						builder1.setCancelable(true);
+						builder1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() 
+						{
+							public void onClick(DialogInterface dialog, int id) 
+							{
+								dialog.dismiss();
+							}
+						});
+						AlertDialog alert11 = builder1.create();
+						alert11.show();
+						
+						if(alert11.isShowing())
+						{
+							try 
+							{
+								Thread.sleep(5000);
+								alert11.dismiss();
+							} 
+							catch (InterruptedException e) 
+							{
+								e.printStackTrace();
+							}
+						}
+					}
+				});
+			}
+			return retorno;
+			
+		}
+		 
 	 }
 	 
 	 private void dibujarCuadrantes() 
@@ -1575,19 +1679,92 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 				 double lon = Double.parseDouble(coor[0]);
 				 double lat = 4.757677;
 				 LatLng latlo = new LatLng(lat, lon);
-				 mapActivity.this.map.addMarker(new MarkerOptions()
+				 Marker m = mapActivity.this.map.addMarker(new MarkerOptions()
 				 .position(latlo)
-				 .icon(BitmapDescriptorFactory.fromResource(R.drawable.cop)));
+				 .icon(BitmapDescriptorFactory.fromResource(R.drawable.cop))
+				 .title(pl.getNombre())
+				 .snippet(pl.getDescripcion()));
+				 marcadoresCuadrantes.put(latlo, m);
 			 }
 			 else
 			 {
 				 double lat = Double.parseDouble(coor[1]);
 				 double lon = Double.parseDouble(coor[0]);
 				 LatLng latlo = new LatLng(lat, lon);
-				 mapActivity.this.map.addMarker(new MarkerOptions()
+				 Marker m = mapActivity.this.map.addMarker(new MarkerOptions()
 				 .position(latlo)
-				 .icon(BitmapDescriptorFactory.fromResource(R.drawable.cop)));
+				 .icon(BitmapDescriptorFactory.fromResource(R.drawable.cop))
+				 .title(pl.getNombre())
+				 .snippet(pl.getDescripcion()));
+				 marcadoresCuadrantes.put(latlo, m);
 			 }
+		 }
+	 }
+	 
+	 private LatLng calcularCuadranteMasCercano(LatLng actualPos)
+	 {
+		 LatLng res = null;
+		 double min = 0.0;
+		 for(int i = 0; i<cuadrantes.size();i++)
+		 {
+			 PlaceMark pl = cuadrantes.get(i);
+			 String loc = pl.getCoordenadas();
+			 String[] coor = loc.split(",");
+			 if(coor.length == 1)
+			 {
+				 double lon = Double.parseDouble(coor[0]);
+				 double lat = 4.757677;
+				 LatLng latlo = new LatLng(lat, lon);
+				 double dis = SphericalUtil.computeDistanceBetween(actualPos, latlo);
+				 if(i == 0)
+				 {
+					 min = dis;
+					 res = latlo;
+				 }
+				 else
+				 {
+					 if(dis<min)
+					 {
+						 min = dis;
+						 res = latlo;
+					 }
+				 }
+			 }
+			 else
+			 {
+				 double lat = Double.parseDouble(coor[1]);
+				 double lon = Double.parseDouble(coor[0]);
+				 LatLng latlo = new LatLng(lat, lon);
+				 double dis = SphericalUtil.computeDistanceBetween(actualPos, latlo);
+				 if(i == 0)
+				 {
+					 min = dis;
+					 res = latlo;
+				 }
+				 else
+				 {
+					 if(dis<min)
+					 {
+						 min = dis;
+						 res = latlo;
+					 }
+				 }
+			 }
+		 }
+		 return res;
+	 }
+	 
+	 private void contactarCuadrante(LatLng pos)
+	 {
+		 Marker m = marcadoresCuadrantes.get(pos);
+		 if(m != null)
+		 {
+			map.animateCamera(CameraUpdateFactory.newLatLngZoom(pos, 13));
+			Drawable dr = getResources().getDrawable(R.drawable.cop);
+			Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
+			Bitmap bitTwiceSize = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth()*2,bitmap.getHeight()*2, false);
+			m.setIcon(BitmapDescriptorFactory.fromBitmap(bitTwiceSize));
+			m.showInfoWindow();
 		 }
 	 }
 }
