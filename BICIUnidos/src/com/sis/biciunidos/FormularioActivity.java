@@ -94,7 +94,7 @@ public class FormularioActivity extends ActionBarActivity
 					Firebase preuserRef = ref.child("users");
 					String email = PreferenceManager.getDefaultSharedPreferences(FormularioActivity.this.getApplicationContext()).getString("User", "");
 					Log.e("EMAIL", email);
-					newUser = new Usuario(0, fullName.getText().toString(), user.getText().toString(),"", 0L, Double.parseDouble(phoneNumber.getText().toString()), 0.0, 0.0, email,0.0,0,0);
+					newUser = new Usuario(0L, fullName.getText().toString(), user.getText().toString(),"", 0L, Long.parseLong(phoneNumber.getText().toString()), 0L, 0L, email,0L,0,0);
 					Map<String, Usuario> usuario = new HashMap<String, Usuario>();
 					usuario.put(user.getText().toString(), newUser);
 					userRef = preuserRef.push();

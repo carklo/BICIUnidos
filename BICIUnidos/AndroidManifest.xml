@@ -61,8 +61,7 @@
         <activity
             android:name=".AlquilerActivity"
             android:label="@string/title_activity_alquiler"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.AppCompat.Light" >
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
             <meta-data
                 android:name="android.support.UI_OPTIONS"
                 android:value="splitActionBarWhenNarrow" />

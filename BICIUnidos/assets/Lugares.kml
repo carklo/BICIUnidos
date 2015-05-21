@@ -1,0 +1,2082 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Folder>
+	<open>1</open>
+	<Document>
+		<Folder>
+			<open>1</open>
+			<Placemark>
+				<name>C.P Biblioteca Virgilio Barco</name>
+				<description><![CDATA[<div dir="ltr">Zona exclusiva para bicicletas, es seguro. $500 todo el dÃ­a. Si se demora menos de 15 minutos es gratis.</div>]]></description>
+				<LookAt>
+					<longitude>-74.09653100623483</longitude>
+					<latitude>4.647528227515523</latitude>
+					<altitude>0</altitude>
+					<heading>-6.719518118594454e-009</heading>
+					<tilt>44.99974177468969</tilt>
+					<range>45918.7363283542</range>
+					<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+				</LookAt>
+				<styleUrl>#estilo_365</styleUrl>
+				<Point>
+					<coordinates>-74.088898,4.657138,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. La Nueva Casa Del Ciclista</name>
+				<description><![CDATA[<span style="font-family:Arial,Helvetica,sans-serif;font-size:11px;background-color:rgb(255, 255, 255)">Bicicletas - Cr 69h # 74b-44</span><div><span style="font-family:Arial,Helvetica,sans-serif;font-size:11px;background-color:rgb(255, 255, 255)">tel:&nbsp;</span><span style="font-family:Arial,Helvetica,sans-serif;font-size:11px;background-color:rgb(255, 255, 255)">2400397</span></div>]]></description>
+				<styleUrl>#estilo_734</styleUrl>
+				<Point>
+					<coordinates>-74.095406,4.692345,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Puerta Omar Augusto</name>
+				<description><![CDATA[<span style="font-family:Arial, Helvetica, sans-serif;font-size:11px;background-color:rgb(255, 255, 255)">Bicicletas - Cr 27 # 63-19</span><div><span style="font-family:Arial, Helvetica, sans-serif;font-size:11px;background-color:rgb(255, 255, 255)">tel:&nbsp;</span><span style="font-family:Arial, Helvetica, sans-serif;font-size:11px;background-color:rgb(255, 255, 255)">3462958</span></div>]]></description>
+				<styleUrl>#estilo_722</styleUrl>
+				<Point>
+					<coordinates>-74.087593,4.647605,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Triciclos Y Bicicletas Aromo</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas, Repuestos para Bicicletas - Cr 17 # 19a-06<br>tel: 2841964</div>]]></description>
+				<styleUrl>#estilo_739</styleUrl>
+				<Point>
+					<coordinates>-74.078636,4.611342,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. La Quinta</name>
+				<description><![CDATA[<div dir="ltr">ReparaciÃ³n de Bicicletas, Restaurantes - Cr 5 # 26-14 Apto 101<br>tel: 3347216</div>]]></description>
+				<styleUrl>#estilo_759</styleUrl>
+				<Point>
+					<coordinates>-74.070297,4.627436,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Ciclorepuestos RuÃ­z</name>
+				<description><![CDATA[<div dir="ltr">Repuestos para Bicicletas - Av 68 # 48-46<br>tel:  2253040</div>]]></description>
+				<styleUrl>#estilo_70</styleUrl>
+				<Point>
+					<coordinates>-74.100273,4.658138,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Dm Inversiones</name>
+				<description><![CDATA[<div dir="ltr">Repuestos para Bicicletas - Cl 57 # 13-04 Of 504<br>tel: 2350063</div>]]></description>
+				<styleUrl>#estilo_733</styleUrl>
+				<Point>
+					<coordinates>-74.064247,4.643926,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Todo En Bicicletas Y Repuestos</name>
+				<description><![CDATA[<div dir="ltr">Repuestos para Bicicletas - <br>Av Ciudad De Cali 67 # 08<br>tel: 4308784</div>]]></description>
+				<styleUrl>#estilo_76</styleUrl>
+				<Point>
+					<coordinates>-74.108749,4.690175,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bike Service Shop</name>
+				<styleUrl>#estilo_775</styleUrl>
+				<Point>
+					<coordinates>-74.05651899999999,4.645445,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicleteria carrera 50 calle 1</name>
+				<description><![CDATA[<div dir="ltr">ordenada, buen sevicio</div>]]></description>
+				<styleUrl>#estilo_738</styleUrl>
+				<Point>
+					<coordinates>-74.11805,4.608647,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Uniandes</name>
+				<description>Parqueadero cubierto, en el edificio Julio Mario Santo Domingo para los estudiantes de Los Andes.</description>
+				<styleUrl>#estilo_391</styleUrl>
+				<Point>
+					<coordinates>-74.06594800000001,4.60465,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Gran EstaciÃ³n</name>
+				<description><![CDATA[<div dir="ltr">Cuesta $1000 o gratis con recibo de compra de algunos almacenes dentro del Centro Comercial. EstÃ¡ vigilado, entregan ficha o recibo y se comparte con el parqueadero de las motos.</div>]]></description>
+				<styleUrl>#estilo_334</styleUrl>
+				<Point>
+					<coordinates>-74.100807,4.647947,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Plaza de las AmÃ©ricas</name>
+				<description><![CDATA[<div dir="ltr">Tarifas Bicicletas<br><br>De 6:00 AM a 12:30 PM $500<br><br>De 12:00 PM a 6:00 AM $5.000<br><br>http://www.plazadelasamericas.com.co/info</div>]]></description>
+				<styleUrl>#estilo_340</styleUrl>
+				<Point>
+					<coordinates>-74.135223,4.619459,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Taller de Bicis</name>
+				<description><![CDATA[No me se el nombre del seÃ±or, pero es bueno, y econÃ³mico, tambiÃ©n arreglan bicitaxis<br>]]></description>
+				<styleUrl>#estilo_766</styleUrl>
+				<Point>
+					<coordinates>-74.129066,4.626346,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Taller</name>
+				<description><![CDATA[<div dir="ltr">Taller normal</div>]]></description>
+				<styleUrl>#estilo_766</styleUrl>
+				<Point>
+					<coordinates>-74.078506,4.571024,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Taller</name>
+				<description><![CDATA[<div dir="ltr">AquÃ­ hay otro par de talleres.. no los use.. son como de bikers..osea bicis peques</div>]]></description>
+				<styleUrl>#estilo_766</styleUrl>
+				<Point>
+					<coordinates>-74.083344,4.599611,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Taller Avanzado</name>
+				<description><![CDATA[<div dir="ltr">En esta Zona hay 2 Talleres muy buenos a muy buen precio. para trabajos complicados como soldaduras</div>]]></description>
+				<styleUrl>#estilo_766</styleUrl>
+				<Point>
+					<coordinates>-74.082008,4.606241,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Salitre</name>
+				<description><![CDATA[<div dir="ltr">PequeÃ±o cicloparqueadero en la zona de gimnasia del parque. Toca llevar candado.</div>]]></description>
+				<styleUrl>#estilo_323</styleUrl>
+				<Point>
+					<coordinates>-74.089516,4.664051,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicleteria el triunfo</name>
+				<styleUrl>#estilo_7</styleUrl>
+				<Point>
+					<coordinates>-74.098495,4.694484,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicleteria chapinero 2</name>
+				<description><![CDATA[<div dir="ltr">bicicleteria, no tiene nombre</div>]]></description>
+				<styleUrl>#estilo_753</styleUrl>
+				<Point>
+					<coordinates>-74.06749000000001,4.650647,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Taller rerparaciones</name>
+				<description><![CDATA[<div dir="ltr">Taller de Bicicletas especializado,es un poco escondido pero es de muy buena calidad, Pregunten por Don Carlos. Buen Servicio, buenos repuestos</div>]]></description>
+				<styleUrl>#estilo_766</styleUrl>
+				<Point>
+					<coordinates>-74.068169,4.645739,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicletas DT, calle 134</name>
+				<description><![CDATA[<div dir="ltr">taller de reparaciÃ³n y venta de bicicletas</div>]]></description>
+				<styleUrl>#estilo_756</styleUrl>
+				<Point>
+					<coordinates>-74.054199,4.719462,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. BICICLETERIA</name>
+				<description><![CDATA[<div dir="ltr">Excelente servicio, no es el mas barato, pero el servicio es de calidad, un seÃ±or muy amable, preocupado por el bienestar del ciclista, no cobra por pequeÃ±os ajustes. RECOMENDADISIMO</div>]]></description>
+				<styleUrl>#estilo_75</styleUrl>
+				<Point>
+					<coordinates>-74.06311,4.660549,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P CC Portoalegre</name>
+				<description><![CDATA[<div dir="ltr">Hay parqueadero gratuito, cubierto y vigilado. Aseguran las bicicletas con candado y dan ficha de parqueo. </div>]]></description>
+				<styleUrl>#estilo_31</styleUrl>
+				<Point>
+					<coordinates>-74.052139,4.688496,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Montallantas</name>
+				<description><![CDATA[<div dir="ltr">Nos Puede Ayudar A Solucionar Problemas De Aire En Los Neumaticos</div>]]></description>
+				<styleUrl>#estilo_764</styleUrl>
+				<Point>
+					<coordinates>-74.122398,4.520976,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Taller De Ciclas De Barrio</name>
+				<description><![CDATA[<div dir="ltr">Abre Solo De 11 a.m A 5 p.m<br><br>By CeMo</div>]]></description>
+				<styleUrl>#estilo_766</styleUrl>
+				<Point>
+					<coordinates>-74.12293200000001,4.521487,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Centro Comercial Alta Vista</name>
+				<description><![CDATA[<span style="color:rgb(0, 204, 204)">El servicio de parqueo es totalmente gratis, solo  hay que tener un candado por Seguridad.<br></span><br>]]></description>
+				<styleUrl>#estilo_343</styleUrl>
+				<Point>
+					<coordinates>-74.11853000000001,4.532792,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Estadio La Aurora</name>
+				<description><![CDATA[<span style="color:rgb(0, 204, 204)">En la entrada se encuentran postes para parquear ciclas. No es muy seguro si nos vamos lejos por mucho tiempo pero si estamos cerca nos sirve...<br></span>]]></description>
+				<styleUrl>#estilo_311</styleUrl>
+				<Point>
+					<coordinates>-74.12190200000001,4.520428,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Taller</name>
+				<description>BicicleterÃ­a de Barrio</description>
+				<styleUrl>#estilo_766</styleUrl>
+				<Point>
+					<coordinates>-74.09626,4.665741,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicleteria el Italiano</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas y repuestos para bicicletas, buen sitio- Cra 110G # 72D-22</div>]]></description>
+				<styleUrl>#estilo_768</styleUrl>
+				<Point>
+					<coordinates>-74.12545,4.712814,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Unicentro</name>
+				<description><![CDATA[<div dir="ltr">Hay varios bicicleteros para colgar las bicis.<br>Cuesta <b>$1000</b>&nbsp;pesos por todo el tiempo que se queden.<br>Te dan recibo.<br>No me exigieron cadena, pero yo siempre le pongo.</div>]]></description>
+				<styleUrl>#estilo_342</styleUrl>
+				<Point>
+					<coordinates>-74.04207599999999,4.701049,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P privado Cafam Cll 53</name>
+				<description><![CDATA[Cuesta $10 pesos el minuto, me sirve cuando voy a CAFAM EPS que no me demoro mas de una hora.<div>Cra 16 entre 52 y 53.</div>]]></description>
+				<styleUrl>#estilo_383</styleUrl>
+				<Point>
+					<coordinates>-74.068291,4.640242,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Capital Tower</name>
+				<description><![CDATA[<div dir="ltr">Parqueo exclusivo de bicis, vigilancia, llevar candado, muy buena opciÃ³n</div>]]></description>
+				<styleUrl>#estilo_352</styleUrl>
+				<Point>
+					<coordinates>-74.039085,4.680054,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P H.A.</name>
+				<description><![CDATA[<div dir="ltr">a 10$ el minuto se puede parquear la bici en tan concurrido lugar. Servicio hasta las 7pm; hay que llevar candado por si las moscas</div>]]></description>
+				<styleUrl>#estilo_399</styleUrl>
+				<Point>
+					<coordinates>-74.110786,4.695637,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Parqueadero Vigilado</name>
+				<description><![CDATA[<div dir="ltr">Dejan Parquear Bicicletas, 1000 Hora, Hay que llevar Candado</div>]]></description>
+				<styleUrl>#estilo_335</styleUrl>
+				<Point>
+					<coordinates>-74.097786,4.618817,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. La Tienda Ideal</name>
+				<description><![CDATA[<div dir="ltr">Calle 13 con Cra 28 esquina, Un almacen nuevo con muy buenos precios</div>]]></description>
+				<styleUrl>#estilo_732</styleUrl>
+				<Point>
+					<coordinates>-74.091263,4.613214,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Parqueadero Clinica de Occidente</name>
+				<description><![CDATA[<div dir="ltr">Al costado de la clinica de occidente se encuentra un parqueadero de transmilenio.</div>]]></description>
+				<styleUrl>#estilo_316</styleUrl>
+				<Point>
+					<coordinates>-74.13510100000001,4.630003,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Parqueadero Biblioteca El Tintal</name>
+				<description><![CDATA[<div dir="ltr">Parqueadero al aire libre al lado de la biblioteca el tintal, cuenta con caseta y celadores, no es necesario su candado, creo que se cobra $1000 confirmare estos dias</div>]]></description>
+				<styleUrl>#estilo_350</styleUrl>
+				<Point>
+					<coordinates>-74.15514400000001,4.642803,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Universidad Distrital sede Ingenieria</name>
+				<description><![CDATA[<div dir="ltr">Cicloparqueadero al aire libre, hay que llevar candado, en el exterior de la universidad al lado de la entrada</div>]]></description>
+				<styleUrl>#estilo_338</styleUrl>
+				<Point>
+					<coordinates>-74.06596399999999,4.628051,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Cicloparqueadero Universidad Javeriana</name>
+				<description><![CDATA[<div dir="ltr">Cicloparqueadero al aire libre, se necesita llevar candado, se llega por la entrada de urgencias del hospital san Ignacio.</div>]]></description>
+				<styleUrl>#estilo_315</styleUrl>
+				<Point>
+					<coordinates>-74.06360599999999,4.628706,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Autolavado</name>
+				<description><![CDATA[<div dir="ltr">Preciso para despinchar.</div>]]></description>
+				<styleUrl>#estilo_740</styleUrl>
+				<Point>
+					<coordinates>-74.067863,4.632791,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Centro Comercial PanamÃ¡</name>
+				<description><![CDATA[<div dir="ltr">Centro Comercial PanamÃ¡.<br>TelefÃ³nicamente la admÃ³n (Tel: 6709757) confirma que se pueden dejar bicis con candado. A la entrada el vigilante insiste en que es bajo responsabilidad del visitante, que ahÃ­ se pierden mucho, que no responden por nada, que se deje con candado.<br>El sitio de bicicletas estÃ¡ a la vista de los vigilantes pero es un lugar muy oscuro.<br>Es gratis, no dan recibo ni papeleta a la entrada.<br>Estuve ~ 1 hora y media y no pasÃ³ nada, pero queda la duda.<br>AsÃ­, al fin no supe si son "biciamigos" o no, si simplemente nos toleran.</div>]]></description>
+				<styleUrl>#estilo_355</styleUrl>
+				<Point>
+					<coordinates>-74.044212,4.75805,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P CC Centro Suba</name>
+				<description><![CDATA[<div dir="ltr">$800 pesos, buena seguridad.</div>]]></description>
+				<styleUrl>#estilo_367</styleUrl>
+				<Point>
+					<coordinates>-74.085228,4.736652,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P EXITO suba</name>
+				<description><![CDATA[<div dir="ltr">Parqueadero gratis, hay un guarda encargado que permanece todo el tiempo cuidando las bicis. Se necesita candado.</div>]]></description>
+				<styleUrl>#estilo_37</styleUrl>
+				<Point>
+					<coordinates>-74.097191,4.747844,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Parqueadero &quot;El Rancho&quot;</name>
+				<description><![CDATA[<div dir="ltr">Â¿Cita mÃ©dica o vuelta de notarÃ­a en Ed. El Bosque, Cl 134 x Av 9a (NQS)?<br>Parqueadero "El Rancho" tiene cicloparqueadero gratis, dejar con candado, no dan papeleta.<br>Biciamigos.</div>]]></description>
+				<styleUrl>#estilo_328</styleUrl>
+				<Point>
+					<coordinates>-74.031525,4.7121,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Taller Juan Carlos</name>
+				<styleUrl>#estilo_766</styleUrl>
+				<Point>
+					<coordinates>-74.064812,4.616253,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Teleport Business Park</name>
+				<description><![CDATA[<div dir="ltr">Gratis para visitantes a las torres de oficinas. No dan papeleta ni registran la entrada. Se dejan en el nivel 2, junto a las motos, donde hay bicicletero y se debe dejar con candado. Hay vigilancia.<br>Lo incÃ³modo es subirla a pie por la rampa: esta es angosta y si suben o bajan carros al tiempo con uno, puede ser peligroso si en conductor no tiene cuidado. Recomiendo subir y bajar con las luces de la bici encendidas.</div>]]></description>
+				<styleUrl>#estilo_330</styleUrl>
+				<Point>
+					<coordinates>-74.03467600000001,4.691474,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>taller normal</name>
+				<description>taller normal para despinchada</description>
+				<styleUrl>#estilo_766</styleUrl>
+				<Point>
+					<coordinates>-74.088943,4.688346,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Taller de paso - Cicloruta</name>
+				<styleUrl>#estilo_736</styleUrl>
+				<Point>
+					<coordinates>-74.088234,4.698643,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Taller</name>
+				<description>preciso para inflar o despinchar</description>
+				<styleUrl>#estilo_618</styleUrl>
+				<Point>
+					<coordinates>-74.068771,4.631436,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Mincultura</name>
+				<description><![CDATA[<div dir="ltr">Hay un cicloparqueadero para visitantes, pero ultimamente en el 2012 la seguridad de la Casa de NariÃ±o pone problemas para entrar en bicicleta hasta allÃ¡.  Se necesita dirigir un oficio a la oficina encargada de seguridad presidencial especificando nombre, cÃ©dula y detalles de la bicicleta.  Si se necesita ir con frecuencia al Ministerio de Cultura, vale la pena hacer el tramite.</div>]]></description>
+				<styleUrl>#estilo_625</styleUrl>
+				<Point>
+					<coordinates>-74.077629,4.59656,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P funcionarios alcaldÃ­a</name>
+				<description><![CDATA[<div dir="ltr">Hay cicloparqueadero pero no es pÃºblico. Sin embargo, muy rara vez se ve ocupado por bicicletas, asi que valdrÃ­a la pena hacer campaÃ±a para que sea abierto para visitantes a la alcaldÃ­a si hay disponibilidad.</div>]]></description>
+				<styleUrl>#estilo_623</styleUrl>
+				<Point>
+					<coordinates>-74.077072,4.598891,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Taller de Bicicletas</name>
+				<description><![CDATA[<div dir="ltr">En ese taller pueden encontrar cual quiera cosa que necesiten para su bici, o para repararla en algun caso de emergencia. abren a las 8am</div>]]></description>
+				<styleUrl>#estilo_766</styleUrl>
+				<Point>
+					<coordinates>-74.047234,4.749256,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Talleres</name>
+				<description><![CDATA[<div dir="ltr">en costado oriental de la boyaca  hay varios talleres donde arreglan de todo.</div>]]></description>
+				<styleUrl>#estilo_766</styleUrl>
+				<Point>
+					<coordinates>-74.085464,4.695746,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Parqueadero Transmilenio</name>
+				<description><![CDATA[<div dir="ltr">Debajo del puente hay una entrada para parqueadero de transmilenio. AÃºn hace falta el dato del valor pero no debe ser mucho</div>]]></description>
+				<styleUrl>#estilo_392</styleUrl>
+				<Point>
+					<coordinates>-74.09214,4.613556,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P C.C. Calima</name>
+				<description><![CDATA[<div dir="ltr">Gratis! por ahora... espacios suficientes, con un sticker en la bici y una boleta para reclamar, hay que llevar candado.</div>]]></description>
+				<styleUrl>#estilo_364</styleUrl>
+				<Point>
+					<coordinates>-74.086174,4.61871,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. BicicleterÃ­a Paloquemao</name>
+				<description><![CDATA[<div dir="ltr">Como para emergencia... el sector no es bueno para ir a ciertas horas.</div>]]></description>
+				<styleUrl>#estilo_765</styleUrl>
+				<Point>
+					<coordinates>-74.082191,4.617341,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Venta de bicicletas</name>
+				<description><![CDATA[<div dir="ltr">Varios almacenes para compra de bicicletas... en algunos dan servicio tÃ©cnico</div>]]></description>
+				<styleUrl>#estilo_50</styleUrl>
+				<Point>
+					<coordinates>-74.086044,4.60808,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P CC. Salitre Plaza</name>
+				<description><![CDATA[<div dir="ltr">Algo atiborrado pero vigilado y gratuito</div>]]></description>
+				<styleUrl>#estilo_617</styleUrl>
+				<Point>
+					<coordinates>-74.10974899999999,4.653112,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Carulla</name>
+				<description><![CDATA[<div dir="ltr">Dejan parquear la bici sin problema</div>]]></description>
+				<styleUrl>#estilo_398</styleUrl>
+				<Point>
+					<coordinates>-74.04360200000001,4.696002,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Colsubsidio Mazuren</name>
+				<description><![CDATA[<div dir="ltr">No tienen parqueadero de bicicletas pero uno la puede dejar con las motos y es gratis.</div>]]></description>
+				<styleUrl>#estilo_382</styleUrl>
+				<Point>
+					<coordinates>-74.05461099999999,4.735137,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Bancolombia</name>
+				<description><![CDATA[<div dir="ltr">Es el Ãºnico Bancolombia donde se que dejan parquear sin problemas. Uno la mete al parqueadero de carros y la amarra por ahÃ­. Es Gratis</div>]]></description>
+				<styleUrl>#estilo_358</styleUrl>
+				<Point>
+					<coordinates>-74.05136899999999,4.698542,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Exito Colina Campestre</name>
+				<description><![CDATA[<div dir="ltr">Cicloparqueadero gratuito, hay que llevar guaya o candado, queda a la vista de los </div>]]></description>
+				<styleUrl>#estilo_314</styleUrl>
+				<Point>
+					<coordinates>-74.06465900000001,4.733979,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Calle 16 # 2-1 a 2-99</name>
+				<description><![CDATA[BogotÃ¡, Cundinamarca, Colombia<br>]]></description>
+				<styleUrl>#estilo_611</styleUrl>
+				<Point>
+					<coordinates>-74.068581,4.600157,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Calle 16 # 2-1 a 2-99</name>
+				<description><![CDATA[BogotÃ¡, Cundinamarca, Colombia<br>]]></description>
+				<styleUrl>#estilo_66</styleUrl>
+				<Point>
+					<coordinates>-74.068581,4.600157,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Taller Bicicleta</name>
+				<description><![CDATA[<div dir="ltr">Taller de despinche ideal para urgencias como pinchazos, no para repuestos. </div>]]></description>
+				<styleUrl>#estilo_766</styleUrl>
+				<Point>
+					<coordinates>-74.100754,4.731403,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. BicicleterÃ­a</name>
+				<styleUrl>#estilo_741</styleUrl>
+				<Point>
+					<coordinates>-74.079521,4.668553,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicletas JM</name>
+				<description><![CDATA[<div dir="ltr">Buena Bicicleteria donde siempre le hago mantenimiento a mi cicla, buenos precios y un buen trato siempre.</div>]]></description>
+				<styleUrl>#estilo_752</styleUrl>
+				<Point>
+					<coordinates>-74.12209300000001,4.70392,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Parqueadero privado</name>
+				<description><![CDATA[<div dir="ltr">Cra 7 con Cl 26, costado suroriental, frente a Torre Colpatria. Valor: $1000 tiempo ilimitado, hay que llevar candado. No hay parqueadero especial para bicis.</div>]]></description>
+				<styleUrl>#estilo_615</styleUrl>
+				<Point>
+					<coordinates>-74.069954,4.610412,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Shaio</name>
+				<description><![CDATA[<div dir="ltr">Se puede parquear al lado de las motos. Cobran mil pesos por todo el dÃ­a.</div>]]></description>
+				<styleUrl>#estilo_346</styleUrl>
+				<Point>
+					<coordinates>-74.073212,4.698119,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P CECIMIN SANITAS</name>
+				<description><![CDATA[<div dir="ltr">En el CECIMIN de la EPS Sanitas dejan parquear la bicicleta al lado de las motos. Toca llevar candado. Es Gratis. Tiene que decir que tiene cita.</div>]]></description>
+				<styleUrl>#estilo_327</styleUrl>
+				<Point>
+					<coordinates>-74.05596199999999,4.690904,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Parqueadero Bulvear Niza</name>
+				<description><![CDATA[<div dir="ltr">Parqueadero de Bulvar Niza. Queda enfrente del centro comercial pero es de Bulevar. (Queda enfrente de la entrada de Carrefour). Es Gratis!</div>]]></description>
+				<styleUrl>#estilo_375</styleUrl>
+				<Point>
+					<coordinates>-74.073128,4.711453,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Centro Medico Dali</name>
+				<description><![CDATA[<div dir="ltr">Hay parqueadero para bicicletas GRATIS. Es muy bueno y seguro. Toca llevar candado.</div>]]></description>
+				<styleUrl>#estilo_3</styleUrl>
+				<Point>
+					<coordinates>-74.05693100000001,4.68459,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>CC Floresta Outlet</name>
+				<description><![CDATA[<div dir="ltr">Hay parqueadero de bicis en el 3 piso. A veces le ponen un candado comunal pero es mejor llevar candado propio. Gratis</div>]]></description>
+				<styleUrl>#estilo_315</styleUrl>
+				<Point>
+					<coordinates>-74.074417,4.692078,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Desvare</name>
+				<description><![CDATA[<div dir="ltr">algunas veces en la entrada del simon hay desvare</div>]]></description>
+				<styleUrl>#estilo_743</styleUrl>
+				<Point>
+					<coordinates>-74.09116400000001,4.655005,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Desvare</name>
+				<description><![CDATA[<div dir="ltr">en SAN FERNANDO en parque en frente de la iglesia buen punto de desvare</div>]]></description>
+				<styleUrl>#estilo_71</styleUrl>
+				<Point>
+					<coordinates>-74.07811,4.67128,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Parqueadero</name>
+				<description><![CDATA[<div dir="ltr">Ã‰xito CLL 53 con Caracas, en el sÃ³tano, hay espacio para bicis, llevar candado. iluminado, junto a las motos. parece seguro</div>]]></description>
+				<styleUrl>#estilo_389</styleUrl>
+				<Point>
+					<coordinates>-74.065834,4.63967,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Universidad Javeriana</name>
+				<description><![CDATA[<div dir="ltr">Buen Sitio, Ãºnicamente para Javerianos, aunque si van de visita le piden el favor al vigilante y Ã©l les colabora dejando un documento. seguro y confiable</div>]]></description>
+				<styleUrl>#estilo_5</styleUrl>
+				<Point>
+					<coordinates>-74.065163,4.627319,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Estacionamiento Panamericana 72</name>
+				<description><![CDATA[Valor $60 el minuto (Igual que el de las motos) El guardia dice que no responden por pÃ©rdida, se puso queja por este tema.<br>]]></description>
+				<styleUrl>#estilo_371</styleUrl>
+				<Point>
+					<coordinates>-74.061432,4.659688,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Estacionamiento CC Av. Chile</name>
+				<description><![CDATA[SubterrÃ¡neo. Valor $2000 todo el dÃ­a o fracciÃ³n. Muy seguro. Se va a sugerir que sea gratis o mÃ¡s barato.<br>]]></description>
+				<styleUrl>#estilo_345</styleUrl>
+				<Point>
+					<coordinates>-74.05761699999999,4.656994,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicleteria pequeÃ±a</name>
+				<description><![CDATA[<div dir="ltr">precios un poco arriba del 7 de agosto pero perfecto para algo rapido en la zona</div>]]></description>
+				<styleUrl>#estilo_757</styleUrl>
+				<Point>
+					<coordinates>-74.070122,4.636708,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicleteria</name>
+				<description><![CDATA[<div dir="ltr">me parece bastante costoso para el servicio que dan, anotacion nunca manden a arreglar cambios aca, no sa</div>]]></description>
+				<styleUrl>#estilo_727</styleUrl>
+				<Point>
+					<coordinates>-74.06703899999999,4.638339,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P City Parking Cra. 15 Calle 93</name>
+				<styleUrl>#estilo_68</styleUrl>
+				<Point>
+					<coordinates>-74.052086,4.677113,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P City Parking Cra. 15 Calle 93</name>
+				<styleUrl>#estilo_620</styleUrl>
+				<Point>
+					<coordinates>-74.052086,4.677113,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Pimp My Bike</name>
+				<description><![CDATA[<div dir="ltr">taller independiente, enchules, venta y compra de bicis </div>]]></description>
+				<styleUrl>#estilo_776</styleUrl>
+				<Point>
+					<coordinates>-74.12196400000001,4.707786,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Campus URosario</name>
+				<description><![CDATA[<div dir="ltr">Parqueadero al aire libre para los estudiantes del Rosario.</div>]]></description>
+				<styleUrl>#estilo_1166</styleUrl>
+				<Point>
+					<coordinates>-74.036545,4.774619,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Home Center 170</name>
+				<description><![CDATA[<div dir="ltr">Parqueadero cubierto.<b>GRATIS</b>.</div>]]></description>
+				<styleUrl>#estilo_1</styleUrl>
+				<Point>
+					<coordinates>-74.047363,4.755655,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Biblioteca Virgilio Barco</name>
+				<description><![CDATA[<div dir="ltr">Zona exclusiva para bicicletas, es seguro. $500 todo el dÃ­a. Si se demora menos de 15 minutos es gratis.</div>]]></description>
+				<styleUrl>#estilo_112</styleUrl>
+				<Point>
+					<coordinates>-74.088898,4.657138,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. BTA Bikes</name>
+				<description><![CDATA[<div dir="ltr">Calle 156B #8-45, costado sur del Parque Altablanca.<br>El muchacho dueÃ±o es muy atento. He comprado luces para las dos bicicletas a 9.000 el par y cambiÃ© el eje trasero por agujas.</div>]]></description>
+				<styleUrl>#estilo_3339</styleUrl>
+				<Point>
+					<coordinates>-74.028809,4.733929,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Panamericana Cedritos</name>
+				<description><![CDATA[<div dir="ltr">Av. 19 Calle 140.<br>Cicloparqueadero de colgar, las bicicletas se dejan con candado y quedan a la vista del vigilante.<br>Dan tiquete y vale $10 el minuto, esto es $600 la hora y con sello de compra sale gratis.</div>]]></description>
+				<styleUrl>#estilo_126</styleUrl>
+				<Point>
+					<coordinates>-74.04596700000001,4.723776,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P C.C. Palatino</name>
+				<description><![CDATA[<div dir="ltr">Es un sitio cÃ³modo para parquear. Buen servicio y seguridad, entregan una ficha y toman datos para evitar que cualquier saque la bici. <span style="font-weight:bold">Precio: $1.100 mÃ¡s de una hora.</span></div>]]></description>
+				<styleUrl>#estilo_198</styleUrl>
+				<Point>
+					<coordinates>-74.02939600000001,4.715254,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Unicentro</name>
+				<description><![CDATA[<div dir="ltr">El centro comercial estrenÃ³ biciparqueadero en junio. AdemÃ¡s es GRATUITO.</div>]]></description>
+				<styleUrl>#estilo_1121</styleUrl>
+				<Point>
+					<coordinates>-74.04117599999999,4.702995,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Carulla Quinta Camacho</name>
+				<description><![CDATA[<div dir="ltr">Parqueadero gratis para Bicis. Hay donde amarrar y no se comparte con motos.</div>]]></description>
+				<styleUrl>#estilo_19</styleUrl>
+				<Point>
+					<coordinates>-74.05987500000001,4.655144,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P CC Show Place</name>
+				<description><![CDATA[<div dir="ltr">Dentro del Ctro Cial., en el Ã¡rea del parqueadero, frente a la entrada de Carulla.<br>Es gratis y hay sitio para amarrarlas con candado pero tienen el siguiente aviso:"No se responde por bicicletas. El espacio es gratuito. La seguridad depende de usted". (!?)</div>]]></description>
+				<styleUrl>#estilo_113</styleUrl>
+				<Point>
+					<coordinates>-74.027252,4.723504,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Aparcar Cl 93 Cr 19</name>
+				<description><![CDATA[<div dir="ltr">Parqueadero Aparcar, Cl 93 x Cr 19, costado sur de la Cl 93.<br>Gratis para bicicletas; llevar candado.<br>AllÃ­ dejo la mÃ­a todo el dÃ­a cuando voy #AlTrabajoEnBici.</div>]]></description>
+				<styleUrl>#estilo_174</styleUrl>
+				<Point>
+					<coordinates>-74.055199,4.678252,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P CC. Andino</name>
+				<description><![CDATA[<div dir="ltr">Parqueadero <b>GRATIS</b>. Toca llevar candado propio. Son muy amables. Entregan papeleta para retirar la bicicleta.</div>]]></description>
+				<styleUrl>#estilo_1116</styleUrl>
+				<Point>
+					<coordinates>-74.05326100000001,4.666981,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P CC. Atlantis</name>
+				<description><![CDATA[Parqueadero <b>GRATIS</b>. Si no lleva candado, se la amarran con una guaya comunal.]]></description>
+				<styleUrl>#estilo_1156</styleUrl>
+				<Point>
+					<coordinates>-74.055588,4.666072,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Pure Bike Shop</name>
+				<description><![CDATA[<div>Cra 13 #78-47.</div><div>BicicleterÃ­a especializada en venta y mantenimiento de plegables DAHON. Es un poco costosa pero trabajan muy bien.</div>]]></description>
+				<styleUrl>#estilo_3271</styleUrl>
+				<Point>
+					<coordinates>-74.056229,4.664803,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P CC. San MartÃ­n</name>
+				<description><![CDATA[<div dir="ltr">Parqueadero cubierto, no hay espacio especial para las bicis, asÃ­ que toca al lado de las motos. No es muy cÃ³modo, pero sirve.<br><b>Precio: 1.500 mÃ¡s de una hora</b></div>]]></description>
+				<styleUrl>#estilo_180</styleUrl>
+				<Point>
+					<coordinates>-74.067474,4.619641,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Parqueadero Compensar Calle 42</name>
+				<description><![CDATA[Parqueadero cubierto.<b> Es gratis</b>. El vigilante facilita candado y da una ficha, tomando datos del ciclista.]]></description>
+				<styleUrl>#estilo_137</styleUrl>
+				<Point>
+					<coordinates>-74.06701700000001,4.629672,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicletas Castillo</name>
+				<description><![CDATA[<div>AlmacÃ©n y taller.</div><div>Cr 7 #121-21</div>]]></description>
+				<styleUrl>#estilo_3352</styleUrl>
+				<Point>
+					<coordinates>-74.029465,4.697093,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Parqueadero (puntos de encuentro IPES)</name>
+				<description><![CDATA[<div dir="ltr"><b>Parqueadero gratis</b> de la alcaldÃ­a, con un buen servicio, perfecto lugar para venir dejar la bicicleta, y coger transmilenio para el trabajo, y en la tarde volver y coger la bicicleta para regresar a casa.<br>&nbsp;</div><div dir="ltr">Horario de atenciÃ³n desde las 6AM.</div>]]></description>
+				<styleUrl>#estilo_189</styleUrl>
+				<Point>
+					<coordinates>-74.050804,4.721753,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. BicicleterÃ­a Jaime Borda</name>
+				<description><![CDATA[<div dir="ltr">Excelente servicio, buenos precios. Don Jaime es un bacÃ¡n.<br><span style="font-weight:bold">Precio mantenimiento: $18.000</span>&nbsp;EXCELENTE</div>]]></description>
+				<styleUrl>#estilo_3362</styleUrl>
+				<Point>
+					<coordinates>-74.13658100000001,4.640558,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P CC. Gran EstaciÃ³n</name>
+				<description><![CDATA[Parqueadero en sÃ³tano. Un poco incÃ³modo porque es al lado de las motos, ademÃ¡s hay que colgar las bicis. No es prÃ¡ctico, pero funciona.<div><b>Gratis</b></div>]]></description>
+				<styleUrl>#estilo_124</styleUrl>
+				<Point>
+					<coordinates>-74.10221900000001,4.647755,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicleteria El toma Corriente</name>
+				<description><![CDATA[Lugar perfecto para comprar bicis Urbanas y elÃ©ctricas. AdemÃ¡s se puede despinchar.<br>]]></description>
+				<styleUrl>#estilo_3223</styleUrl>
+				<Point>
+					<coordinates>-74.054985,4.663207,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. BicicleterÃ­a</name>
+				<description>No recuerdo el nombre de esta tienda pero es muy buena, venden bicis de montaÃ±a, ruta y Urbanas, ademÃ¡s un lugar perfecto para despinchar la bicicleta</description>
+				<styleUrl>#estilo_3165</styleUrl>
+				<Point>
+					<coordinates>-74.06034099999999,4.665794,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. BicicleterÃ­a de barrio</name>
+				<description>Es una bicicleterÃ­a a la cual nunca he ido, pero la he visto cuando voy en le bus hacia el centro, y la tengo marcada por si algÃºn dÃ­a me pincho por la ciclorruta de la 22.</description>
+				<styleUrl>#estilo_3196</styleUrl>
+				<Point>
+					<coordinates>-74.077225,4.612577,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P CAD</name>
+				<description><![CDATA[Parqueadero al aire libre. Necesario tener candado propio. No hay vigilancia, pero es relativamente seguro. Muy Ãºtil para hacer diligencias en el Catastro.<br>]]></description>
+				<styleUrl>#estilo_136</styleUrl>
+				<Point>
+					<coordinates>-74.081146,4.625758,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Arturo Calle 122</name>
+				<description><![CDATA[Calle 122 18B - 44 <br>En el sÃ³tano se puede parquear al lado de las motos. Toca llevar candado propio. <br>Es GRATIS.]]></description>
+				<styleUrl>#estilo_1120</styleUrl>
+				<Point>
+					<coordinates>-74.04798099999999,4.701723,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P UBosque</name>
+				<description><![CDATA[<div dir="ltr">Parqueadero para los estudiantes de El Bosque<br></div>]]></description>
+				<styleUrl>#estilo_164</styleUrl>
+				<Point>
+					<coordinates>-74.03198999999999,4.710395,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P CC Salitre Plaza</name>
+				<description>Es un parqueadero descubierto que queda al frente del centro comercial Salitre Plaza, cobran 10$ por minuto, hay que llevar buen candado.</description>
+				<styleUrl>#estilo_153</styleUrl>
+				<Point>
+					<coordinates>-74.110497,4.652053,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Compensar CUR (Sede Empresarial)</name>
+				<description>Parqueadero gratuito. Lleven candado!</description>
+				<styleUrl>#estilo_1118</styleUrl>
+				<Point>
+					<coordinates>-74.100014,4.6594,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P CUR 1 Compensar</name>
+				<description><![CDATA[<div dir="ltr">Parqueadero gratuito. Lleven candado! AdemÃ¡s es cubierto.</div>]]></description>
+				<styleUrl>#estilo_146</styleUrl>
+				<Point>
+					<coordinates>-74.102402,4.662677,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. BicicleterÃ­a Luchini</name>
+				<description>Buen sitio para despinchar.</description>
+				<styleUrl>#estilo_3287</styleUrl>
+				<Point>
+					<coordinates>-74.10597199999999,4.672868,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. BicicleterÃ­a de barrio</name>
+				<description>Buen lugar para despinchar.</description>
+				<styleUrl>#estilo_3124</styleUrl>
+				<Point>
+					<coordinates>-74.10882599999999,4.66989,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. MecÃ¡nico de bicis (temporal)</name>
+				<description>Entre lunes y miÃ©rcoles en horas pico (7am-9am). Debajo del puente de la 26 siempre hay un mecÃ¡nico que ayuda a reparar cualquier inconveniente.</description>
+				<styleUrl>#estilo_3116</styleUrl>
+				<Point>
+					<coordinates>-74.112427,4.66604,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. BicicleterÃ­a de barrio</name>
+				<description>Es un buen sitio para despinchar.</description>
+				<styleUrl>#estilo_3295</styleUrl>
+				<Point>
+					<coordinates>-74.099777,4.670269,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. BicicleterÃ­a Conejo</name>
+				<description><![CDATA[<div dir="ltr">Es una bicicleterÃ­a  muy buena, es donde he mandado ha hacer mantenimiento a mi bici desde que era niÃ±o. <br>Atienden de Lunes a SÃ¡bado de 9am a 6pm.</div>]]></description>
+				<styleUrl>#estilo_3107</styleUrl>
+				<Point>
+					<coordinates>-74.10414900000001,4.676939,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Compensar EPS</name>
+				<description><![CDATA[<div dir="ltr">Parqueadero gratuito. Lleven candado!<br></div>]]></description>
+				<styleUrl>#estilo_173</styleUrl>
+				<Point>
+					<coordinates>-74.101906,4.653513,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P AcomÃ©dica</name>
+				<description><![CDATA[<div dir="ltr"></div>Parqueadero cubierto, no hay un zona especial para bicis, pero es posible parquear ahÃ­.<div><b>Es GRATIS.</b></div>]]></description>
+				<styleUrl>#estilo_1109</styleUrl>
+				<Point>
+					<coordinates>-74.049812,4.706053,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. BicicleterÃ­a de barrio</name>
+				<description>Es un lugar que conocÃ­ un dÃ­a que me pinchÃ© en la 68 con 80. Estuve caminando y preguntando en cada tienda donde habÃ­a una bicicleterÃ­a hasta que alguien me recomendÃ³ este lugar, es un sitio muy ocupado por lo que todos las tiendas del lugar hacen la reparaciÃ³n de sus bicicletas ahÃ­.</description>
+				<styleUrl>#estilo_3188</styleUrl>
+				<Point>
+					<coordinates>-74.06553599999999,4.685967,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. BicicleterÃ­a Prado</name>
+				<description><![CDATA[<div dir="ltr">Atiende de 9am a 7 pm, buenos precios y atenciÃ³n, es cumplido.</div>]]></description>
+				<styleUrl>#estilo_3282</styleUrl>
+				<Point>
+					<coordinates>-74.05544999999999,4.715319,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Kooning</name>
+				<description><![CDATA[<div dir="ltr">Av. Calle 116 No. 16 - 24 tienda de bicicletas Urbanas, tambiÃ©n hacen mantenimiento y ayudan a despinchar la bicicleta</div>]]></description>
+				<styleUrl>#estilo_3337</styleUrl>
+				<Point>
+					<coordinates>-74.04536400000001,4.697499,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Ã‰xito Country</name>
+				<description><![CDATA[<div dir="ltr">Gratis para bicicletas.<br>Por la entrada occidental al sÃ³tano de parqueaderos. Buen control y seguridad. Adyacente pero no compartido con el Ã¡rea para motos.</div>]]></description>
+				<styleUrl>#estilo_183</styleUrl>
+				<Point>
+					<coordinates>-74.034218,4.712063,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Locatel</name>
+				<description><![CDATA[<div dir="ltr">Carrera 45 # Autop Norte, calle 116 Se puede parquear en el SÃ³tano al lado de las motos. Toca llevar candado propio.<br><span style="font-weight:bold">Es GRATIS.</span><br></div>]]></description>
+				<styleUrl>#estilo_114</styleUrl>
+				<Point>
+					<coordinates>-74.054474,4.699734,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Home Sentry Av. 68</name>
+				<description><![CDATA[<div dir="ltr">Parqueadero cubierto, sÃ³lo es necesario llevar candado. Precio: GRATIS<br></div>]]></description>
+				<styleUrl>#estilo_1130</styleUrl>
+				<Point>
+					<coordinates>-74.088646,4.67197,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. BicicleterÃ­a de barrio</name>
+				<description><![CDATA[Buen lugar para despinchar.<br>]]></description>
+				<styleUrl>#estilo_3208</styleUrl>
+				<Point>
+					<coordinates>-74.097679,4.683957,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Edificio BVC</name>
+				<description><![CDATA[Edifico de la Bolsa de Valores de Colombia:<br>Hay parqueadero en el sÃ³tano. Son supremamente amables. GRATIS.Toca llevar candado propio.<br>Muy Ãºtil para cuando toca hacer vueltas por este sector.]]></description>
+				<styleUrl>#estilo_1152</styleUrl>
+				<Point>
+					<coordinates>-74.056091,4.655005,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Parqueadero Unicentro occ</name>
+				<description><![CDATA[<div dir="ltr"><b>Gratuito</b>, hay que llevar candado, se inscribe en una lista donde referencia la bicicleta, ubicaciÃ³n en el parqueadero y la cedula del usuario. </div>]]></description>
+				<styleUrl>#estilo_167</styleUrl>
+				<Point>
+					<coordinates>-74.114426,4.723375,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Portal 80</name>
+				<description><![CDATA[<div dir="ltr">Tiene un costo de 900 pesos, queda en la fachada del centro comercial, frente a Transmilenio. <br>Es un corredor cerrado con un encargado y funciona entre 6am a 9pm de lunes a sÃ¡bado, y domingos y festivos de 7am a 8pm. Entregan papeleta a la entrada donde refiere la bicicleta y la cÃ©dula del usuario.</div>]]></description>
+				<styleUrl>#estilo_12</styleUrl>
+				<Point>
+					<coordinates>-74.11216,4.710598,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicletas American</name>
+				<description><![CDATA[<div dir="ltr">Buena bicicleterÃ­a, acÃ¡ es donde le hago mantenimiento a mi bici, tienen precios justos y atienden bien.</div>]]></description>
+				<styleUrl>#estilo_3286</styleUrl>
+				<Point>
+					<coordinates>-74.11237300000001,4.68593,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. BicicleterÃ­a</name>
+				<description><![CDATA[<div dir="ltr">Remontan y despinchan llantas, toca timbrar en una casita colonial.</div>]]></description>
+				<styleUrl>#estilo_3354</styleUrl>
+				<Point>
+					<coordinates>-74.067764,4.601485,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Luis Angel Arango</name>
+				<description><![CDATA[<div dir="ltr">Es muy seguro, se pagan $500 pesos por todo el tiempo que vaya a estar. Se entra por el mismo parqueadero de los carros, paga los 500 pesos y le toman una foto con su bici. Â¡SonrÃ­a!</div>]]></description>
+				<styleUrl>#estilo_140</styleUrl>
+				<Point>
+					<coordinates>-74.073227,4.597279,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P CC. santa Fe</name>
+				<description><![CDATA[<div dir="ltr"><b>Gratuito</b>, hay que llevar candado, y se inscribe en una lista donde se referencia usuario, cÃ©dula y ubicaciÃ³n dentro del parqueadero.</div>]]></description>
+				<styleUrl>#estilo_1129</styleUrl>
+				<Point>
+					<coordinates>-74.045975,4.761856,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P UExternado</name>
+				<description><![CDATA[<div dir="ltr">Es en convenio con city parking asÃ­ que utiliza sus mismas polÃ­ticas, <b>es gratis</b> y hay que llevar su propio candado, pero no se hacen responsables por daÃ±os o robo.</div>]]></description>
+				<styleUrl>#estilo_143</styleUrl>
+				<Point>
+					<coordinates>-74.06868,4.595536,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Taller de reparacion</name>
+				<description><![CDATA[<div dir="ltr">Taller de reparacion en el barrio 'La Estrada'</div>]]></description>
+				<styleUrl>#estilo_3217</styleUrl>
+				<Point>
+					<coordinates>-74.089096,4.680284,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Biciarco</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Cr 45 # 177-50<br>tel: 678 6252</div>]]></description>
+				<styleUrl>#estilo_3155</styleUrl>
+				<Point>
+					<coordinates>-74.046143,4.756938,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicletas Ruiz</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Cr 54 # 166-69<br>tel: 6790953</div>]]></description>
+				<styleUrl>#estilo_3268</styleUrl>
+				<Point>
+					<coordinates>-74.053192,4.748042,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicletas Sierra NiÃ±o</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Cr 60 # 164c-19 L- 1<br>tel: 600 9634</div>]]></description>
+				<styleUrl>#estilo_3229</styleUrl>
+				<Point>
+					<coordinates>-74.062592,4.747732,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Anchislavski LeÃ³n</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Cl 147 # 22-47<br>tel: 6263706</div>]]></description>
+				<styleUrl>#estilo_3204</styleUrl>
+				<Point>
+					<coordinates>-74.04869100000001,4.730133,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicletas Willfer</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Cr 13 # 142-74<br>tel: 274 6909</div>]]></description>
+				<styleUrl>#estilo_3163</styleUrl>
+				<Point>
+					<coordinates>-74.03879499999999,4.722862,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicletas Champion Ltda.</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Cl 129a # 54-27 Bdg 113<br>tel: 613 2343</div>]]></description>
+				<styleUrl>#estilo_3136</styleUrl>
+				<Point>
+					<coordinates>-74.061607,4.716596,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. AlmacÃ©n y taller Ucaf</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Av 129 # 52-40<br>tel: 25380 93</div>]]></description>
+				<styleUrl>#estilo_3218</styleUrl>
+				<Point>
+					<coordinates>-74.058922,4.716008,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicletas Castillo</name>
+				<description><![CDATA[<span style="font-family:Arial, Helvetica, sans-serif;font-size:11px;background-color:rgb(255, 255, 255)">Bicicletas - Av 7 # 121-21</span><div><span style="font-family:Arial, Helvetica, sans-serif;font-size:11px;background-color:rgb(255, 255, 255)">tel: 6193573</span></div>]]></description>
+				<styleUrl>#estilo_3318</styleUrl>
+				<Point>
+					<coordinates>-74.02887,4.703113,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. C&amp;a Global Sourcing Ltda.</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Av 15 # 118-03 L- 123,<br>tel: 612 5412</div>]]></description>
+				<styleUrl>#estilo_3133</styleUrl>
+				<Point>
+					<coordinates>-74.042885,4.697521,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bike &amp; House</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas, Equipos para Gimnasia -<br>Cr 15 # 106-55<br>tel: 696 7934</div>]]></description>
+				<styleUrl>#estilo_3322</styleUrl>
+				<Point>
+					<coordinates>-74.04574599999999,4.691447,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. BicicleterÃ­a Oscar</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Cr 109 # 80-31<br>tel: 228 0881</div>]]></description>
+				<styleUrl>#estilo_3331</styleUrl>
+				<Point>
+					<coordinates>-74.117012,4.716243,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. AlmacÃ©n Y Taller El Veterano</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Cr 107c # 72-58<br>tel:2292152</div>]]></description>
+				<styleUrl>#estilo_3210</styleUrl>
+				<Point>
+					<coordinates>-74.12370300000001,4.709871,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicletas Alfamed</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Cl 13 # 22-19<br>tel: 2473778</div>]]></description>
+				<styleUrl>#estilo_3118</styleUrl>
+				<Point>
+					<coordinates>-74.08709,4.609668,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicletas Im</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Av 13 # 22-13<br>tel: 237 4623</div>]]></description>
+				<styleUrl>#estilo_3138</styleUrl>
+				<Point>
+					<coordinates>-74.08719600000001,4.609738,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. FÃ¡brica De Bicicletas SatÃ©lite</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Cl 13 # 22-15 P- 1<br>tel: 480 7790</div>]]></description>
+				<styleUrl>#estilo_3224</styleUrl>
+				<Point>
+					<coordinates>-74.087273,4.609818,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicletas Milan</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Cl 13 # 21-51<br>tel: 408 5051</div>]]></description>
+				<styleUrl>#estilo_3335</styleUrl>
+				<Point>
+					<coordinates>-74.08665499999999,4.609214,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicletas Bolivar</name>
+				<description><![CDATA[<span style="font-family:Arial, Helvetica, sans-serif;font-size:11px;background-color:rgb(255, 255, 255)">ArtÃ­culos para Deportes, Bicicletas, Repuestos para Bicicletas - Cl 13 # 20-77</span><div><span style="font-family:Arial, Helvetica, sans-serif;font-size:11px;background-color:rgb(255, 255, 255)">tel: 2471274</span></div>]]></description>
+				<styleUrl>#estilo_3157</styleUrl>
+				<Point>
+					<coordinates>-74.085876,4.60861,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Welcome calle 13</name>
+				<description><![CDATA[<div dir="ltr"> Cl 13 # 20-47  tel: 3707006</div>]]></description>
+				<styleUrl>#estilo_3201</styleUrl>
+				<Point>
+					<coordinates>-74.08560900000001,4.608348,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bejarano Osorio Alfonso</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Cl 13 # 17-75 <br>tel: 341 0336</div>]]></description>
+				<styleUrl>#estilo_3323</styleUrl>
+				<Point>
+					<coordinates>-74.083275,4.606305,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Almacen Ciclo Mesa</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas, Repuestos para Bicicletas -<br> Cl 13 #17-55 <br>tel: 2824128</div>]]></description>
+				<styleUrl>#estilo_3146</styleUrl>
+				<Point>
+					<coordinates>-74.08313,4.606209,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicletas Y Repuestos Campeones J.r.</name>
+				<description><![CDATA[<div dir="ltr">ArtÃ­culos para Deportes, Bicicletas - <br>Cr 17 # 12-91<br>tel: 282 8234</div>]]></description>
+				<styleUrl>#estilo_3278</styleUrl>
+				<Point>
+					<coordinates>-74.083023,4.605471,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. AlmacÃ©n El Escarabajo De Oro</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Cr 94 # 25-11<br>tel 4159575:</div>]]></description>
+				<styleUrl>#estilo_3140</styleUrl>
+				<Point>
+					<coordinates>-74.082314,4.605487,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. AlmacÃ©n Juan PachÃ³n</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Av 13 # 16-71 <br>tel: 342 3094</div>]]></description>
+				<styleUrl>#estilo_3270</styleUrl>
+				<Point>
+					<coordinates>-74.08221399999999,4.605375,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Taller</name>
+				<description><![CDATA[<div dir="ltr">Hay un seÃ±or que repara bicicletas, buenos precios y buena atencion. para reparaciones sencillas</div>]]></description>
+				<styleUrl>#estilo_3217</styleUrl>
+				<Point>
+					<coordinates>-74.081673,4.604829,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicletas El Escarabajo</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Cr 7 # 19-21<br>tel: 575 8329</div>]]></description>
+				<styleUrl>#estilo_3327</styleUrl>
+				<Point>
+					<coordinates>-74.07154800000001,4.605802,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicletas Trocha Ruta &amp; Cross</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Cr 10 # 7b-44<br>tel: 8510089</div>]]></description>
+				<styleUrl>#estilo_3277</styleUrl>
+				<Point>
+					<coordinates>-74.080101,4.596017,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Fonseca Carlos Abel</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Cl 2 # 12a-07<br>tel: 280 0717</div>]]></description>
+				<styleUrl>#estilo_3184</styleUrl>
+				<Point>
+					<coordinates>-74.085533,4.592681,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicleteria</name>
+				<description><![CDATA[<div dir="ltr">Un seÃ±or que hace un trabajo excelente a muy buen precio. </div>]]></description>
+				<styleUrl>#estilo_3237</styleUrl>
+				<Point>
+					<coordinates>-74.16580999999999,4.591312,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicleterias de Venecia</name>
+				<description><![CDATA[<div dir="ltr">Buenos precios.</div>]]></description>
+				<styleUrl>#estilo_3246</styleUrl>
+				<Point>
+					<coordinates>-74.13642900000001,4.594221,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Ciclo Morelly</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas, ReparaciÃ³n de Bicicletas -<br> Cl 3 # 55-01<br>tel: 2625358</div>]]></description>
+				<styleUrl>#estilo_3137</styleUrl>
+				<Point>
+					<coordinates>-74.119308,4.61963,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicletas Torres</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Cr 50 # 37-25 Sur<br>tel: 7284463</div>]]></description>
+				<styleUrl>#estilo_3309</styleUrl>
+				<Point>
+					<coordinates>-74.12531300000001,4.598028,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicleteria</name>
+				<description><![CDATA[<div dir="ltr">Cra 30 con cll 1<br>Muy buen servicio.</div>]]></description>
+				<styleUrl>#estilo_3185</styleUrl>
+				<Point>
+					<coordinates>-74.105186,4.598841,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicletas Jaimur</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Cr 22 # 10-34<br>tel: 2474678</div>]]></description>
+				<styleUrl>#estilo_3316</styleUrl>
+				<Point>
+					<coordinates>-74.089241,4.606562,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Taller</name>
+				<description><![CDATA[<div dir="ltr">Hay un pequeÃ±o Taller en este sector, para mantenimiento basico y desvares</div>]]></description>
+				<styleUrl>#estilo_3217</styleUrl>
+				<Point>
+					<coordinates>-74.08403,4.630859,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicletas Casa PachÃ³n Ltda.</name>
+				<description><![CDATA[<span style="font-size:11px;font-family:Arial, Helvetica, sans-serif;background-color:rgb(255,255,255)">ArtÃ­culos para Deportes, Bicicletas - Av 24 # 40-55</span><div><span style="font-size:11px;font-family:Arial, Helvetica, sans-serif;background-color:rgb(255,255,255)">tel: &nbsp;2449723</span></div>]]></description>
+				<styleUrl>#estilo_3351</styleUrl>
+				<Point>
+					<coordinates>-74.07476800000001,4.630666,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Taller</name>
+				<description>Taller de Bicicletas sobre el costado occidental</description>
+				<styleUrl>#estilo_3217</styleUrl>
+				<Point>
+					<coordinates>-74.070641,4.6355,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P ClÃ­nica Marly</name>
+				<description><![CDATA[<div dir="ltr"><b>Gratis</b>, hay que llevar candado;<br>administrado por Aparcar.</div>]]></description>
+				<styleUrl>#estilo_1162</styleUrl>
+				<Point>
+					<coordinates>-74.064995,4.63713,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Cyclelutions S.a</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Av 72 # 19-36<br>tel: 2351128</div>]]></description>
+				<styleUrl>#estilo_3205</styleUrl>
+				<Point>
+					<coordinates>-74.12350499999999,4.652021,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Taller de Bicicletas</name>
+				<description><![CDATA[<div dir="ltr">Sobre la Avenida Esperanza costado norte, hay un taller pequeÃ±o. para arreglos basicos y mantenimiento, te cobraran un poco mas caro de lo normal</div>]]></description>
+				<styleUrl>#estilo_3217</styleUrl>
+				<Point>
+					<coordinates>-74.11290700000001,4.656673,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Bicicletas El Porvenir</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Cr 74 # 66a-17<br>tel:  2763154</div>]]></description>
+				<styleUrl>#estilo_3217</styleUrl>
+				<Point>
+					<coordinates>-74.10150899999999,4.682978,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Casa Del Deporte Arcenio Chaparro</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Cr 77a # 63b-12<br>tel: 436 3285</div>]]></description>
+				<styleUrl>#estilo_3117</styleUrl>
+				<Point>
+					<coordinates>-74.108513,4.679663,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicleteria</name>
+				<description><![CDATA[<font face="arial" size="2">buen servicio,&nbsp;tienen&nbsp;de todo, abre generalmente&nbsp;despuÃ©s&nbsp;de las 7:30 am hasta las 7pm +/-</font>]]></description>
+				<styleUrl>#estilo_3227</styleUrl>
+				<Point>
+					<coordinates>-74.103065,4.67652,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicletas Institucionales</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Cl 61f # 24-25<br>tel: 2175241</div>]]></description>
+				<styleUrl>#estilo_3241</styleUrl>
+				<Point>
+					<coordinates>-74.07250999999999,4.649359,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Bicicletas Duarte</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Av 68 # 28a-20<br>tel: 2319781</div>]]></description>
+				<styleUrl>#estilo_3217</styleUrl>
+				<Point>
+					<coordinates>-74.073463,4.661934,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Bicicletas Land Star</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Cl 68 # 28a-28<br>tel: 2506830</div>]]></description>
+				<styleUrl>#estilo_3217</styleUrl>
+				<Point>
+					<coordinates>-74.073601,4.66202,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Bicicletas Euro</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Cr 29 # 67-88<br>tel: 630 3724</div>]]></description>
+				<styleUrl>#estilo_3217</styleUrl>
+				<Point>
+					<coordinates>-74.07456999999999,4.662244,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Bicicletas Nuevo Milenio</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Av 68 # 29-21<br>tel: 2316294</div>]]></description>
+				<styleUrl>#estilo_3217</styleUrl>
+				<Point>
+					<coordinates>-74.07448599999999,4.662458,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Almacen El Triunfo</name>
+				<description><![CDATA[<span style="font-family:Arial, Helvetica, sans-serif;font-size:11px;background-color:rgb(255, 255, 255)">Bicicletas - Av 68 # 29-17&nbsp;</span><div><span style="font-family:Arial, Helvetica, sans-serif;font-size:11px;background-color:rgb(255, 255, 255)">tel:6304896</span></div>]]></description>
+				<styleUrl>#estilo_3217</styleUrl>
+				<Point>
+					<coordinates>-74.07461499999999,4.662538,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicletas Strongman</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Cl 68 # 29-42<br>tel: 225 4967</div>]]></description>
+				<styleUrl>#estilo_3113</styleUrl>
+				<Point>
+					<coordinates>-74.07457700000001,4.662699,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicletas Galli</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas, Repuestos para Bicicletas - Cr 28 # 72-52<br>tel: 225 8307</div>]]></description>
+				<styleUrl>#estilo_3144</styleUrl>
+				<Point>
+					<coordinates>-74.07006800000001,4.665495,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicleteria Bike Tech</name>
+				<description><![CDATA[<div dir="ltr">Bicicleteria especializada, buena para mantenimientos y repuestos de gama medias y altas.<br><br>Importador de bicicletas Giant.</div>]]></description>
+				<styleUrl>#estilo_3216</styleUrl>
+				<Point>
+					<coordinates>-74.06869500000001,4.663891,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Amortegui IbaÃ±ez Antonio</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Cr 17 # 72-39<br>tel: 2552407</div>]]></description>
+				<styleUrl>#estilo_3131</styleUrl>
+				<Point>
+					<coordinates>-74.062935,4.660587,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Unilago</name>
+				<description><![CDATA[<div dir="ltr">Por $1000 puedes guardar la bicicleta en el sotano del parqueadero de unilago el tiempo que desees. hay que llevar candado!</div>]]></description>
+				<styleUrl>#estilo_168</styleUrl>
+				<Point>
+					<coordinates>-74.05832700000001,4.665185,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicletas Dumar</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Av 8 # 73a-18<br>tel: 411 9765</div>]]></description>
+				<styleUrl>#estilo_3148</styleUrl>
+				<Point>
+					<coordinates>-74.054276,4.658149,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Busfo Ltda. - Bustamante Deportes</name>
+				<description><![CDATA[<div dir="ltr">ArtÃ­culos para Caza y Pesca, ArtÃ­culos para Deportes, BICICLETAS, Patines, Piscinas - <br>Cl 65 # 10-79<br>tel: 347 3316</div>]]></description>
+				<styleUrl>#estilo_3300</styleUrl>
+				<Point>
+					<coordinates>-74.061668,4.651037,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bike Service Shop</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Cr 4 # 66-66<br>tel: 312 7964</div>]]></description>
+				<styleUrl>#estilo_3308</styleUrl>
+				<Point>
+					<coordinates>-74.05590100000001,4.648246,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bodega BogotaFixed</name>
+				<description><![CDATA[<div dir="ltr">Ciclotaller, bodega, tienda de partes y accesorios, lugar de disfrute y relajaciÃ³n, LA 66, especialistas en Bicicletas de PiÃ±Ã³n fijo www.bogotafixed.com </div>]]></description>
+				<styleUrl>#estilo_3266</styleUrl>
+				<Point>
+					<coordinates>-74.06780999999999,4.655304,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. BicicleterÃ­a</name>
+				<description><![CDATA[<div dir="ltr">Buen servicio, pero no recuerdo el nombre, atendido por Don Ã�lvaro</div>]]></description>
+				<styleUrl>#estilo_3264</styleUrl>
+				<Point>
+					<coordinates>-74.098625,4.706096,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Desvare</name>
+				<description><![CDATA[<font face="arial" size="2">debajo del puente peatonal se hace una seÃ±or y presta servicios&nbsp;bÃ¡sicos&nbsp;desvares&nbsp;despinchadas y gallos pequeÃ±os.</font>]]></description>
+				<styleUrl>#estilo_3174</styleUrl>
+				<Point>
+					<coordinates>-74.100487,4.703025,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicletas Caobos</name>
+				<description><![CDATA[<div dir="ltr">ReparaciÃ³n de Bicicletas - Cl 147 # 17-29<br>tel: 2589009</div>]]></description>
+				<styleUrl>#estilo_3272</styleUrl>
+				<Point>
+					<coordinates>-74.04377700000001,4.729342,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Montallantas</name>
+				<description>Puede pedir aire para las llantas y no cobran nada. Al lado de la estaciÃ³n de gasolina Brio.</description>
+				<styleUrl>#estilo_3340</styleUrl>
+				<Point>
+					<coordinates>-74.052711,4.716671,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicleteria</name>
+				<description>Atiende de 9am a /pm</description>
+				<styleUrl>#estilo_3359</styleUrl>
+				<Point>
+					<coordinates>-74.059181,4.712552,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Todo Terreno</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas, Repuestos para Bicicletas - Cl 127a # 13a-76<br>tel: 6148645</div>]]></description>
+				<styleUrl>#estilo_3191</styleUrl>
+				<Point>
+					<coordinates>-74.040375,4.705529,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Colombian Bikes</name>
+				<description><![CDATA[<div dir="ltr">Cll 116 No. 18-36, tel 6120947 y 2143653</div>]]></description>
+				<styleUrl>#estilo_3110</styleUrl>
+				<Point>
+					<coordinates>-74.049301,4.698675,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Movilidad Personal</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas - Av 15 # 96-67 L- 2<br>tel:&nbsp;6916456</div>]]></description>
+				<styleUrl>#estilo_3230</styleUrl>
+				<Point>
+					<coordinates>-74.04872899999999,4.681246,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Speed Bikers</name>
+				<description><![CDATA[<span style="font-family:Arial,Helvetica,sans-serif;font-size:11px;background-color:rgb(255, 255, 255)">Bicicletas, Repuestos para Bicicletas - Cr 24 # 80-14</span><div><span style="font-family:Arial,Helvetica,sans-serif;font-size:11px;background-color:rgb(255, 255, 255)">tel:&nbsp;</span><span style="font-family:Arial,Helvetica,sans-serif;font-size:11px;background-color:rgb(255, 255, 255)">2569323</span></div>]]></description>
+				<styleUrl>#estilo_3141</styleUrl>
+				<Point>
+					<coordinates>-74.063141,4.669184,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Mundial De Bicicletas Torres Y CÃ­a. Ltda.</name>
+				<description><![CDATA[<span style="font-family:Arial,Helvetica,sans-serif;font-size:11px;background-color:rgb(255, 255, 255)">Bicicletas - Cl 78 # 24-45</span>]]></description>
+				<styleUrl>#estilo_3360</styleUrl>
+				<Point>
+					<coordinates>-74.063667,4.668414,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Inssa</name>
+				<description><![CDATA[<span style="font-family:Arial,Helvetica,sans-serif;font-size:11px;background-color:rgb(255, 255, 255)">Bicicletas, Repuestos para Bicicletas - Cr 26 # 78-47</span><div><span style="font-family:Arial,Helvetica,sans-serif;font-size:11px;background-color:rgb(255, 255, 255)">tel:&nbsp;</span><span style="font-family:Arial,Helvetica,sans-serif;font-size:11px;background-color:rgb(255, 255, 255)">6601842</span></div>]]></description>
+				<styleUrl>#estilo_3310</styleUrl>
+				<Point>
+					<coordinates>-74.064674,4.668724,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Universidad Central</name>
+				<description><![CDATA[<div dir="ltr">En el marco de la Semana de la Bicicleta 2011 (28/09/2011):<br>- Muestra de videos sobre el uso de la bicicleta - 5 a 7 pm<br>- Ciclopaseos de los miÃ©rcoles - 7 a 9 pm <br>El punto de encuentro para ambas actividades es el parqueadero de la Universidad Central. El CPM termina en la Biblioteca Virgilio Barco, la ruta no se socializa, se disfruta.</div>]]></description>
+				<styleUrl>#estilo_23</styleUrl>
+				<Point>
+					<coordinates>-74.069481,4.606527,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. La Nueva Casa Del Ciclista</name>
+				<description><![CDATA[<span style="font-family:Arial,Helvetica,sans-serif;font-size:11px;background-color:rgb(255, 255, 255)">Bicicletas - Cr 69h # 74b-44</span><div><span style="font-family:Arial,Helvetica,sans-serif;font-size:11px;background-color:rgb(255, 255, 255)">tel:&nbsp;</span><span style="font-family:Arial,Helvetica,sans-serif;font-size:11px;background-color:rgb(255, 255, 255)">2400397</span></div>]]></description>
+				<styleUrl>#estilo_3232</styleUrl>
+				<Point>
+					<coordinates>-74.086967,4.684882,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Aparcar 93 con 14</name>
+				<description><![CDATA[<div dir="ltr">Parqueadero<span style="font-weight:bold"> GRATIS</span>, es necesario llevar candado propio. No es cubierto, pero estÃ¡ muy bien.<br>&nbsp;</div>]]></description>
+				<styleUrl>#estilo_141</styleUrl>
+				<Point>
+					<coordinates>-74.050262,4.677824,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P ClÃ­nica Reina Sofia</name>
+				<description><![CDATA[<div dir="ltr">El parqueadero privado de la clÃ­nica Reina SofÃ­a cuenta con Cicloparqueadero. Recomendado llevar candado, no sÃ³lo para este lugar, para todos los cicloparqueaderos que visite.</div>]]></description>
+				<styleUrl>#estilo_116</styleUrl>
+				<Point>
+					<coordinates>-74.05201700000001,4.706674,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Portal de Suba</name>
+				<description><![CDATA[<div dir="ltr">Cicloparqueaderos de Transmilenio. Debes der usuario de Trasmilenio para parquear tu bici. MÃ¡s informaciÃ³n <a target='_blank' href="http://www.transmilenio.gov.co/WebSite/Contenido.aspx?ID=ServiciosComplementarios_Cicloparqueaderos" target="_blank">aquÃ­</a>.</div>]]></description>
+				<styleUrl>#estilo_1149</styleUrl>
+				<Point>
+					<coordinates>-74.094032,4.747732,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Ciclo Logros - Recomendada</name>
+				<description><![CDATA[<div dir="ltr"><font><b>Av. 9 # 127C-45<br>312 548 3526 - 310 255 7903</b><br>ReparaciÃ³n de toda clase de bicicletas<br>EstÃ¡ticas, montaÃ±a, triciclos<br>Mantenimiento | Pintura | Repuestos<br>Servicio a Domicilio<br><b>Propietario: Carlos AcuÃ±a<b></b></b></font></div>]]></description>
+				<styleUrl>#estilo_3330</styleUrl>
+				<Point>
+					<coordinates>-74.033028,4.707406,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Home Sentry 116 con 19</name>
+				<description><![CDATA[<div dir="ltr">Parqueadero Home Sentry. Cubierto y seguro, ademÃ¡s del candado propio hay una cadena comunal que ponen a todas las bicicletas.</div>]]></description>
+				<styleUrl>#estilo_1161</styleUrl>
+				<Point>
+					<coordinates>-74.05033899999999,4.698392,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicileteria Kooning</name>
+				<description>Importadores de bicicletas batavus, especializadas en recorridos urbanos.</description>
+				<styleUrl>#estilo_3298</styleUrl>
+				<Point>
+					<coordinates>-74.04792000000001,4.698331,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Lucky Lion - Bicicletas 100% electricas</name>
+				<description><![CDATA[<div dir="ltr">Lucky Lion, la primera marca multinacional de Bicicletas y Motos 100%elÃ©ctricas,  ecolÃ³gicas, silenciosas y econÃ³micas, sin mantenimiento, con solo $290 podrÃ¡s recorrer hasta 80 Km. para mas informacion ingresa a www.luckylion-la.com </div>]]></description>
+				<styleUrl>#estilo_3372</styleUrl>
+				<Point>
+					<coordinates>-74.049652,4.681225,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P City Parking Cra 15 Calle 95</name>
+				<description>Al lado de Farmatodo. Espacio gratuito para bicicletas. No es seguro dejarla despuÃ©s de las 6:00p.m.</description>
+				<styleUrl>#estilo_1123</styleUrl>
+				<Point>
+					<coordinates>-74.05004099999999,4.680198,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Tango Discos</name>
+				<description><![CDATA[<div dir="ltr">En el Tango no tienen parqueadero pero dejan que uno entre la bici al almacÃ©n porque sobre la 15 ellos mismos han visto robos de bicis. Extremadamente amables.</div>]]></description>
+				<styleUrl>#estilo_192</styleUrl>
+				<Point>
+					<coordinates>-74.052544,4.675643,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P City Parking  Cra 15 Calle 93</name>
+				<description>Parqueadero con espacio para bicicletas. Gratuito.</description>
+				<styleUrl>#estilo_1145</styleUrl>
+				<Point>
+					<coordinates>-74.052032,4.677097,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Torralba Sportswear</name>
+				<description><![CDATA[<div dir="ltr">Bicicletas, Ropa Deportiva - Cl 67 # 17-69<br>tel:  2493794   6094688</div>]]></description>
+				<styleUrl>#estilo_3108</styleUrl>
+				<Point>
+					<coordinates>-74.066292,4.655914,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Metropolis</name>
+				<description><![CDATA[<div dir="ltr">Parqueadero del centro comercial metrÃ³polis. Es gratis, pero toca llevar candado, pues los celadores no usan candado todas las veces.</div>]]></description>
+				<styleUrl>#estilo_134</styleUrl>
+				<Point>
+					<coordinates>-74.082542,4.679407,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicleteria Pachon</name>
+				<description><![CDATA[<div dir="ltr">A pesar de ser un Almacen pequeÃ±o tiene los mejores precios en repuestos de gama baja y media. 100% recomendado<br><br>(hay que tener paciencia para que te atiendan, el sitio es muy lleno)</div>]]></description>
+				<styleUrl>#estilo_3338</styleUrl>
+				<Point>
+					<coordinates>-74.074631,4.662512,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Plaza Imperial</name>
+				<description><![CDATA[<div dir="ltr">Parqueadero <b>GRATIS</b>.</div>]]></description>
+				<styleUrl>#estilo_187</styleUrl>
+				<Point>
+					<coordinates>-74.09457399999999,4.75094,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Taller</name>
+				<description><![CDATA[<div dir="ltr">No lo he usado.. pero existe</div>]]></description>
+				<styleUrl>#estilo_3217</styleUrl>
+				<Point>
+					<coordinates>-74.085464,4.569877,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Taller de reparaciÃ³n</name>
+				<description><![CDATA[<div dir="ltr">Taller de reparaciÃ³n en el barrio 'La Estrada'</div>]]></description>
+				<styleUrl>#estilo_3217</styleUrl>
+				<Point>
+					<coordinates>-74.090187,4.574275,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Mike Bike tours</name>
+				<description><![CDATA[<div dir="ltr">en este lugar salen toures de bicicleta por BogotÃ¡, se alquilan bicis, y tambiÃ©n reparan pinchazos y percances</div>]]></description>
+				<styleUrl>#estilo_22</styleUrl>
+				<Point>
+					<coordinates>-74.070854,4.597474,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Universidad del Rosario</name>
+				<description><![CDATA[<div dir="ltr">Cicloparqueadero gratuito para estudiantes UR. Edificio Cabal. Llevar cadena, pedir permiso en el Edificio Administrativo.</div>]]></description>
+				<styleUrl>#estilo_06</styleUrl>
+				<Point>
+					<coordinates>-74.07261699999999,4.600327,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Hotel Tequendama</name>
+				<description><![CDATA[<div dir="ltr">Se puede parquear en el sÃ³tano. Es GRATIS. Toca llevar candado propio.</div>]]></description>
+				<styleUrl>#estilo_196</styleUrl>
+				<Point>
+					<coordinates>-74.070641,4.613385,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Industria L.a. Bernal CÃ­a. S. En C.</name>
+				<description><![CDATA[<span style="font-size:11px;font-family:Arial,Helvetica,sans-serif;background-color:rgb(255,255,255)">Bicicletas - Cl 22b # 25-34</span><div><span style="font-size:11px;font-family:Arial,Helvetica,sans-serif;background-color:rgb(255,255,255)">tel:&nbsp;</span><span style="font-size:11px;font-family:Arial,Helvetica,sans-serif;background-color:rgb(255,255,255)">5619494</span></div>]]></description>
+				<styleUrl>#estilo_3200</styleUrl>
+				<Point>
+					<coordinates>-74.082184,4.618518,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. BicicleterÃ­a Bitti-hans</name>
+				<description><![CDATA[<div dir="ltr">ReparaciÃ³n de Bicicletas - Cl 23 # 17-11<br>tel:  2867965</div>]]></description>
+				<styleUrl>#estilo_3181</styleUrl>
+				<Point>
+					<coordinates>-74.076111,4.613267,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Taller</name>
+				<description><![CDATA[<div dir="ltr">AlmacÃ©n y taller LA QUETZAL<br><br>TEL 2833092<br><br>CALLE 23 No. 17-30</div>]]></description>
+				<styleUrl>#estilo_3217</styleUrl>
+				<Point>
+					<coordinates>-74.076424,4.613441,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Home Sentry Plaza de las AmÃ©ricas</name>
+				<description><![CDATA[Cicloparqueadero <span style="font-weight:bold">GRATIS</span>.<br>]]></description>
+				<styleUrl>#estilo_1112</styleUrl>
+				<Point>
+					<coordinates>-74.136703,4.620125,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Home Sentry Autopista Norte con 127</name>
+				<description><![CDATA[Cicloparqueadero <span style="font-weight:bold">GRATIS</span>.]]></description>
+				<styleUrl>#estilo_123</styleUrl>
+				<Point>
+					<coordinates>-74.05373400000001,4.71102,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Portal Banderas</name>
+				<description><![CDATA[<div dir="ltr">Cicloparqueaderos de Transmilenio. Debes der usuario de Trasmilenio para parquear tu bici. MÃ¡s informaciÃ³n&nbsp;<a target='_blank' href="http://www.transmilenio.gov.co/WebSite/Contenido.aspx?ID=ServiciosComplementarios_Cicloparqueaderos" target="_blank">aquÃ­</a>.<br><br>Muy buen servicio, tienen cadenas muy buenas (hay que llevar candado).</div>]]></description>
+				<styleUrl>#estilo_1164</styleUrl>
+				<Point>
+					<coordinates>-74.14561500000001,4.631265,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. PequeÃ±o taller</name>
+				<description><![CDATA[Un seÃ±or arregla los problemas de las ciclas.<div><br>&nbsp;</div><div>Aporte de MayttÃ© Casto</div>]]></description>
+				<styleUrl>#estilo_3284</styleUrl>
+				<Point>
+					<coordinates>-74.161125,4.650503,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Biblioteca El Tintal</name>
+				<styleUrl>#estilo_1127</styleUrl>
+				<Point>
+					<coordinates>-74.154022,4.643584,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. BicicletarÃ­a de barrio</name>
+				<styleUrl>#estilo_3285</styleUrl>
+				<Point>
+					<coordinates>-74.148743,4.632848,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Cicloparqueadero en la estaciÃ³n de Transmilenio Mundo Aventura</name>
+				<styleUrl>#estilo_193</styleUrl>
+				<Point>
+					<coordinates>-74.13417800000001,4.630131,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Libar Ltda</name>
+				<description><![CDATA[<div dir="ltr">Repuestos para Bicicletas - Cr 78g # 8b-32</div>]]></description>
+				<styleUrl>#estilo_3256</styleUrl>
+				<Point>
+					<coordinates>-74.142189,4.641274,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Ã‰xito AmÃ©ricas</name>
+				<description><![CDATA[<div dir="ltr">Vigilado, con planilla. Llevar candado.</div>]]></description>
+				<styleUrl>#estilo_13</styleUrl>
+				<Point>
+					<coordinates>-74.12381000000001,4.629661,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Lucky Lion - Bicicletas Electricas</name>
+				<description><![CDATA[<div dir="ltr">Lucky Lion Primera marca Multinacional de Bicicletas y Motos 100% Electricas, Ecologicas, Silenciosas, sin Mantenimiento, Economicas, con solo $290 podras recorrer hasta 80 Km.<br>Para mayor informacion ingresa a www.luckylion-la.com </div>]]></description>
+				<styleUrl>#estilo_3156</styleUrl>
+				<Point>
+					<coordinates>-74.10813899999999,4.626335,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Taller</name>
+				<description><![CDATA[<div dir="ltr">A cuadra y media de la cicloruta de la Carrera 13. DirecciÃ³n: Calle 52 No. 14 - 25... media cuadra abajo de la Av. Caracas, cerca al Exito de la calle 53.</div>]]></description>
+				<styleUrl>#estilo_3217</styleUrl>
+				<Point>
+					<coordinates>-74.079697,4.624849,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicleteria cerca a la UN</name>
+				<description><![CDATA[es la Ãºnica bicicleterÃ­a que conozco cerca a la entrada de la 26 de la UN, es un costeÃ±o buena gente.. <br>]]></description>
+				<styleUrl>#estilo_3376</styleUrl>
+				<Point>
+					<coordinates>-74.084129,4.630912,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Universidad Nacional</name>
+				<description><![CDATA[<br>]]></description>
+				<styleUrl>#estilo_1124</styleUrl>
+				<Point>
+					<coordinates>-74.08596,4.635371,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Universidad Nacional</name>
+				<description><![CDATA[<br>]]></description>
+				<styleUrl>#estilo_3332</styleUrl>
+				<Point>
+					<coordinates>-74.083038,4.636056,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P cerca Clinica Marly</name>
+				<description><![CDATA[<div dir="ltr">Gratis, en el estacionamiento de la clÃ­nica Marly, igual el cela dice que no responde por nada... y la cosa es que el parqueadero queda al lado de la entrada/salida entonces es como ideal para que lo roben a uno.. pero nada.. a mi me fue bien. </div>]]></description>
+				<styleUrl>#estilo_1105</styleUrl>
+				<Point>
+					<coordinates>-74.064674,4.63905,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Bicicleteria de barrio</name>
+				<description><![CDATA[<div dir="ltr">hacen mantenimiento y reparan percances</div>]]></description>
+				<styleUrl>#estilo_3183</styleUrl>
+				<Point>
+					<coordinates>-74.075279,4.637638,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Checheres</name>
+				<description><![CDATA[<div dir="ltr">Carrera 17 49-51<br><br>Don JoaquÃ­n hace muy buenos trabajos en arreglos y mantenimiento para bicicletas. Recomendado. Por DPB</div>]]></description>
+				<styleUrl>#estilo_3162</styleUrl>
+				<Point>
+					<coordinates>-74.070122,4.637253,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Industrias Jocal E.u.</name>
+				<description><![CDATA[<span style="font-size:11px;font-family:Arial,Helvetica,sans-serif;background-color:rgb(255,255,255)">Bicicletas, Repuestos para Bicicletas - Cr 10a # 1b-46</span><div><span style="font-size:11px;font-family:Arial,Helvetica,sans-serif;background-color:rgb(255,255,255)">tel:&nbsp;</span><span style="font-size:11px;font-family:Arial,Helvetica,sans-serif;background-color:rgb(255,255,255)">3370567</span></div>]]></description>
+				<styleUrl>#estilo_3215</styleUrl>
+				<Point>
+					<coordinates>-74.084412,4.590713,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Taller</name>
+				<description><![CDATA[<div dir="ltr">Otro taller.. me parecieron careros, teniendo en cuenta que uno esta a 15minutos de la 13 y allÃ­ es muy barato</div>]]></description>
+				<styleUrl>#estilo_3217</styleUrl>
+				<Point>
+					<coordinates>-74.080856,4.588432,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Industrias Rockville</name>
+				<description><![CDATA[<span style="font-size:11px;font-family:Arial,Helvetica,sans-serif;background-color:rgb(255,255,255)">Bicicletas - Cr 25 # 10-60</span><div><span style="font-size:11px;font-family:Arial,Helvetica,sans-serif;background-color:rgb(255,255,255)">tel:&nbsp;</span><span style="font-size:11px;font-family:Arial,Helvetica,sans-serif;background-color:rgb(255,255,255)">2770391</span></div>]]></description>
+				<styleUrl>#estilo_3178</styleUrl>
+				<Point>
+					<coordinates>-74.090942,4.607225,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Cafam Floresta</name>
+				<description><![CDATA[<div dir="ltr">Parqueadero <b>gratuito</b>.</div>]]></description>
+				<styleUrl>#estilo_152</styleUrl>
+				<Point>
+					<coordinates>-74.074585,4.686518,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Museo Nacional</name>
+				<description>Bicisparqueadero GRATIS</description>
+				<styleUrl>#estilo_1159</styleUrl>
+				<Point>
+					<coordinates>-74.06826,4.615427,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Estadio La Aurora</name>
+				<description><![CDATA[<SPAN style="color:rgb(0,204,204)">En La Entrada Se Encuentran Postes Para Parquear Ciclas No Es Muy Seguro Si Nos Vamos Lejos Por Mucho Tiempo Pero Si Estamos Serca Nos Sirve...<BR><BR>By CeMo<BR></SPAN>]]></description>
+				<styleUrl>#estilo_08</styleUrl>
+				<Point>
+					<coordinates>-74.12190200000001,4.520428,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P CC. Portoalegre</name>
+				<description><![CDATA[<div dir="ltr">Hay parqueadero gratuito, cubierto y vigilado. Aseguran las bicicletas con candado y dan ficha de parqueo. </div>]]></description>
+				<styleUrl>#estilo_0</styleUrl>
+				<Point>
+					<coordinates>-74.065094,4.728101,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>T. Almacen ciclo partes taller</name>
+				<description><![CDATA[Carrera 26 NÂ° 75A-46<br><br>Repuestos, pintura al duco, soldadura autogena, centrada de rines para moto, mantenimiento y despinchada<br><br>Horario Lunes a sabado de 8 a 5<br><br>Domingos de 8 a 1<br>]]></description>
+				<styleUrl>#estilo_01</styleUrl>
+				<Point>
+					<coordinates>-74.065567,4.66696,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Cicloparqueadero C.C. Calima</name>
+				<description><![CDATA[<div dir="ltr">Gratis! por ahora... espacios suficientes, con un sticker en la bici y una boleta para reclamar, hay que llevar candado.</div>]]></description>
+				<styleUrl>#estilo_08</styleUrl>
+				<Point>
+					<coordinates>-74.086174,4.61871,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Hotel Marriot de la Calle 26</name>
+				<description><![CDATA[<div dir="ltr">En el Hotel Marriot de la Calle 26, sector Ciudad Salitre tambiÃ©n hay parqueadero GRATIS, es necesario llevar candado. Es amplio y cÃ³modo.</div>]]></description>
+				<styleUrl>#estilo_139</styleUrl>
+				<Point>
+					<coordinates>-74.10833700000001,4.659646,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Compensar Calle 94</name>
+				<description><![CDATA[<div dir="ltr">Compensar de la 94, lugar amigable con las bicis, buen parqueadero y seguro. GRATIS.</div>]]></description>
+				<styleUrl>#estilo_1140</styleUrl>
+				<Point>
+					<coordinates>-74.05753300000001,4.681321,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P FundaciÃ³n Santa Fe</name>
+				<description><![CDATA[<div dir="ltr">Parqueadero GRATIS, cÃ³modo y muy seguro pues solicitan los datos del ciclista, ademÃ¡s de asegurar la bici con una cadena del parqueadero. Funciona 24 horas y la entrada es por la 116.</div>]]></description>
+				<styleUrl>#estilo_176</styleUrl>
+				<Point>
+					<coordinates>-74.033768,4.694184,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Oma Park Way</name>
+				<description><![CDATA[<div dir="ltr">No hay precisamente un parqueadero para la bici, pero dan la posbilidad de entrarla al jardÃ­n donde estÃ¡ el Oma. Es un lugar seguro y agradable, pues se puede dejar al lado de la mesa; mientras se disfruta un buen cafÃ©. Obviamente es GRATIS, si se consume.</div>]]></description>
+				<styleUrl>#estilo_147</styleUrl>
+				<Point>
+					<coordinates>-74.075317,4.632094,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>C.P Oma 15 con 72</name>
+				<description><![CDATA[<div dir="ltr">Hay un parqueadero pÃºblico al lado del sitio, se puede dejar y echar ojo desde una mesita del Oma. Sirve si se deja con candado.</div>]]></description>
+				<styleUrl>#estilo_1143</styleUrl>
+				<Point>
+					<coordinates>-74.061188,4.659565,0</coordinates>
+				</Point>
+			</Placemark>
+		</Folder>
+	</Document>
+</Folder>
+</kml>

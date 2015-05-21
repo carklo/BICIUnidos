@@ -2,18 +2,18 @@ package com.sis.biciunidos;
 
 public class Usuario 
 {
-	private int amigos;
+	private long amigos;
 	private String nombreUser;
 	private String nombre;
 	private String lastlatLong;
 	private long lastTime;
-	private double PhoneNumber;
+	private long PhoneNumber;
 	private String email;
-	private double numKilometros;
-	private double ritmo;
-	private double pedalazos;
-	private int caravanas;
-	private int caloriasTotales;
+	private long numKilometros;
+	private long ritmo;
+	private long pedalazos;
+	private long caravanas;
+	private long caloriasTotales;
 	private String keyU;
 	
 	/**
@@ -26,7 +26,7 @@ public class Usuario
 	 * @param ri
 	 * @param pe
 	 */
-	public Usuario(int am, String nomb, String nameUser, String latlong, long last, double num, double ri, double pe, String em, double kil,int car, int cal)
+	public Usuario(long am, String nomb, String nameUser, String latlong, long last, long num, long ri, long pe, String em, long kil,long car, long cal)
 	{
 		setAmigos(am);
 		setNombreUser(nameUser);
@@ -42,11 +42,11 @@ public class Usuario
 		setCaloriasTotales(cal);
 	}
 
-	public int getAmigos() {
+	public long getAmigos() {
 		return amigos;
 	}
 
-	public void setAmigos(int amigos) {
+	public void setAmigos(long amigos) {
 		this.amigos = amigos;
 	}
 
@@ -81,56 +81,56 @@ public class Usuario
 	/**
 	 * @return the numKilom
 	 */
-	public double getNumKilom() {
+	public long getNumKilom() {
 		return numKilometros;
 	}
 
 	/**
 	 * @param numKilom the numKilom to set
 	 */
-	public void setNumKilom(double numKilom) {
+	public void setNumKilom(long numKilom) {
 		this.numKilometros = numKilom;
 	}
 
 	/**
 	 * @return the ritmo
 	 */
-	public double getRitmo() {
+	public long getRitmo() {
 		return ritmo;
 	}
 
 	/**
 	 * @param ritmo the ritmo to set
 	 */
-	public void setRitmo(double ritmo) {
+	public void setRitmo(long ritmo) {
 		this.ritmo = ritmo;
 	}
 
 	/**
 	 * @return the pedalazos
 	 */
-	public double getPedalazos() {
+	public long getPedalazos() {
 		return pedalazos;
 	}
 
 	/**
 	 * @param pedalazos the pedalazos to set
 	 */
-	public void setPedalazos(double pedalazos) {
+	public void setPedalazos(long pedalazos) {
 		this.pedalazos = pedalazos;
 	}
 
 	/**
 	 * @return the phoneNumber
 	 */
-	public double getPhoneNumber() {
+	public long getPhoneNumber() {
 		return PhoneNumber;
 	}
 
 	/**
 	 * @param phoneNumber the phoneNumber to set
 	 */
-	public void setPhoneNumber(double phoneNumber) {
+	public void setPhoneNumber(long phoneNumber) {
 		PhoneNumber = phoneNumber;
 	}
 
@@ -179,28 +179,28 @@ public class Usuario
 	/**
 	 * @return the caravanas
 	 */
-	public int getCaravanas() {
+	public long getCaravanas() {
 		return caravanas;
 	}
 
 	/**
-	 * @param caravanas the caravanas to set
+	 * @param caravanas2 the caravanas to set
 	 */
-	public void setCaravanas(int caravanas) {
-		this.caravanas = caravanas;
+	public void setCaravanas(long caravanas2) {
+		this.caravanas = caravanas2;
 	}
 
 	/**
 	 * @return the caloriasTotales
 	 */
-	public int getCaloriasTotales() {
+	public long getCaloriasTotales() {
 		return caloriasTotales;
 	}
 
 	/**
 	 * @param caloriasTotales the caloriasTotales to set
 	 */
-	public void setCaloriasTotales(int caloriasTotales) {
+	public void setCaloriasTotales(long caloriasTotales) {
 		this.caloriasTotales = caloriasTotales;
 	}
 

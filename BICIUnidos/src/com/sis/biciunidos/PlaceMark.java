@@ -7,6 +7,7 @@ public class PlaceMark
 	private String nombre;
 	private String descripcion;
 	private String coordenadas;
+	private String tipo;
 	
 	/**
 	 * Empty constructor
@@ -50,6 +51,32 @@ public class PlaceMark
 	 */
 	public void setCoordenadas(String coordenadas) {
 		this.coordenadas = coordenadas;
+	}
+
+	/**
+	 * @return the tipo
+	 */
+	public String getTipo() {
+		return tipo;
+	}
+
+	/**
+	 * @param tipo the tipo to set
+	 */
+	public void setTipo(int tip) 
+	{
+		if(tip == Constantes.PLACEMARK_COP)
+		{
+			tipo = "PlPolicia";
+		}
+		else if(tip == Constantes.PLACEMARK_PARK)
+		{
+			tipo = "PlParqueo";
+		}
+		else
+		{
+			tipo = "PlTaller";
+		}
 	}
 	
 }

@@ -49,18 +49,6 @@
         tools:ignore="UnusedAttribute,RtlHardcoded,ContentDescription" />
 
     <ImageButton
-        android:id="@id/chronometer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/contacts"
-        android:layout_alignTop="@id/contacts"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/round_button"
-        android:elevation="5dp"
-        android:src="@drawable/chronometer"
-        tools:ignore="UnusedAttribute,ContentDescription" />
-
-    <ImageButton
         android:id="@id/contacts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -153,5 +141,29 @@
         android:minHeight="0dp"
         android:src="@drawable/support"
         tools:ignore="UnusedAttribute,RtlHardcoded,ContentDescription" />
+
+    <ImageButton
+        android:id="@+id/help"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="3dp"
+        android:layout_marginLeft="35dp"
+        android:layout_toRightOf="@id/police"
+        android:background="@drawable/round_button"
+        android:elevation="5dp"
+        android:src="@drawable/help" />
+
+    <ImageButton
+        android:id="@id/chronometer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/contacts"
+        android:layout_marginRight="35dp"
+        android:layout_toLeftOf="@id/contacts"
+        android:background="@drawable/round_button"
+        android:elevation="5dp"
+        android:src="@drawable/chronometer"
+        tools:ignore="UnusedAttribute,ContentDescription" />
 
 </RelativeLayout>

@@ -55,6 +55,7 @@ import android.view.View.OnClickListener;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.Chronometer;
+import android.widget.Chronometer.OnChronometerTickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -95,6 +96,7 @@ import com.sis.geofirebase.GeoQuery;
 import com.sis.geofirebase.GeoQueryEventListener;
 import com.sis.supportClasses.SphericalUtil;
 
+@SuppressWarnings("deprecation")
 @SuppressLint("InflateParams") public class mapActivity
 extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedListener, LocationListener, com.google.android.gms.location.LocationListener, GeoQueryEventListener, GoogleMap.OnCameraChangeListener
 {
@@ -103,7 +105,7 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 	private String numero;
 	public ArrayList<Marcador> markers = new ArrayList<Marcador>(); //marcadores creados por el usuario para rutas
 	private TextView textTip;
-	public ArrayList<LatLng> marcadores; //posiciones guardadas cuando se activa el modo ruta
+	public ArrayList<LatLng> posicionesTrayecto; //posiciones guardadas cuando se activa el modo ruta
 	private Location initial;
 	private boolean vaARecibirOnLoc0 = false;
 	private int contOnC = 0;
@@ -119,15 +121,25 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 	private Chronometer chr;
 	private ArrayList<PlaceMark>cuadrantes; //informacion de los cuadrantes de la policia
 	private Location actualLocation;
+	private ArrayList<PlaceMark>talleres;
+	private ArrayList<PlaceMark>parqueaderos;
 	private Map<LatLng,Marker> marcadoresCuadrantes;
-	
+	private Map<LatLng, Marker> marcadoresTalleres;
+	private Map<LatLng, Marker> marcadoresParqueaderos;
+	private ArrayList<LatLng> points;
+	private Map<LatLng,Marker> marcadoresTrayecto;
 	protected void onCreate(Bundle paramBundle)
 	{
 		super.onCreate(paramBundle);
 		setContentView(R.layout.activity_map);
-		marcadores = new ArrayList<LatLng>();
+		posicionesTrayecto = new ArrayList<LatLng>();
 		marcadoresCuadrantes = new HashMap<LatLng, Marker>();
+		marcadoresTalleres = new HashMap<LatLng, Marker>();
+		marcadoresParqueaderos = new HashMap<LatLng, Marker>();
 		cuadrantes = new ArrayList<PlaceMark>();
+		talleres = new ArrayList<PlaceMark>();
+		parqueaderos = new ArrayList<PlaceMark>();
+		marcadoresTrayecto = new HashMap<LatLng, Marker>();
 		Gson gson = new Gson();
 		chr = (Chronometer) findViewById(R.id.chronometer1);
 		String jsonObjUser = PreferenceManager.getDefaultSharedPreferences(mapActivity.this.getApplicationContext()).getString("USUARIO", "");
@@ -152,11 +164,11 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 				map.setMyLocationEnabled(true);
 				Log.i("PROCESO", "SE ESTA PIDIENDO LA ULTIMA LOCACION");
 				mGoogleApiClient = new GoogleApiClient.Builder(this)
-		        .addConnectionCallbacks(this)
-		        .addOnConnectionFailedListener(this)
-		        .addApi(LocationServices.API)
-		        .build();
-				mGoogleApiClient.connect();	
+				.addConnectionCallbacks(this)
+				.addOnConnectionFailedListener(this)
+				.addApi(LocationServices.API)
+				.build();
+				mGoogleApiClient.connect(); 
 			}
 		}
 		else
@@ -170,10 +182,10 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 				map.setMyLocationEnabled(true);
 				Log.i("PROCESO", "SE ESTA PIDIENDO LA ULTIMA LOCACION");
 				mGoogleApiClient = new GoogleApiClient.Builder(this)
-		        .addConnectionCallbacks(this)
-		        .addOnConnectionFailedListener(this)
-		        .addApi(LocationServices.API)
-		        .build();
+				.addConnectionCallbacks(this)
+				.addOnConnectionFailedListener(this)
+				.addApi(LocationServices.API)
+				.build();
 				mGoogleApiClient.connect();
 			}
 		}
@@ -182,8 +194,6 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 		eliminarMarcador();
 		((ImageButton) findViewById(R.id.chronometer)).setOnClickListener(new OnClickListener() 
 		{
-			
-			@SuppressWarnings("deprecation")
 			@Override
 			public void onClick(View v) 
 			{
@@ -195,12 +205,26 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 					((ImageButton) findViewById(R.id.chronometer)).setBackgroundDrawable(orange);
 					initTime = System.currentTimeMillis();
 					mGoogleApiClient = new GoogleApiClient.Builder(mapActivity.this)
-			        .addConnectionCallbacks(mapActivity.this)
-			        .addOnConnectionFailedListener(mapActivity.this)
-			        .addApi(LocationServices.API)
-			        .build();
-					mGoogleApiClient.connect();	
-					chr.setFormat("H:MM:SS");
+					.addConnectionCallbacks(mapActivity.this)
+					.addOnConnectionFailedListener(mapActivity.this)
+					.addApi(LocationServices.API)
+					.build();
+					mGoogleApiClient.connect(); 
+					chr.setOnChronometerTickListener(new OnChronometerTickListener()
+					{
+						@Override
+						public void onChronometerTick(Chronometer cArg) {
+							long time = SystemClock.elapsedRealtime() - cArg.getBase();
+							int h   = (int)(time /3600000);
+							int m = (int)(time - h*3600000)/60000;
+							int s= (int)(time - h*3600000- m*60000)/1000 ;
+							String hh = h < 10 ? "0"+h: h+"";
+							String mm = m < 10 ? "0"+m: m+"";
+							String ss = s < 10 ? "0"+s: s+"";
+							cArg.setText(hh+":"+mm+":"+ss);
+						}
+					});
+					chr.setBase(SystemClock.elapsedRealtime());
 					chr.start();
 				}
 				else
@@ -218,72 +242,110 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 					{
 						public void onClick(DialogInterface dialog, int id) 
 						{
+							chr.setOnChronometerTickListener(new OnChronometerTickListener()
+							{
+								@Override
+								public void onChronometerTick(Chronometer cArg) {
+									long time = SystemClock.elapsedRealtime() - cArg.getBase();
+									int h   = (int)(time /3600000);
+									int m = (int)(time - h*3600000)/60000;
+									int s= (int)(time - h*3600000- m*60000)/1000 ;
+									String hh = h < 10 ? "0"+h: h+"";
+									String mm = m < 10 ? "0"+m: m+"";
+									String ss = s < 10 ? "0"+s: s+"";
+									cArg.setText(hh+":"+mm+":"+ss);
+								}
+							});
+							//chr.setBase(SystemClock.elapsedRealtime());
 							chr.start();
 							initTime = System.currentTimeMillis();
 							mGoogleApiClient = new GoogleApiClient.Builder(mapActivity.this)
-					        .addConnectionCallbacks(mapActivity.this)
-					        .addOnConnectionFailedListener(mapActivity.this)
-					        .addApi(LocationServices.API)
-					        .build();
+							.addConnectionCallbacks(mapActivity.this)
+							.addOnConnectionFailedListener(mapActivity.this)
+							.addApi(LocationServices.API)
+							.build();
 							mGoogleApiClient.connect();
 							dialog.dismiss();
 						}
 					});
 					builder1.setNegativeButton("Reiniciar", new DialogInterface.OnClickListener() 
 					{
-						
 						@Override
 						public void onClick(DialogInterface dialog, int which) 
 						{
-							chr.setBase(0L);
+							chr.setOnChronometerTickListener(new OnChronometerTickListener()
+							{
+								@Override
+								public void onChronometerTick(Chronometer cArg) {
+									long time = SystemClock.elapsedRealtime() - cArg.getBase();
+									int h   = (int)(time /3600000);
+									int m = (int)(time - h*3600000)/60000;
+									int s= (int)(time - h*3600000- m*60000)/1000 ;
+									String hh = h < 10 ? "0"+h: h+"";
+									String mm = m < 10 ? "0"+m: m+"";
+									String ss = s < 10 ? "0"+s: s+"";
+									cArg.setText(hh+":"+mm+":"+ss);
+								}
+							});
+							chr.setText("00:00.00");
+							chr.setBase(SystemClock.elapsedRealtime());
 							chr.start();
 							for (Marker marker: markersF.values()) 
 							{
-					            marker.remove();
-					        }
-					        markersF.clear();
-					      //Segunda vez que se da a ejecutar al boton. Cancelar?
+								marker.remove();
+							}
+							markersF.clear();
+							posicionesTrayecto = new ArrayList<LatLng>();
+							for (Marker marker: marcadoresTrayecto.values()) 
+							{
+								marker.remove();
+							}
+							marcadoresTrayecto.clear();
+							//Segunda vez que se da a ejecutar al boton. Reiniciar
 							LocationServices.FusedLocationApi.removeLocationUpdates( mGoogleApiClient, (com.google.android.gms.location.LocationListener) mapActivity.this);
 							// remove all event listeners to stop updating in the background
 							geoQuery.removeAllListeners();
-							chr.start();
 							initTime = System.currentTimeMillis();
 							mGoogleApiClient = new GoogleApiClient.Builder(mapActivity.this)
-					        .addConnectionCallbacks(mapActivity.this)
-					        .addOnConnectionFailedListener(mapActivity.this)
-					        .addApi(LocationServices.API)
-					        .build();
+							.addConnectionCallbacks(mapActivity.this)
+							.addOnConnectionFailedListener(mapActivity.this)
+							.addApi(LocationServices.API)
+							.build();
 							mGoogleApiClient.connect();
 							dialog.dismiss();
 						}
 					});
 					builder1.setNeutralButton("Apagar", new DialogInterface.OnClickListener() 
 					{
-						
 						@Override
 						public void onClick(DialogInterface dialog, int which) 
 						{
-							
+							//Segunda vez que se da a ejecutar al boton. Cancelar?
+							LocationServices.FusedLocationApi.removeLocationUpdates( mGoogleApiClient, (com.google.android.gms.location.LocationListener) mapActivity.this);
+							// remove all event listeners to stop updating in the background
+							Drawable blue = getResources().getDrawable(R.drawable.round_button);
+							((ImageButton) findViewById(R.id.chronometer)).setBackgroundDrawable(blue);
+							geoQuery.removeAllListeners();
+							for (Marker marker: markersF.values()) {
+								marker.remove();
+							}
+							markersF.clear();
+							for (Marker marker: marcadoresTrayecto.values()) 
+							{
+								marker.remove();
+							}
+							marcadoresTrayecto.clear();
+							posicionesTrayecto = new ArrayList<LatLng>();
+							chr.setText("00:00:00");
+							contBtn = 0;
 						}
 					});
 					AlertDialog alert11 = builder1.create();
 					alert11.show();
-					//Segunda vez que se da a ejecutar al boton. Cancelar?
-					LocationServices.FusedLocationApi.removeLocationUpdates( mGoogleApiClient, (com.google.android.gms.location.LocationListener) mapActivity.this);
-					// remove all event listeners to stop updating in the background
-					Drawable orange = getResources().getDrawable(R.drawable.round_button);
-					((ImageButton) findViewById(R.id.chronometer)).setBackgroundDrawable(orange);
-					geoQuery.removeAllListeners();
-			        for (Marker marker: markersF.values()) {
-			            marker.remove();
-			        }
-			        markersF.clear();
-			        chr.stop();
-					contBtn = 0;
+					
 				}
 			}
 		});
-		
 		((ImageButton) findViewById(R.id.btnClean)).setOnClickListener(new OnClickListener() 
 		{
 
@@ -293,8 +355,83 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 				limpiarMapa();
 			}
 		});
+		((ImageButton)findViewById(R.id.support)).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) 
+			{
+				if(marcadoresParqueaderos.size()==0)
+				{
+					saxQuadrantsParserTask sqpt = new saxQuadrantsParserTask(mapActivity.this, false);
+					sqpt.execute();
+				}
+				else
+				{
+					AlertDialog.Builder builder1 = new AlertDialog.Builder(mapActivity.this);
+					builder1.setMessage("Actualmente ya se encuentra desplegada la informacion de los cuadrantes.");
+					builder1.setCancelable(true);
+					builder1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() 
+					{
+						public void onClick(DialogInterface dialog, int id) 
+						{
+							dialog.cancel();
+						}
+					});
+					AlertDialog alert11 = builder1.create();
+					alert11.show();
+				}
+			}
+		});
+		((ImageButton)findViewById(R.id.help)).setOnClickListener(new OnClickListener() 
+		{
+			@Override
+			public void onClick(View v) 
+			{
+				if(marcadoresTalleres.size() == 0)
+				{
+					AlertDialog.Builder builder1 = new AlertDialog.Builder(mapActivity.this);
+					builder1.setMessage("No se ha cargado la información de ayuda al ciclista.");
+					builder1.setCancelable(true);
+					builder1.setTitle("Error!");
+					builder1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() 
+					{
+						public void onClick(DialogInterface dialog, int id) 
+						{
+							dialog.cancel();
+						}
+					});
+					AlertDialog alert11 = builder1.create();
+					alert11.show();
+				}
+				else
+				{
+					String[] opciones = {"Taller mas cercano","Parqueadero mas cercano"};
+					AlertDialog.Builder builder1 = new AlertDialog.Builder(mapActivity.this);
+					builder1.setTitle("Escoja una opción:");
+					builder1.setItems(opciones, new DialogInterface.OnClickListener() 
+					{
+						@Override
+						public void onClick(DialogInterface dialog, int which) 
+						{
+							if(which == 0)
+							{
+								System.out.println("LLEGO A TALLER MAS CERCANO");
+								LatLng taller = calcularTallerMasCercano(new LatLng(actualLocation.getLatitude(), actualLocation.getLongitude()));
+								System.out.println(taller.toString());
+								resaltarTaller(taller);
+							}
+							else
+							{
+								LatLng parq = calcularParqueaderoMasCercano(new LatLng(actualLocation.getLatitude(), actualLocation.getLongitude()));
+								resaltarParqueadero(parq);
+							}
+						}
+					});
+					AlertDialog alert11 = builder1.create();
+					alert11.show();
+				}
+			}
+		});
 		((ImageButton) findViewById(R.id.police)).setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View v) 
 			{
@@ -319,23 +456,35 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 					LatLng pos = calcularCuadranteMasCercano(new LatLng(actualLocation.getLatitude(), actualLocation.getLongitude()));
 					contactarCuadrante(pos);
 				}
-				
 			}
 		});
 		((ImageButton) findViewById(R.id.station)).setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View v) 
 			{
 				if(marcadoresCuadrantes.size()==0)
 				{
-					saxQuadrantsParserTask sqpt = new saxQuadrantsParserTask(mapActivity.this);
+					saxQuadrantsParserTask sqpt = new saxQuadrantsParserTask(mapActivity.this, true);
 					sqpt.execute();
+				}
+				else
+				{
+					AlertDialog.Builder builder1 = new AlertDialog.Builder(mapActivity.this);
+					builder1.setMessage("Actualmente ya se encuentra desplegada la informacion de los cuadrantes.");
+					builder1.setCancelable(true);
+					builder1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() 
+					{
+						public void onClick(DialogInterface dialog, int id) 
+						{
+							dialog.cancel();
+						}
+					});
+					AlertDialog alert11 = builder1.create();
+					alert11.show();
 				}
 			}
 		});
 		((ImageButton) findViewById(R.id.btnFind)).setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View v) 
 			{
@@ -499,7 +648,6 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 												contIni++;
 											}
 										}
-										
 										if(contIni==0)
 										{
 											Marcador m = new Marcador(new LatLng(d1,d2), 0);
@@ -523,7 +671,6 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 											AlertDialog alert11 = builder1.create();
 											alert11.show();
 										}
-										
 									}
 									else if(sel==R.id.radTipMar1)
 									{
@@ -713,7 +860,6 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 				{
 					Marcador m = markers.get(i);
 					String tipo = m.getTipo();
-					
 					if(tipo.equals("Inicio"))
 					{
 						ini = m.getPosicion();
@@ -893,12 +1039,11 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 		// Executes in UI thread, after the parsing process
 		@Override
 		protected void onPostExecute(List<List<HashMap<String, String>>> result) {
-
-			ArrayList<LatLng> points = null;
+			points = null;
 			PolylineOptions lineOptions = null;
-
 			// Traversing through all the routes
-			for(int i=0;i<result.size();i++){
+			for(int i=0;i<result.size();i++)
+			{
 				points = new ArrayList<LatLng>();
 				lineOptions = new PolylineOptions();
 
@@ -926,7 +1071,6 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 			map.addPolyline(lineOptions);
 		}
 	}
-	
 	private class DownloadAddressTask extends AsyncTask<String, Void, JSONObject>
 	{
 
@@ -934,54 +1078,50 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 		protected JSONObject doInBackground(String... url) 
 		{
 			HttpGet httpGet = new HttpGet(url[0]);
-		    HttpClient client = new DefaultHttpClient();
-		    HttpResponse response;
-		    StringBuilder stringBuilder = new StringBuilder();
+			HttpClient client = new DefaultHttpClient();
+			HttpResponse response;
+			StringBuilder stringBuilder = new StringBuilder();
 
-		    try 
-		    {
-		        response = client.execute(httpGet);
-		        HttpEntity entity = response.getEntity();
-		        InputStream stream = entity.getContent();
-		        int b;
-		        while ((b = stream.read()) != -1) 
-		        {
-		            stringBuilder.append((char) b);
-		        }
-		    } 
-		    catch (ClientProtocolException e) 
-		    {
-		    } 
-		    catch (IOException e) 
-		    {
-		    }
+			try 
+			{
+				response = client.execute(httpGet);
+				HttpEntity entity = response.getEntity();
+				InputStream stream = entity.getContent();
+				int b;
+				while ((b = stream.read()) != -1) 
+				{
+					stringBuilder.append((char) b);
+				}
+			} 
+			catch (ClientProtocolException e) 
+			{
+			} 
+			catch (IOException e) 
+			{
+			}
 
-		    JSONObject jsonObject = new JSONObject();
-		    try {
-		        jsonObject = new JSONObject(stringBuilder.toString());
-		    } catch (JSONException e) {
-		        e.printStackTrace();
-		    }
+			JSONObject jsonObject = new JSONObject();
+			try {
+				jsonObject = new JSONObject(stringBuilder.toString());
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 
-		    return jsonObject;
+			return jsonObject;
 		}
-		
 		@Override
 		protected void onPostExecute(JSONObject jsonObject)
 		{
 			super.onPostExecute(jsonObject);
-			
 			ParserAddressTask pat = new ParserAddressTask();
 			pat.execute(jsonObject);
 		}
 	}
-	
 	private String generateURL(LatLng latlng)
 	{
 		String url = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+ latlng.latitude+","+latlng.longitude +"&sensor=true";
 		return url;
 	}
-	
 	private class ParserAddressTask extends AsyncTask<JSONObject, Void, String>
 	{
 
@@ -989,56 +1129,55 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 		protected String doInBackground(JSONObject... jSonObject) 
 		{
 			JSONObject jsonObj = jSonObject[0];
-		    Log.i("JSON string =>", jsonObj.toString());
+			Log.i("JSON string =>", jsonObj.toString());
 
-		    String currentLocation = "";
-		    String street_address = null;
-		    //String postal_code = null; 
+			String currentLocation = "";
+			String street_address = null;
+			//String postal_code = null; 
 
-		    try {
-		        String status = jsonObj.getString("status").toString();
-		        Log.i("status", status);
+			try {
+				String status = jsonObj.getString("status").toString();
+				Log.i("status", status);
 
-		        if(status.equalsIgnoreCase("OK")){
-		            JSONArray results = jsonObj.getJSONArray("results");
-		            int i = 0;
-		            do{
+				if(status.equalsIgnoreCase("OK")){
+					JSONArray results = jsonObj.getJSONArray("results");
+					int i = 0;
+					do{
 
-		                JSONObject r = results.getJSONObject(i);
-		                JSONArray typesArray = r.getJSONArray("types");
-		                String types = typesArray.getString(0);
+						JSONObject r = results.getJSONObject(i);
+						JSONArray typesArray = r.getJSONArray("types");
+						String types = typesArray.getString(0);
 
-		                if(types.equalsIgnoreCase("street_address")){
-		                    street_address = r.getString("formatted_address").split(",")[0];
-		                    Log.i("street_address", street_address);
-		                }
-//		                else if(types.equalsIgnoreCase("postal_code")){
-//		                    postal_code = r.getString("formatted_address");
-//		                    Log.i("postal_code", postal_code);
-//		                }
+						if(types.equalsIgnoreCase("street_address")){
+							street_address = r.getString("formatted_address").split(",")[0];
+							Log.i("street_address", street_address);
+						}
+						//                else if(types.equalsIgnoreCase("postal_code")){
+						//                    postal_code = r.getString("formatted_address");
+						//                    Log.i("postal_code", postal_code);
+						//                }
 
-		                if(street_address!=null){
-		                    currentLocation = street_address;
-		                    Log.d("Current Location =>", currentLocation); //Delete this
-		                    i = results.length();
-		                }
+						if(street_address!=null){
+							currentLocation = street_address;
+							Log.d("Current Location =>", currentLocation); //Delete this
+							i = results.length();
+						}
 
-		                i++;
-		            }while(i<results.length());
+						i++;
+					}while(i<results.length());
 
-		            Log.i("JSON Geo Locatoin =>", currentLocation);
-		            return currentLocation;
-		        }
+					Log.i("JSON Geo Locatoin =>", currentLocation);
+					return currentLocation;
+				}
 
-		    } 
-		    catch (JSONException e) 
-		    {
-		        Log.e("testing","Failed to load JSON");
-		        e.printStackTrace();
-		    }
-		    return null;
+			} 
+			catch (JSONException e) 
+			{
+				Log.e("testing","Failed to load JSON");
+				e.printStackTrace();
+			}
+			return null;
 		}
-		
 		@Override
 		protected void onPostExecute(String res)
 		{
@@ -1047,12 +1186,10 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 			Toast.makeText(mapActivity.this.getApplicationContext(), res, Toast.LENGTH_LONG).show();
 		}
 	}
-	
 	private void eliminarMarcador()
 	{
 		this.map.setOnInfoWindowClickListener(new OnInfoWindowClickListener() 
 		{
-			
 			@Override
 			public void onInfoWindowClick(Marker marker) 
 			{
@@ -1068,163 +1205,171 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 						break;
 					}
 				}
-				markers.remove(posRemove);
+				if(posRemove == -1)
+				{
+				}
+				else
+				{
+					markers.remove(posRemove);
+				} 
 			}
 		});
 	}
-	
 	private void limpiarMapa()
 	{
 		map.clear();
 		markers = new ArrayList<Marcador>();
+		cuadrantes = new ArrayList<PlaceMark>();
+		talleres = new ArrayList<PlaceMark>();
+		parqueaderos = new ArrayList<PlaceMark>();
+		marcadoresCuadrantes = new HashMap<LatLng, Marker>();
+		marcadoresParqueaderos = new HashMap<LatLng, Marker>();
+		marcadoresTalleres = new HashMap<LatLng, Marker>();
 	}
-	
-	
-//	private class checkConnectionTask extends AsyncTask<Context, Void, String>
-//	{
-//		private mapActivity map;
-//		
-//		public checkConnectionTask(mapActivity m)
-//		{
-//			map = m;
-//		}
-//		@Override
-//		protected String doInBackground(Context... params) 
-//		{
-//			String res = null;
-//			ConnectivityManager connectivity = (ConnectivityManager) params[0].getSystemService(Context.CONNECTIVITY_SERVICE);
-//			NetworkInfo nf=connectivity.getActiveNetworkInfo();
-//			if(nf != null && nf.isConnected()==true )
-//			{
-//				res = "true";
-//			}
-//			else
-//			{
-//				res = "false";
-//			}
-//		    return res;
-//		}
-//		
-//		protected void onPostExecute(String res)
-//		{
-//			Log.e("PROCESO","termino el proceso de chequeo de conexion =" + res);
-//			map.processTracking(res);
-//		}
-//	}
-	
-//	private class ContinuosTracking extends AsyncTask<Context, Void, Void>
-//	{
-//		private mapActivity mapA;
-//		private int modo;
-//		public ContinuosTracking(mapActivity ma, int mod)
-//		{
-//			mapA = ma;
-//			modo = mod;
-//		}
-//
-//		@Override
-//		protected Void doInBackground(Context... params) 
-//		{
-//			final Context con = params[0];
-//			if(modo ==  Constantes.GSM_TRACKER)
-//			{
-//				while(mapA.endTracking == false)
-//				{
-//					
-//				}
-//			}
-//			else
-//			{
-//				while(mapA.endTracking == false)
-//				{
-//					try 
-//					{
-//						mapA.runOnUiThread(new Runnable() {
-//
-//							@Override
-//							public void run() 
-//							{
-//								Toast.makeText(con, "Va comenzar el minuto y medio", Toast.LENGTH_LONG).show();
-//
-//							}
-//						});
-//						Thread.sleep(90000); // 1 minuto y medio
-//						mapA.runOnUiThread(new Runnable() {
-//							
-//							@Override
-//							public void run() 
-//							{
-//								Toast.makeText(con, "Termino el minuto y medio", Toast.LENGTH_LONG).show();
-//							}
-//						});
-//						LocationManager locationManager = (LocationManager) params[0].getSystemService(Context.LOCATION_SERVICE);
-//						Criteria criteria = new Criteria();
-//						final Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
-//						mapA.marcadores.add(new LatLng(location.getLatitude(), location.getLongitude()));
-//						mapA.runOnUiThread(new Runnable() 
-//						{
-//							@Override
-//							public void run() 
-//							{
-//								map.addMarker(new MarkerOptions()
-//								.position(new LatLng(location.getLatitude(), location.getLongitude()))
-//								.icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
-//							}
-//						});
-//					} 
-//					catch (InterruptedException e) 
-//					{
-//						e.printStackTrace();
-//					}
-//					
-//				}
-//			}
-//			return null;
-//		}
-//	}
-//	private void starTracking()
-//	{
-//		checkConnectionTask cct = new checkConnectionTask(this);
-//		Log.e("PROCESO", "Va ejecutar el chequeo de conexion");
-//		cct.execute(mapActivity.this.getApplicationContext());
-//	}
-//	
-//	private void processTracking(String res)
-//	{
-//		if(res.equals("false"))
-//		{
-//			AlertDialog.Builder builder1 = new AlertDialog.Builder(mapActivity.this);
-//			builder1.setMessage("Actualmente no hay conexion, se utilizara la opcion de ubicacion por GSM");
-//			builder1.setCancelable(true);
-//			builder1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() 
-//			{
-//				public void onClick(DialogInterface dialog, int id) 
-//				{
-//					dialog.cancel();
-//				}
-//			});
-//			AlertDialog alert11 = builder1.create();
-//			alert11.show();
-//			ContinuosTracking ct = new ContinuosTracking(this, Constantes.GSM_TRACKER);
-//		}
-//		else
-//		{
-//			Log.e("PROCESO", "va a obtener una primera ubicacion ya que hay conexion");
-//			LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-//			Criteria criteria = new Criteria();
-//			Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
-//			if(location != null)
-//			{
-//				Log.e("PROCESO", "primera location: "+ location.getLatitude()+";"+location.getLongitude());
-//				marcadores.add(new LatLng(location.getLatitude(), location.getLongitude()));
-//				map.addMarker(new MarkerOptions()
-//				.position(new LatLng(location.getLatitude(), location.getLongitude()))
-//				.icon(BitmapDescriptorFactory.fromResource(R.drawable.start)));
-//				Log.e("PROCESO", "debio poner el marcador");
-//				ContinuosTracking ct = new ContinuosTracking(this, Constantes.NETWORK_TRACKER);
-//			}	
-//		}
-//	}
+	// private class checkConnectionTask extends AsyncTask<Context, Void, String>
+	// {
+	// private mapActivity map;
+	// 
+	// public checkConnectionTask(mapActivity m)
+	// {
+	// map = m;
+	// }
+	// @Override
+	// protected String doInBackground(Context... params) 
+	// {
+	// String res = null;
+	// ConnectivityManager connectivity = (ConnectivityManager) params[0].getSystemService(Context.CONNECTIVITY_SERVICE);
+	// NetworkInfo nf=connectivity.getActiveNetworkInfo();
+	// if(nf != null && nf.isConnected()==true )
+	// {
+	// res = "true";
+	// }
+	// else
+	// {
+	// res = "false";
+	// }
+	//    return res;
+	// }
+	// 
+	// protected void onPostExecute(String res)
+	// {
+	// Log.e("PROCESO","termino el proceso de chequeo de conexion =" + res);
+	// map.processTracking(res);
+	// }
+	// }
+	// private class ContinuosTracking extends AsyncTask<Context, Void, Void>
+	// {
+	// private mapActivity mapA;
+	// private int modo;
+	// public ContinuosTracking(mapActivity ma, int mod)
+	// {
+	// mapA = ma;
+	// modo = mod;
+	// }
+	//
+	// @Override
+	// protected Void doInBackground(Context... params) 
+	// {
+	// final Context con = params[0];
+	// if(modo ==  Constantes.GSM_TRACKER)
+	// {
+	// while(mapA.endTracking == false)
+	// {
+	// 
+	// }
+	// }
+	// else
+	// {
+	// while(mapA.endTracking == false)
+	// {
+	// try 
+	// {
+	// mapA.runOnUiThread(new Runnable() {
+	//
+	// @Override
+	// public void run() 
+	// {
+	// Toast.makeText(con, "Va comenzar el minuto y medio", Toast.LENGTH_LONG).show();
+	//
+	// }
+	// });
+	// Thread.sleep(90000); // 1 minuto y medio
+	// mapA.runOnUiThread(new Runnable() {
+	// 
+	// @Override
+	// public void run() 
+	// {
+	// Toast.makeText(con, "Termino el minuto y medio", Toast.LENGTH_LONG).show();
+	// }
+	// });
+	// LocationManager locationManager = (LocationManager) params[0].getSystemService(Context.LOCATION_SERVICE);
+	// Criteria criteria = new Criteria();
+	// final Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
+	// mapA.marcadores.add(new LatLng(location.getLatitude(), location.getLongitude()));
+	// mapA.runOnUiThread(new Runnable() 
+	// {
+	// @Override
+	// public void run() 
+	// {
+	// map.addMarker(new MarkerOptions()
+	// .position(new LatLng(location.getLatitude(), location.getLongitude()))
+	// .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
+	// }
+	// });
+	// } 
+	// catch (InterruptedException e) 
+	// {
+	// e.printStackTrace();
+	// }
+	// 
+	// }
+	// }
+	// return null;
+	// }
+	// }
+	// private void starTracking()
+	// {
+	// checkConnectionTask cct = new checkConnectionTask(this);
+	// Log.e("PROCESO", "Va ejecutar el chequeo de conexion");
+	// cct.execute(mapActivity.this.getApplicationContext());
+	// }
+	// 
+	// private void processTracking(String res)
+	// {
+	// if(res.equals("false"))
+	// {
+	// AlertDialog.Builder builder1 = new AlertDialog.Builder(mapActivity.this);
+	// builder1.setMessage("Actualmente no hay conexion, se utilizara la opcion de ubicacion por GSM");
+	// builder1.setCancelable(true);
+	// builder1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() 
+	// {
+	// public void onClick(DialogInterface dialog, int id) 
+	// {
+	// dialog.cancel();
+	// }
+	// });
+	// AlertDialog alert11 = builder1.create();
+	// alert11.show();
+	// ContinuosTracking ct = new ContinuosTracking(this, Constantes.GSM_TRACKER);
+	// }
+	// else
+	// {
+	// Log.e("PROCESO", "va a obtener una primera ubicacion ya que hay conexion");
+	// LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+	// Criteria criteria = new Criteria();
+	// Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
+	// if(location != null)
+	// {
+	// Log.e("PROCESO", "primera location: "+ location.getLatitude()+";"+location.getLongitude());
+	// marcadores.add(new LatLng(location.getLatitude(), location.getLongitude()));
+	// map.addMarker(new MarkerOptions()
+	// .position(new LatLng(location.getLatitude(), location.getLongitude()))
+	// .icon(BitmapDescriptorFactory.fromResource(R.drawable.start)));
+	// Log.e("PROCESO", "debio poner el marcador");
+	// ContinuosTracking ct = new ContinuosTracking(this, Constantes.NETWORK_TRACKER);
+	// } 
+	// }
+	// }
 
 	@Override
 	public void onConnected(Bundle connectionHint) 
@@ -1248,7 +1393,7 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 				map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 				searchCircle = map.addCircle(new CircleOptions().center(new LatLng(location.getLatitude(), location.getLongitude())).radius(1000));
 				this.searchCircle.setFillColor(Color.argb(66, 255, 0, 255));
-		        this.searchCircle.setStrokeColor(Color.argb(66, 0, 0, 0));
+				this.searchCircle.setStrokeColor(Color.argb(66, 0, 0, 0));
 				UiSettings localUiSettings2 = this.map.getUiSettings();
 				localUiSettings2.setMyLocationButtonEnabled(true);
 				localUiSettings2.setZoomControlsEnabled(true);
@@ -1309,7 +1454,6 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 				.tilt(40)                   // Sets the tilt of the camera to 30 degrees
 				.build();                   // Creates a CameraPosition from the builder
 				map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-				
 			}
 			else
 			{
@@ -1323,38 +1467,39 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 		}
 		else
 		{
-			if(marcadores.size() == 0)
+			if(posicionesTrayecto.size() == 0)
 			{
 				LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
-				map.addMarker(new MarkerOptions().position(latlng).icon(BitmapDescriptorFactory.fromResource(R.drawable.start)));
-				marcadores.add(latlng);	
+				Marker m = map.addMarker(new MarkerOptions().position(latlng).icon(BitmapDescriptorFactory.fromResource(R.drawable.start)));
+				marcadoresTrayecto.put(latlng, m);
+				posicionesTrayecto.add(latlng); 
 				String userName = user.getNombreUser();
 				geoQuery = this.geoFire.queryAtLocation(new GeoLocation(location.getLatitude(),location.getLongitude()),1);
 				this.geoQuery.addGeoQueryEventListener(this);
 				geoFire.setLocation("users/"+user.getKeyU()+"/"+userName+"/lastlatLong", new GeoLocation(latlng.latitude, latlng.longitude), new CompletionListener() {
-					
 					@Override
 					public void onComplete(String key, FirebaseError error) 
 					{
 						if (error != null) 
 						{
-				            System.err.println("There was an error saving the location to GeoFire: " + error);
-				        } 
+							System.err.println("There was an error saving the location to GeoFire: " + error);
+						} 
 						else 
 						{
-				            System.out.println("Location saved on server successfully!");
-				        }
+							System.out.println("Location saved on server successfully!");
+						}
 					}
 				});
 			}
-			else if(marcadores.size() == 1)
+			else if(posicionesTrayecto.size() == 1)
 			{
 				LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
 				inicial = map.addMarker(new MarkerOptions().position(latlng).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
-				marcadores.add(latlng);
+				marcadoresTrayecto.put(latlng, inicial);
+				posicionesTrayecto.add(latlng);
 				animateMarkerTo(inicial, latlng.latitude, latlng.longitude);
 				String userName = user.getNombreUser();
-				geoQuery = this.geoFire.queryAtLocation(new GeoLocation(location.getLatitude(),location.getLongitude()),1);
+				geoQuery = this.geoFire.queryAtLocation(new GeoLocation(location.getLatitude(),location.getLongitude()),50);
 				this.geoQuery.addGeoQueryEventListener(this);
 				geoFire.setLocation("users/"+user.getKeyU()+"/"+userName+"/lastlatLong", new GeoLocation(latlng.latitude, latlng.longitude), new CompletionListener() {
 
@@ -1375,10 +1520,10 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 			else
 			{
 				LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
-				marcadores.add(latlng);
+				posicionesTrayecto.add(latlng);
 				animateMarkerTo(inicial, latlng.latitude, latlng.longitude);
 				String userName = user.getNombreUser();
-				geoQuery = this.geoFire.queryAtLocation(new GeoLocation(location.getLatitude(),location.getLongitude()),1);
+				geoQuery = this.geoFire.queryAtLocation(new GeoLocation(location.getLatitude(),location.getLongitude()),30);
 				this.geoQuery.addGeoQueryEventListener(this);
 				geoFire.setLocation("users/"+user.getKeyU()+"/"+userName+"/lastlatLong", new GeoLocation(latlng.latitude, latlng.longitude), new CompletionListener() {
 
@@ -1397,7 +1542,6 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 				});
 			}
 		}
-		
 	}
 
 	@Override
@@ -1425,122 +1569,134 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 	public void onKeyEntered(String key, GeoLocation location) 
 	{
 		Marker marker = this.map.addMarker(new MarkerOptions().
-		icon(BitmapDescriptorFactory.fromResource(R.drawable.fmarker))
-		.position(new LatLng(location.latitude, location.longitude)));
+				icon(BitmapDescriptorFactory.fromResource(R.drawable.fmarker))
+				.position(new LatLng(location.latitude, location.longitude)));
 		markersF.put(key, marker);
-        System.out.println(key);
+		System.out.println(key);
 	}
 
 	@Override
 	public void onKeyExited(String key) 
 	{
 		Marker marker = this.markersF.get(key);
-        if (marker != null) {
-            marker.remove();
-            this.markersF.remove(key);
-        }
+		if (marker != null) {
+			marker.remove();
+			this.markersF.remove(key);
+		}
 	}
 
 	@Override
 	public void onKeyMoved(String key, GeoLocation location) 
 	{
 		// Move the marker
-        Marker marker = this.markersF.get(key);
-        if (marker != null) {
-            this.animateMarkerTo(marker, location.latitude, location.longitude);
-        }
+		Marker marker = this.markersF.get(key);
+		if (marker != null) {
+			this.animateMarkerTo(marker, location.latitude, location.longitude);
+		}
 	}
 
 	@Override
 	public void onGeoQueryReady() 
 	{
-		
 	}
 
 	@Override
 	public void onGeoQueryError(FirebaseError error) 
 	{
 		new AlertDialog.Builder(this)
-        .setTitle("Error")
-        .setMessage("There was an unexpected error querying GeoFire: " + error.getMessage())
-        .setPositiveButton(android.R.string.ok, null)
-        .setIcon(android.R.drawable.ic_dialog_alert)
-        .show();
+		.setTitle("Error")
+		.setMessage("There was an unexpected error querying GeoFire: " + error.getMessage())
+		.setPositiveButton(android.R.string.ok, null)
+		.setIcon(android.R.drawable.ic_dialog_alert)
+		.show();
 	}
 
 	@Override
 	public void onCameraChange(CameraPosition position) 
 	{
 		// Update the search criteria for this geoQuery and the circle on the map
-        LatLng center = position.target;
-        double radius = zoomLevelToRadius(position.zoom);
-        this.searchCircle.setCenter(center);
-        this.searchCircle.setRadius(radius);
-        this.geoQuery.setCenter(new GeoLocation(center.latitude, center.longitude));
-        // radius in km
-        this.geoQuery.setRadius(radius/1000);
+		LatLng center = position.target;
+		double radius = zoomLevelToRadius(position.zoom);
+		this.searchCircle.setCenter(center);
+		this.searchCircle.setRadius(radius);
+		this.geoQuery.setCenter(new GeoLocation(center.latitude, center.longitude));
+		// radius in km
+		this.geoQuery.setRadius(radius/1000);
 	}
 
-	 private void animateMarkerTo(final Marker marker, final double lat, final double lng) 
-	 {
-	        final Handler handler = new Handler();
-	        final long start = SystemClock.uptimeMillis();
-	        final long DURATION_MS = 2800;
-	        final Interpolator interpolator = new AccelerateDecelerateInterpolator();
-	        final LatLng startPosition = marker.getPosition();
-	        handler.post(new Runnable() {
-	            @Override
-	            public void run() {
-	                float elapsed = SystemClock.uptimeMillis() - start;
-	                float t = elapsed/DURATION_MS;
-	                float v = interpolator.getInterpolation(t);
+	private void animateMarkerTo(final Marker marker, final double lat, final double lng) 
+	{
+		final Handler handler = new Handler();
+		final long start = SystemClock.uptimeMillis();
+		final long DURATION_MS = 2800;
+		final Interpolator interpolator = new AccelerateDecelerateInterpolator();
+		final LatLng startPosition = marker.getPosition();
+		handler.post(new Runnable() {
+			@Override
+			public void run() {
+				float elapsed = SystemClock.uptimeMillis() - start;
+				float t = elapsed/DURATION_MS;
+				float v = interpolator.getInterpolation(t);
 
-	                double currentLat = (lat - startPosition.latitude) * v + startPosition.latitude;
-	                double currentLng = (lng - startPosition.longitude) * v + startPosition.longitude;
-	                marker.setPosition(new LatLng(currentLat, currentLng));
+				double currentLat = (lat - startPosition.latitude) * v + startPosition.latitude;
+				double currentLng = (lng - startPosition.longitude) * v + startPosition.longitude;
+				marker.setPosition(new LatLng(currentLat, currentLng));
 
-	                // if animation is not finished yet, repeat
-	                if (t < 1) {
-	                    handler.postDelayed(this, 16);
-	                }
-	            }
-	        });
-	    }
-	 
-	 private double zoomLevelToRadius(double zoomLevel) 
-	 {
-		 return 16384000/Math.pow(2, zoomLevel);
-	 }
-	 
-	 private class saxQuadrantsParserTask extends AsyncTask<Void, Void, Boolean>
-	 {
-		 private ProgressDialog dialog;
-		 
-		 public saxQuadrantsParserTask(mapActivity activity) 
-		 {
-			 dialog = new ProgressDialog(activity);
-		 }
-		 
-		 @Override
-		 protected void onPreExecute() 
-		 {
-			 dialog.setMessage("Cargando la información al mapa. Por favor espere...");
-			 dialog.show();
-		 }
-		 
-		 @Override
-		 protected void onPostExecute(Boolean result) 
-		 {
-			 if(result)
-			 {
-				 if (dialog.isShowing()) 
-				 {
-					 dialog.dismiss();
-				 }
-				 dibujarCuadrantes();
-			 }
-		 }
-		 
+				// if animation is not finished yet, repeat
+				if (t < 1) {
+					handler.postDelayed(this, 16);
+				}
+			}
+		});
+	}
+
+	private double zoomLevelToRadius(double zoomLevel) 
+	{
+		return 16384000/Math.pow(2, zoomLevel);
+	}
+
+	private class saxQuadrantsParserTask extends AsyncTask<Void, Void, Boolean>
+	{
+		private ProgressDialog dialog;
+		private boolean cop;
+
+		public saxQuadrantsParserTask(mapActivity activity, boolean co) 
+		{
+			dialog = new ProgressDialog(activity);
+			cop = co;
+		}
+
+		@Override
+		protected void onPreExecute() 
+		{
+			dialog.setMessage("Cargando la información al mapa. Por favor espere...");
+			dialog.show();
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result) 
+		{
+			if(result)
+			{	
+				if(cop)
+				{
+					dibujarCuadrantes();
+					if (dialog.isShowing()) 
+					{
+						dialog.dismiss();
+					}
+				}
+				else
+				{
+					dibujarTallerParqueaderos();
+					if (dialog.isShowing()) 
+					{
+						dialog.dismiss();
+					}
+				}
+			}
+		}
+
 		@Override
 		protected Boolean doInBackground(Void... params) 
 		{
@@ -1549,80 +1705,119 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 			{
 				SAXParserFactory factory = SAXParserFactory.newInstance();
 				SAXParser saxParser = factory.newSAXParser();
-				 
-				 DefaultHandler handler = new DefaultHandler()
-				 {
-					 boolean bname = false;
-					 boolean bdescr = false;
-					 boolean bcoord = false;
-					 PlaceMark pl = null;
-					 
-					 public void startElement(String uri, String localName,String qName, org.xml.sax.Attributes attributes)
-					 {
-						 if(qName.equalsIgnoreCase("Placemark"))
-						 {
-							 pl = new PlaceMark();
-						 }
-						 else if(qName.equalsIgnoreCase("name"))
-						 {
-							 bname = true;
-						 }
-						 else if(qName.equalsIgnoreCase("description"))
-						 {
-							 bdescr = true;
-						 }
-						 else if(qName.equalsIgnoreCase("coordinates"))
-						 {
-							 bcoord = true;
-						 }
-					 }
-					 
-					 public void endElement(String uri, String localName, String qName)
-					 {
-						 if(qName.equalsIgnoreCase("Placemark"))
-						 {
-							 cuadrantes.add(pl);
-							 //System.out.println(pl.getNombre());
-							 //System.out.println(pl.getCoordenadas());
-							 //System.out.println(pl.getDescripcion());
-							 pl = null;
-						 }
-					 }
-					 
-					 public void characters(char ch[], int start, int length)
-					 {
-						 if(bname)
-						 {
-							 pl.setNombre(new String(ch, start, length));
-							 System.out.println(new String(ch, start, length));
-							 bname = false;
-						 }
-						 if(bdescr)
-						 {
-							 pl.setDescripcion(new String(ch, start, length));
-							 System.out.println(new String(ch, start, length));
-							 bdescr =  false;
-						 }
-						 if(bcoord)
-						 {
-							 pl.setCoordenadas(new String(ch, start, length));
-							 System.out.println(new String(ch, start, length));
-							 bcoord = false;
-						 }
-					 }
-				 };
-				 AssetManager asset = getAssets();
-				 InputStream input = asset.open("doc.kml");
-				 int size = input.available();
-				 byte[] buffer = new byte[size];
-				 input.read(buffer);
-				 input.close();
-				 File file = new File(getFilesDir(), "doc.kml");
-				 FileOutputStream fos = new FileOutputStream(file);
-				 fos.write(buffer);
-				 fos.close();
-				 saxParser.parse(file, handler);
-				 retorno = true;
+
+				DefaultHandler handler = new DefaultHandler()
+				{
+					boolean bname = false;
+					boolean bdescr = false;
+					boolean bcoord = false;
+					PlaceMark pl = null;
+
+					public void startElement(String uri, String localName,String qName, org.xml.sax.Attributes attributes)
+					{
+						if(qName.equalsIgnoreCase("Placemark"))
+						{
+							pl = new PlaceMark();
+						}
+						else if(qName.equalsIgnoreCase("name"))
+						{
+							bname = true;
+						}
+						else if(qName.equalsIgnoreCase("description"))
+						{
+							bdescr = true;
+						}
+						else if(qName.equalsIgnoreCase("coordinates"))
+						{
+							bcoord = true;
+						}
+					}
+
+					public void endElement(String uri, String localName, String qName)
+					{
+						if(qName.equalsIgnoreCase("Placemark"))
+						{
+							if(pl.getTipo().equals("PlPolicia"))
+							{
+								cuadrantes.add(pl);
+							}
+							else if(pl.getTipo().equals("PlParqueo"))
+							{
+								parqueaderos.add(pl);
+							}
+							else
+							{
+								talleres.add(pl);
+							}
+
+							pl = null;
+						}
+					}
+
+					public void characters(char ch[], int start, int length)
+					{
+						if(bname)
+						{
+							String nombre = new String(ch, start, length);
+							if(nombre.contains("C.P"))
+							{
+								pl.setNombre(nombre);
+								pl.setTipo(Constantes.PLACEMARK_PARK);
+							}
+							else if(nombre.contains("T.") || nombre.contains("taller") || nombre.contains("Taller") || nombre.contains("TALLER"))
+							{
+								pl.setNombre(nombre);
+								pl.setTipo(Constantes.PLACEMARK_FIX);
+							}
+							else
+							{
+								pl.setNombre(nombre);
+								pl.setTipo(Constantes.PLACEMARK_COP);
+							}
+							bname = false;
+						}
+						if(bdescr)
+						{
+							pl.setDescripcion(new String(ch, start, length));
+							bdescr =  false;
+						}
+						if(bcoord)
+						{
+							pl.setCoordenadas(new String(ch, start, length));
+							bcoord = false;
+						}
+					}
+				};
+				AssetManager asset = getAssets();
+				if(cop)
+				{
+					InputStream input = asset.open("doc.kml");
+					int size = input.available();
+					byte[] buffer = new byte[size];
+					input.read(buffer);
+					input.close();
+					File file = new File(getFilesDir(), "doc.kml");
+					FileOutputStream fos = new FileOutputStream(file);
+					fos.write(buffer);
+					fos.close();
+					saxParser.parse(file, handler);
+					retorno = true;
+				}
+				else
+				{
+					InputStream input = asset.open("Lugares.kml");
+					int size = input.available();
+					byte[] buffer = new byte[size];
+					input.read(buffer);
+					input.close();
+					File file = new File(getFilesDir(), "Lugares.kml");
+					FileOutputStream fos = new FileOutputStream(file);
+					fos.write(buffer);
+					fos.close();
+					System.out.println("VA A PARSEAR");
+					saxParser.parse(file, handler);
+					retorno = true;
+				}
 			}
 			catch (Exception e)
 			{
@@ -1644,7 +1839,6 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 						});
 						AlertDialog alert11 = builder1.create();
 						alert11.show();
-						
 						if(alert11.isShowing())
 						{
 							try 
@@ -1661,110 +1855,366 @@ extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedList
 				});
 			}
 			return retorno;
-			
 		}
-		 
-	 }
-	 
-	 private void dibujarCuadrantes() 
-	 {
-		 for(int i = 0;i<cuadrantes.size();i++)
-		 {
-			 PlaceMark pl = cuadrantes.get(i);
-			 String loc = pl.getCoordenadas();
-			 System.out.println("COOR-----> "+loc);
-			 String[] coor = loc.split(",");
-			 if(coor.length == 1)
-			 {
-				 double lon = Double.parseDouble(coor[0]);
-				 double lat = 4.757677;
-				 LatLng latlo = new LatLng(lat, lon);
-				 Marker m = mapActivity.this.map.addMarker(new MarkerOptions()
-				 .position(latlo)
-				 .icon(BitmapDescriptorFactory.fromResource(R.drawable.cop))
-				 .title(pl.getNombre())
-				 .snippet(pl.getDescripcion()));
-				 marcadoresCuadrantes.put(latlo, m);
-			 }
-			 else
-			 {
-				 double lat = Double.parseDouble(coor[1]);
-				 double lon = Double.parseDouble(coor[0]);
-				 LatLng latlo = new LatLng(lat, lon);
-				 Marker m = mapActivity.this.map.addMarker(new MarkerOptions()
-				 .position(latlo)
-				 .icon(BitmapDescriptorFactory.fromResource(R.drawable.cop))
-				 .title(pl.getNombre())
-				 .snippet(pl.getDescripcion()));
-				 marcadoresCuadrantes.put(latlo, m);
-			 }
-		 }
-	 }
-	 
-	 private LatLng calcularCuadranteMasCercano(LatLng actualPos)
-	 {
-		 LatLng res = null;
-		 double min = 0.0;
-		 for(int i = 0; i<cuadrantes.size();i++)
-		 {
-			 PlaceMark pl = cuadrantes.get(i);
-			 String loc = pl.getCoordenadas();
-			 String[] coor = loc.split(",");
-			 if(coor.length == 1)
-			 {
-				 double lon = Double.parseDouble(coor[0]);
-				 double lat = 4.757677;
-				 LatLng latlo = new LatLng(lat, lon);
-				 double dis = SphericalUtil.computeDistanceBetween(actualPos, latlo);
-				 if(i == 0)
-				 {
-					 min = dis;
-					 res = latlo;
-				 }
-				 else
-				 {
-					 if(dis<min)
-					 {
-						 min = dis;
-						 res = latlo;
-					 }
-				 }
-			 }
-			 else
-			 {
-				 double lat = Double.parseDouble(coor[1]);
-				 double lon = Double.parseDouble(coor[0]);
-				 LatLng latlo = new LatLng(lat, lon);
-				 double dis = SphericalUtil.computeDistanceBetween(actualPos, latlo);
-				 if(i == 0)
-				 {
-					 min = dis;
-					 res = latlo;
-				 }
-				 else
-				 {
-					 if(dis<min)
-					 {
-						 min = dis;
-						 res = latlo;
-					 }
-				 }
-			 }
-		 }
-		 return res;
-	 }
-	 
-	 private void contactarCuadrante(LatLng pos)
-	 {
-		 Marker m = marcadoresCuadrantes.get(pos);
-		 if(m != null)
-		 {
-			map.animateCamera(CameraUpdateFactory.newLatLngZoom(pos, 13));
+
+	}
+
+	private void dibujarCuadrantes() 
+	{
+		for(int i = 0;i<cuadrantes.size();i++)
+		{
+			PlaceMark pl = cuadrantes.get(i);
+			if(pl.getTipo().equals("PlPolicia"))
+			{
+				String loc = pl.getCoordenadas();
+				String[] coor = loc.split(",");
+				if(coor.length == 1)
+				{
+					double lon = Double.parseDouble(coor[0]);
+					double lat = 4.757677;
+					LatLng latlo = new LatLng(lat, lon);
+					Marker m = mapActivity.this.map.addMarker(new MarkerOptions()
+					.position(latlo)
+					.icon(BitmapDescriptorFactory.fromResource(R.drawable.cop))
+					.title(pl.getNombre()));
+					marcadoresCuadrantes.put(latlo, m);
+				}
+				else
+				{
+					double lat = Double.parseDouble(coor[1]);
+					double lon = Double.parseDouble(coor[0]);
+					LatLng latlo = new LatLng(lat, lon);
+					Marker m = mapActivity.this.map.addMarker(new MarkerOptions()
+					.position(latlo)
+					.icon(BitmapDescriptorFactory.fromResource(R.drawable.cop))
+					.title(pl.getNombre()));
+					marcadoresCuadrantes.put(latlo, m);
+				}
+			}
+		}
+	}
+
+	private LatLng calcularCuadranteMasCercano(LatLng actualPos)
+	{
+		LatLng res = null;
+		double min = 0.0;
+		for(int i = 0; i<cuadrantes.size();i++)
+		{
+			PlaceMark pl = cuadrantes.get(i);
+			String loc = pl.getCoordenadas();
+			String[] coor = loc.split(",");
+			if(coor.length == 1)
+			{
+				double lon = Double.parseDouble(coor[0]);
+				double lat = 4.757677;
+				LatLng latlo = new LatLng(lat, lon);
+				double dis = SphericalUtil.computeDistanceBetween(actualPos, latlo);
+				if(i == 0)
+				{
+					min = dis;
+					res = latlo;
+				}
+				else
+				{
+					if(dis<min)
+					{
+						min = dis;
+						res = latlo;
+					}
+				}
+			}
+			else
+			{
+				double lat = Double.parseDouble(coor[1]);
+				double lon = Double.parseDouble(coor[0]);
+				LatLng latlo = new LatLng(lat, lon);
+				double dis = SphericalUtil.computeDistanceBetween(actualPos, latlo);
+				if(i == 0)
+				{
+					min = dis;
+					res = latlo;
+				}
+				else
+				{
+					if(dis<min)
+					{
+						min = dis;
+						res = latlo;
+					}
+				}
+			}
+		}
+		return res;
+	}
+
+	private void contactarCuadrante(LatLng pos)
+	{
+		Marker m = marcadoresCuadrantes.get(pos);
+		if(m != null)
+		{
+			map.animateCamera(CameraUpdateFactory.newLatLngZoom(pos, 15));
 			Drawable dr = getResources().getDrawable(R.drawable.cop);
 			Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
 			Bitmap bitTwiceSize = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth()*2,bitmap.getHeight()*2, false);
 			m.setIcon(BitmapDescriptorFactory.fromBitmap(bitTwiceSize));
 			m.showInfoWindow();
-		 }
-	 }
+		}
+	}
+
+	private void dibujarTallerParqueaderos()
+	{
+		boolean finTalleres = false;
+		boolean finParqueos = false;
+		int i = 0;
+		int j = 0;
+		while(finTalleres == false || finParqueos == false)
+		{
+			if(i >= talleres.size())
+			{
+				System.out.println("----->LLego a true con i " + i +" y size "+ talleres.size());
+				finTalleres = true;
+			}
+			else
+			{
+				PlaceMark plT = talleres.get(i);
+				String loc = plT.getCoordenadas();
+				String[] coor = loc.split(",");
+				if(coor.length == 1)
+				{
+					double lon = Double.parseDouble(coor[0]);
+					double lat = 4.757677;
+					LatLng latlo = new LatLng(lat, lon);
+					Marker m = mapActivity.this.map.addMarker(new MarkerOptions()
+					.position(latlo)
+					.icon(BitmapDescriptorFactory.fromResource(R.drawable.taller))
+					.title(plT.getNombre()));
+					marcadoresTalleres.put(latlo, m);
+				}
+				else
+				{
+					double lat = Double.parseDouble(coor[1]);
+					double lon = Double.parseDouble(coor[0]);
+					LatLng latlo = new LatLng(lat, lon);
+					Marker m = mapActivity.this.map.addMarker(new MarkerOptions()
+					.position(latlo)
+					.icon(BitmapDescriptorFactory.fromResource(R.drawable.taller))
+					.title(plT.getNombre()));
+					marcadoresTalleres.put(latlo, m);
+				}
+			}
+
+			if(j>= parqueaderos.size())
+			{
+				System.out.println("LLego a true con j " + j +"y size "+ parqueaderos.size());
+				finParqueos = true;
+			}
+			else
+			{
+				PlaceMark plP = parqueaderos.get(j);
+				String loc1 = plP.getCoordenadas();
+				String[] coor1 = loc1.split(",");
+				if(coor1.length == 1)
+				{
+					double lon = Double.parseDouble(coor1[0]);
+					double lat = 4.757677;
+					LatLng latlo = new LatLng(lat, lon);
+					Marker m = mapActivity.this.map.addMarker(new MarkerOptions()
+					.position(latlo)
+					.icon(BitmapDescriptorFactory.fromResource(R.drawable.parking))
+					.title(plP.getNombre()));
+					marcadoresParqueaderos.put(latlo, m);
+				}
+				else
+				{
+					double lat = Double.parseDouble(coor1[1]);
+					double lon = Double.parseDouble(coor1[0]);
+					LatLng latlo = new LatLng(lat, lon);
+					Marker m = mapActivity.this.map.addMarker(new MarkerOptions()
+					.position(latlo)
+					.icon(BitmapDescriptorFactory.fromResource(R.drawable.parking))
+					.title(plP.getNombre()));
+					marcadoresParqueaderos.put(latlo, m);
+				}
+			}
+			System.out.println("i---->"+i);
+			System.out.println(talleres.size());
+			System.out.println(j);
+			i++;
+			j++;
+		}
+	}
+
+	private LatLng calcularParqueaderoMasCercano(LatLng actual)
+	{
+		LatLng res = null;
+		double min = 0.0;
+		for(int i = 0; i<parqueaderos.size();i++)
+		{
+			PlaceMark pl = parqueaderos.get(i);
+			String loc = pl.getCoordenadas();
+			String[] coor = loc.split(",");
+			if(coor.length == 1)
+			{
+				double lon = Double.parseDouble(coor[0]);
+				double lat = 4.757677;
+				LatLng latlo = new LatLng(lat, lon);
+				double dis = SphericalUtil.computeDistanceBetween(actual, latlo);
+				if(i == 0)
+				{
+					min = dis;
+					res = latlo;
+				}
+				else
+				{
+					if(dis<min)
+					{
+						min = dis;
+						res = latlo;
+					}
+				}
+			}
+			else
+			{
+				double lat = Double.parseDouble(coor[1]);
+				double lon = Double.parseDouble(coor[0]);
+				LatLng latlo = new LatLng(lat, lon);
+				double dis = SphericalUtil.computeDistanceBetween(actual, latlo);
+				if(i == 0)
+				{
+					min = dis;
+					res = latlo;
+				}
+				else
+				{
+					if(dis<min)
+					{
+						min = dis;
+						res = latlo;
+					}
+				}
+			}
+		}
+		return res;
+	}
+
+	private LatLng calcularTallerMasCercano(LatLng actual)
+	{
+		LatLng res = null;
+		double min = 0.0;
+		for(int i = 0; i<talleres.size();i++)
+		{
+			PlaceMark pl = talleres.get(i);
+			String loc = pl.getCoordenadas();
+			String[] coor = loc.split(",");
+			if(coor.length == 1)
+			{
+				double lon = Double.parseDouble(coor[0]);
+				double lat = 4.757677;
+				LatLng latlo = new LatLng(lat, lon);
+				double dis = SphericalUtil.computeDistanceBetween(actual, latlo);
+				if(i == 0)
+				{
+					min = dis;
+					res = latlo;
+				}
+				else
+				{
+					if(dis<min)
+					{
+						min = dis;
+						res = latlo;
+					}
+				}
+			}
+			else
+			{
+				double lat = Double.parseDouble(coor[1]);
+				double lon = Double.parseDouble(coor[0]);
+				LatLng latlo = new LatLng(lat, lon);
+				double dis = SphericalUtil.computeDistanceBetween(actual, latlo);
+				if(i == 0)
+				{
+					min = dis;
+					res = latlo;
+				}
+				else
+				{
+					if(dis<min)
+					{
+						min = dis;
+						res = latlo;
+					}
+				}
+			}
+		}
+		return res;
+	}
+
+	private void resaltarTaller(LatLng pos)
+	{
+		Marker m = marcadoresTalleres.get(pos);
+		if(m != null)
+		{
+			map.animateCamera(CameraUpdateFactory.newLatLngZoom(pos, 15));
+			Drawable dr = getResources().getDrawable(R.drawable.taller);
+			Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
+			Bitmap bitTwiceSize = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth()*2,bitmap.getHeight()*2, false);
+			m.setIcon(BitmapDescriptorFactory.fromBitmap(bitTwiceSize));
+			m.showInfoWindow();
+		}
+		else
+		{
+			System.out.println("marcador de taller NULO!!");
+			if(marcadoresTalleres.size()== talleres.size())
+			{
+				System.out.println(true);
+			}
+			else
+			{
+				System.out.println(false);
+				System.out.println(talleres.size()-marcadoresTalleres.size());
+			}
+		}
+	}
+
+	private void resaltarParqueadero(LatLng pos)
+	{
+		Marker m = marcadoresParqueaderos.get(pos);
+		if(m != null)
+		{
+			map.animateCamera(CameraUpdateFactory.newLatLngZoom(pos, 15));
+			Drawable dr = getResources().getDrawable(R.drawable.parking);
+			Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
+			Bitmap bitTwiceSize = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth()*2,bitmap.getHeight()*2, false);
+			m.setIcon(BitmapDescriptorFactory.fromBitmap(bitTwiceSize));
+			m.showInfoWindow();
+		}
+	}
+
+	private float hallarDistanciaRuta()
+	{
+		float dist = 0f;
+		for(int i = 1;i<points.size();i++)
+		{
+			Location currloc = new Location("this");
+			currloc.setLatitude(points.get(i).latitude);
+			currloc.setLongitude(points.get(i).longitude);
+
+			Location lastLocation = new Location("this");
+			lastLocation.setLatitude(points.get(i-1).latitude);
+			lastLocation.setLongitude(points.get(i-1).longitude);
+
+			dist += lastLocation.distanceTo(currloc);
+
+		}
+		return dist;
+	}
+
+	private double tiempoEstimadoDeLlegada(float distancia)
+	{
+		double avgSpeed = 16.5; //km/h
+		double time = (distancia/1000)/avgSpeed;
+		return time;
+	}
+
 }

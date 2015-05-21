@@ -114,52 +114,61 @@ public class MainActivity extends ActionBarActivity
 		public void onDataChange(DataSnapshot arg0) 
 		{
 			@SuppressWarnings("unchecked")
-			HashMap<String, Usuario> datos = (HashMap<String, Usuario>) arg0.getValue();
+			HashMap<String, Object> datos = (HashMap<String, Object>) arg0.getValue();
 			System.out.println(arg0.getValue());
-			ArrayList<Usuario> arr = new ArrayList<Usuario>(datos.values());
-			String val = "";
-			for(int i = 0;i<arr.size();i++)
+			Usuario u = new Usuario(0L,"","","",0L,0L,0L,0L,"",0L, 0L,0L);
+			
+			long amigos = 0L;
+			String nombreUser = "";
+			String nombre = "";
+			HashMap<String, Object> lastlatLong = null;
+			String lastlatlng = "";
+			long lastTime = 0L;
+			long phoneNumber = 0L;
+			String email = "";
+			long numKilometros =0L;
+			long ritmo=0L;
+			long pedalazos=0L;
+			long caravanas=0L;
+			long calorias=0L;
+			
+			for( String key: datos.keySet())
 			{
-				if(i==arr.size()-1)
-				{
-					val+=arr.get(i);
-				}
-				else
-				{
-					val+=arr.get(i)+";";
-				}
+				caravanas = (Long) datos.get("caravanas");
+				amigos = (Long) datos.get("amigos");
+				nombreUser = (String) datos.get("nombreUser");
+				calorias = (Long) datos.get("caloriasTotales");
+				email = (String) datos.get("email");
+				lastTime = (Long) datos.get("lastTime");
+				phoneNumber = (Long) datos.get("phoneNumber");
+				ritmo = (Long) datos.get("ritmo");
+				numKilometros = (Long) datos.get("numKilom");
+				pedalazos = (Long) datos.get("pedalazos");
+				lastlatLong = (HashMap<String, Object>) datos.get("lastlatLong");
+				nombre = (String) datos.get("nombre");
 			}
-			System.out.println(val);
-			String[] vals = val.split(";");
-			String nombre = vals[0];
-			String numKilo = vals[1];
-			String numCara = vals[2];
-			String numCalo = vals[3];
-			String phone = vals[4];
-			String email = vals[5];
-			String amigos = vals[6];
-			String time = vals[7];
-			String ritmo = vals[8];
-			String nomU = vals[9];
-			String lastLong = vals[10];
-			String peda= vals[11];
-			if(lastLong.equals("")||lastLong==null)
+			if(lastlatLong.isEmpty())
 			{
-				lastLong = " ";
+				lastlatlng = " ";
 			}
 			else
 			{
-				String[] ltln = lastLong.split(",");
-				String lat = ltln[1];
-				String lng = ltln[2];
-				String[] lats = lat.split("\\[");
-				String reLat = lats[1];
-				String[] longs = lng.split("\\]");
-				String reLong = longs[0];
-				lastLong = reLat+","+reLong;
+				ArrayList loc = (ArrayList) lastlatLong.get("l");
+				lastlatlng = loc.get(0)+","+loc.get(1);
 			}
-			Usuario u = new Usuario(Integer.parseInt(amigos), nombre, nomU, lastLong, Long.parseLong(time), Double.parseDouble(phone), Double.parseDouble(ritmo), Double.parseDouble(peda), email, Double.parseDouble(numKilo), Integer.parseInt(numCara), Integer.parseInt(numCalo));
-			//user = null;
+			u.setAmigos(amigos);
+			u.setCaloriasTotales(calorias);
+			u.setCaravanas(caravanas);
+			u.setEmail(email);
+			u.setLastlatLong(lastlatlng);
+			u.setLastTime(lastTime);
+			u.setNumKilom(numKilometros);
+			u.setNombre(nombre);
+			u.setNombreUser(nombreUser);
+			u.setPedalazos(pedalazos);
+			u.setRitmo(ritmo);
+			u.setPhoneNumber(phoneNumber);
+			
 			user = u;
 			String PATH = PreferenceManager.getDefaultSharedPreferences(MainActivity.this.getApplicationContext()).getString("ImagenPerfil", "");
 			System.out.println("PATH: "+ PATH);
@@ -214,7 +223,7 @@ public class MainActivity extends ActionBarActivity
 			txtNombre.setText(user.getNombre());
 			txtKilometros.setText(user.getNumKilom()+"");
 			btnAmigos.setText(user.getAmigos()+"");
-			txtCaravanas.setText(user.getCaravanas());
+			txtCaravanas.setText(user.getCaravanas()+"");
 			txtRitmo.setText(user.getRitmo()+"");
 			txtPedalazos.setText(user.getPedalazos()+"");
 			txtCalorias.setText(user.getCaloriasTotales()+"");
